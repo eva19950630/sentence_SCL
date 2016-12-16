@@ -16,7 +16,7 @@ class User(models.Model):
 	#IconPosition = models.
 	EXP = models.IntegerField()
 	Money = models.DecimalField(max_digits=20,decimal_places=0)
-	language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
+# 	language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
 
 # #SENTENCE
 # class Sentence(models.Model):
