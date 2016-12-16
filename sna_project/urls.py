@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^user/achievement/', views.user_achievement),
     url(r'^user/history/', views.user_history),
     #google+
-    url(r'^accounts/', include('allauth.urls')),
+    # url(r'^accounts/', include('allauth.urls')),
 ]
