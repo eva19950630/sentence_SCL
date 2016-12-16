@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^user/account/', views.user_account),
     url(r'^user/achievement/', views.user_achievement),
     url(r'^user/history/', views.user_history),
+    #google+
+    url(r'^accounts/', include('allauth.urls')),
 ]
