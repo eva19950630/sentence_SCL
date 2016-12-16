@@ -1,0 +1,47 @@
+{% extends 'sentence/background.html' %}
+{% load staticfiles %}
+{% block content1 %}
+
+<!-- User History -->
+<div id="wrapper">
+
+    <ul class="nav navbar-nav side-nav">
+        <div class="sidebar-menu">
+            <a href="/user/profile"><button type="button" class="btn btn-default navbar-btn">User Profile</button></a>
+            <a href="/user/account"><button type="button" class="btn btn-default navbar-btn">Accounts</button></a>
+            <a href="/user/achievement"><button type="button" class="btn btn-default navbar-btn">Achievement</button></a>
+            <a href="/user/history"><button type="button" class="btn btn-default navbar-btn">History</button></a>
+        </div>
+    </ul>
+
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">2016/11/28</h3>
+                        </div>
+                        <div class="panel-body">
+                            I have a dream.
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">2016/10/5</h3>
+                        </div>
+                        <div class="panel-body">
+                            Gutten Tag!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+</div>
+<!-- /#wrapper -->
+
+{% endblock content1 %}

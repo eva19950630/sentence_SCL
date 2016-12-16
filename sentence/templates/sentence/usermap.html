@@ -1,0 +1,71 @@
+{% extends 'sentence/background.html' %}
+{% load staticfiles %}
+{% block content1 %}
+
+<!-- User map and let user find friends to contact -->
+<canvas id="UserMap" width="2000" height="1000" style="margin:0 0 0 0;">Your browser does not support canvas element.</canvas>
+<div class="FriendsList">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row friend-panel">
+                <div class="col-lg-2"> <img class="panel-title" src="{% static 'images/amiba.png' %}"> </div>
+                <div class="col-lg-5 friend-name">
+                    <h3>Trump</h3>
+                </div>
+            </div>
+            <div class="row friend-panel">
+                <div class="col-lg-2"> <img class="panel-title" src="{% static 'images/seastar.png' %}"> </div>
+                <div class="col-lg-5 friend-name">
+                    <h3>Obama</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--intro-->
+<div class="intro" style="display: block;">
+    <!--Introduction page-->
+    <div id="myIntro">
+        <div class="row">
+            <div class="col-lg-2 intro-img"> <img src="{% static 'images/fish.png' %}"> </div>
+            <div class="col-lg-6 my-profile">
+                <h5>John</h5>
+                <h5>LV.10</h5>
+                <h5>Russian,English</h5>
+            </div>
+        </div>
+    </div>
+    <!--./passerby intro page-->
+    <div role="dialog" class="modal fade" id="passerIntro">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">BigV</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-2 intro-img"> <img src="{% static 'images/whale.png' %}"> </div>
+                        <div class="col-lg-6 user-profile">
+                            <h5>LV.1</h5>
+                            <h5>Gutten Tag</h5>
+                            <h5>German,English</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--./passerby intro page-->
+</div>
+
+<!--message-->
+<div id="message-area"> </div>
+<!--./message-->
+
+{% endblock content1 %}

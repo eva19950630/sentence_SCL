@@ -1,0 +1,56 @@
+{% extends 'sentence/background.html' %}
+{% load staticfiles %}
+{% block content1 %}
+
+<!-- Inputfield and Post modal -->
+<div class="inputfield-container">
+    <section>
+        <div class="row">
+            <div class="col-md-6 fields">
+                <label for="input">I want to translate this sentence</label>
+                <input id="input" type='text'></input>
+            </div>
+            <div class="col-md-6 postbtn">
+                <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal">POST</button>
+                <a href="/sentence_world"><button type="button" class="btn btn-default navbar-btn" id="chooseArea-btn">CLICK COUNTRY</button></a>
+            </div>
+        </div>
+    </section>
+</div>
+
+        <!-- Post Modal -->
+                      <div class="modal fade" id="post-modal" role="dialog">
+                          <div class="modal-dialog">
+                              <div id="post-box">
+                                  <div class="top" style="padding: 15px;">
+                                      <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                  </div>
+
+                                  <div class="postbox-content">
+                                      <h2>Hash tag your language</h2>
+
+                                      <input type="text" name="language" placeholder="#language" />
+
+                                      <a href="/post_world"><input type="submit" name="post_submit" value="Submit" /></a>
+                                  </div>
+
+                              </div>
+
+                          </div>
+                      </div>
+
+{% endblock content1 %}
+
+{% block content2 %}
+
+<!-- Overworld sentence posts and let user select country -->
+<div class="map-container-fluid">
+    <div class="row map-block ">
+        <div id="vmap" style="width: 100vw; height: 100vh;">
+            <div id="float-sentence" class="col-lg-6 col-lg-offset-5 text-center ">THE SENTENCE</div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content2 %}

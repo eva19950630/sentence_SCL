@@ -1,0 +1,85 @@
+
+#map {
+    position: absolute;
+    z-index: 1;
+   
+  height: 500px;
+  min-width: 310px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.loading {
+  margin-top: 10em;
+  text-align: center;
+  color: gray;
+}
+
+
+
+#float-sentence {
+    width: auto;
+    height: auto;
+    position: relative;
+    z-index: 11;
+    
+    background-color: rgba(12, 165, 216, 0.77);
+    
+    border-radius: 6px;
+    padding: 15px 80px;
+    
+    
+}
+
+#float-language {
+    width: auto;
+    height: auto;
+    position: relative;
+    z-index: 11;
+    
+    background-color:salmon;
+    border-radius: 3px;
+    padding: 3px 15px;
+}
+
+.float {
+    position: relative;
+    z-index: 11;
+    border-radius: 3px;
+    padding: 3px 15px;
+}
+
+.card-size {
+    width:auto;
+    height:auto;
+    background-color: rgba(255,255,255,0.9);
+    margin:20px 100px;
+}
+
+
+
+/*.map-container-fluid {
+    margin-top: 150px;
+     
+}*/
+
+
+.map-content {
+   padding: 0px 0px;
+}
+
+
+
+#vmap #row {
+    position: absolute;
+    z-index: 11;
+}
+
+#vmap {
+    
+    z-index: 1;
+}
+
+.cards-block {
+    margin: 30px;
+}
