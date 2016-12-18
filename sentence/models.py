@@ -12,7 +12,7 @@ class User(models.Model):
 	UserName = models.CharField(max_length=50, null=False)
 	Email = models.EmailField(max_length=254)
 	Password = models.CharField(max_length=50, null=False)
-	UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
+# 	UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
 	#IconPosition = models.
 	EXP = models.IntegerField()
 	Money = models.DecimalField(max_digits=20,decimal_places=0)
