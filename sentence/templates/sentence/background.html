@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
     <meta charset="utf-8">
     <title>A Sentence A Day</title>
@@ -43,6 +44,33 @@
 </head>
 
 <body>
+    
+    
+        <!--facebook login block-->
+    <script>
+        var FaceBookAppId = '233902740370813';
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: FaceBookAppId
+                , xfbml: true
+                , version: 'v2.8'
+            });
+            window.fbloaded();
+        };
+        
+        
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    
     <div class="header">
         <!-- Navigation -->
         <nav class="navbar-fixed-top" role="navigation">
@@ -61,6 +89,7 @@
                             </span> <span class="before-login">
                             <button type="button" class="btn btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
                             </span> <span class="after-login">
+
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-bell" style="font-size: 25px; color:#000"></i>
                                   </a>
@@ -77,13 +106,15 @@
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
                                     <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-sign-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                      <!--class="fb-log-out" written by gim for fb log out-->
+                                    <li><a href="#"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                                 </span> </div>
                         <!-- Log in Modal -->
                         <div class="modal fade" id="login-modal" role="dialog">
                             <div class="modal-dialog">
                                 <div id="login-box">
+
                                     <div class="top" style="padding: 15px;">
                                         <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
                                     </div>
@@ -95,7 +126,7 @@
                                             <input type="submit" name="login_submit" value="Log in" /> </a>
                                     </div>
                                     <div class="login-right"> 
-                                        <button class="social-signin facebook">Log in with facebook</button>
+                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                         <button class="social-signin google" data-onsuccess="onSignIn">Log in with Google</button>
                                         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                                     </div>
@@ -119,11 +150,12 @@
                                         <input type="password" name="password2" placeholder="Retype password" />
                                         <input type="submit" name="signup_submit" value="Sign me up" /> </div>
                                     <div class="signup-right">
-                                        <button class="social-signin facebook">Log in with facebook</button>
+                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                         <button class="social-signin google">Log in with Google</button>
                                     </div>
                                     <div class="signup-or">OR</div>
                                     <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
+
                                 </div>
                             </div>
                         </div>
@@ -212,5 +244,44 @@
 <!--    google+-->
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
 </body>
+<!--    facebookApi-->
+     <script type="text/javascript">
+    window.fbloaded = function(){
+    FB.Event.subscribe('auth.statusChange', function(response){
+        if(response.status === 'connected'){
+            FB.api("/me/picture?widrh=30" , function(response){
+                $("#my-profile-picture").attr("src", response.data.url);
+    });
+    FB.api("/me",function(response){
+        $('#user-name').html(response.name);
+    });
+    }
+    });
+    }
+    
+     var loginCheck = function(){
+        FB.getLoginStatus(function(response){
+            if(response.status === 'connected'){
+            FB.logout(function(response){
+                $(".facebook-login-btn").html("Facebook Login");
+                $("#my-profile-picture").attr("src", "");
+                $("#user-name").html(null);
+                /*facebook friend list
+                $(".friend-block").empty();
+                */
+            });
+            }
+            else{
+                FB.login(function(response){
+                    $(".fb-log-out").html("Facebook Logout")
+                });
+            }
+        });
+    }
+     
+     $(".facebook-login-btn").click(function(){
+       loginCheck(); 
+    });
+    </script>
 
 </html>
