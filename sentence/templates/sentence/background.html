@@ -44,8 +44,37 @@
 
 
     </head>
+    
+    
 
     <body>
+        
+        
+        <!--facebook login block-->
+    <script>
+        var FaceBookAppId = '233902740370813';
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: FaceBookAppId
+                , xfbml: true
+                , version: 'v2.8'
+            });
+            window.fbloaded();
+        };
+        
+        
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+        
         <div class ="header">
           <!-- Navigation -->
             <nav class="navbar-fixed-top" role="navigation">
@@ -89,7 +118,8 @@
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
                                     <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-sign-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                      <!--class="fb-log-out" written by gim for fb log out-->
+                                    <li><a href="#"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                                 </span>
                                 
@@ -116,7 +146,7 @@
                                   </div>
                                   
                                   <div class="login-right">
-                                    <button class="social-signin facebook">Log in with facebook</button>
+                                    <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                     <button class="social-signin google">Log in with Google</button>
                                   </div>
 
@@ -152,7 +182,7 @@
                                 </div>
                                 
                                 <div class="signup-right">
-                                  <button class="social-signin facebook">Log in with facebook</button>
+                                  <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                   <button class="social-signin google">Log in with Google</button>
                                 </div>
 
@@ -282,7 +312,47 @@
             icons[1].src = "{% static 'images/fish.png' %}"
         </script>
         
-
+       
     </body>
+    
+     <script type="text/javascript">
+    window.fbloaded = function(){
+    FB.Event.subscribe('auth.statusChange', function(response){
+        if(response.status === 'connected'){
+            FB.api("/me/picture?widrh=30" , function(response){
+                $("#my-profile-picture").attr("src", response.data.url);
+    });
+    FB.api("/me",function(response){
+        $("#user-name").html(response.name);
+    });
+    }
+    });
+    }
+    
+     var loginCheck = function(){
+        FB.getLoginStatus(function(response){
+            if(response.status === 'connected'){
+            FB.logout(function(response){
+                $(".facebook-login-btn").html("Facebook Login");
+                $("#my-profile-picture").attr("src", "");
+                $("user-name").html(null);
+                /*facebook friend list
+                $(".friend-block").empty();
+                */
+            });
+            }
+            else{
+                FB.login(function(response){
+                    $(".fb-log-out").html("Facebook Logout")
+                });
+            }
+        });
+    }
+     
+     $(".facebook-login-btn").click(function(){
+       loginCheck(); 
+    });
+    </script>
+
     
 </html>
