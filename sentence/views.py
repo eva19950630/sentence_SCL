@@ -1,4 +1,8 @@
 from django.shortcuts import render
+#google+
+from .forms import AddUser
+from .models import User
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -28,3 +32,29 @@ def user_achievement(request):
 
 def user_history(request):
 	return render(request, "sentence/user_history.html")
+
+#google+
+def signup_google(request):
+    if request.method == 'POST':
+    
+        user_form = AddUser(request.POST)
+        if user_form.is_valid():
+        
+            new_user_id = user_form.data.get("uid")
+            new_user_name = user_form.data.get("username")
+            new_user_email = user_form.data.get("email")
+            
+            
+            User.objects.create(
+                uid = new_user_id,
+                username = new_user_name,
+                email = new_user_email,
+            )
+            
+            return render(request, 'sentence/index.html')
+        
+        else:
+            return render(request, 'sentence/index.html')
+        
+    else:
+        return render(request, 'sentence/index.html')
