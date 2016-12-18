@@ -3,105 +3,7 @@
 <!DOCTYPE html>
 <html>
 
-<<<<<<< HEAD
-    <head>
-        <meta charset="utf-8">
-        <title>A Sentence A Day</title>
 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-        <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Icons Fonts -->
-        <link rel="stylesheet" href="{% static 'icons-fonts/glyphicon-style.css' %}">
-        <link href="https://file.myfontastic.com/aR4fpYP5juQuaFcCLbzkFZ/icons.css" rel="stylesheet">
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Favicon -->
-        <!-- <link rel="shortcut icon" href="">-->
-        <!-- Main styles CSS -->
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <!-- Navbar CSS -->
-        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-        <!-- Textfield CSS -->
-        <link rel="stylesheet" href="{% static 'css/textfield.css' %}">
-        <!-- Postcard CSS -->
-        <link rel="stylesheet" href="{% static 'css/postcard.css' %}">
-        <!-- Sentence CSS -->
-        <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
-        <!-- Usermap CSS -->
-        <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
-        
-
-        <!-- WorldMAP CSS -->
-        <link href="{% static 'css/jqvmap.css' %}" media="screen" rel="stylesheet" type="text/css">
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="{% static 'css/sb-admin.css' %}">
-        <!-- Morris Charts CSS -->
-        <link rel="stylesheet" href="{% static 'css/morris.css' %}">
-
-
-    </head>
-    
-    
-
-    <body>
-        
-        
-        <!--facebook login block-->
-    <script>
-        var FaceBookAppId = '233902740370813';
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: FaceBookAppId
-                , xfbml: true
-                , version: 'v2.8'
-            });
-            window.fbloaded();
-        };
-        
-        
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-        
-        <div class ="header">
-          <!-- Navigation -->
-            <nav class="navbar-fixed-top" role="navigation">
-
-        <!-- 1 POZIOM MENU -->
-                <div class="navbar header-1">
-                    <div class="container">
-
-        <!-- Logo -->
-                        <div id="header-logo" class="col-md-3 col-sm-6 col-xs-6">
-                            <a href="/">
-                              <img class="logo img-valign img-responsive" src="{% static 'images/logo.png' %}">
-                            </a>
-                        </div>
-
-        <!-- Social media + Menu MOBILE -->
-                        <div class="col-md-9 col-sm-6 col-xs-6 header-mobile-sm">
-
-        <!-- Log in / Sign up -->
-                            <div class="header-sm">
-
-                              <span class="before-login"><button type="button" class="btn btn-default navbar-btn" id="login-btn" data-toggle="modal">Log In</button></span>
-                                <span class="before-login"><button type="button" class="btn btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button></span>
-                                
-                                <span class="after-login">
-=======
 <head>
     <meta charset="utf-8">
     <title>A Sentence A Day</title>
@@ -142,6 +44,33 @@
 </head>
 
 <body>
+    
+    
+        <!--facebook login block-->
+    <script>
+        var FaceBookAppId = '233902740370813';
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: FaceBookAppId
+                , xfbml: true
+                , version: 'v2.8'
+            });
+            window.fbloaded();
+        };
+        
+        
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    
     <div class="header">
         <!-- Navigation -->
         <nav class="navbar-fixed-top" role="navigation">
@@ -160,7 +89,7 @@
                             </span> <span class="before-login">
                             <button type="button" class="btn btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
                             </span> <span class="after-login">
->>>>>>> a1f940f66ab3ede523b62b12e0f3a15a40fd5ee0
+
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-bell" style="font-size: 25px; color:#000"></i>
                                   </a>
@@ -185,60 +114,7 @@
                         <div class="modal fade" id="login-modal" role="dialog">
                             <div class="modal-dialog">
                                 <div id="login-box">
-<<<<<<< HEAD
-                                  <div class="top" style="padding: 15px;">
-                                  <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                                  </div>
 
-                                  <div class="left">
-                                    <h1>Welcome back!</h1>
-
-                                    <input type="text" name="email" placeholder="E-mail" />
-                                    <input type="password" name="password" placeholder="Password" />
-
-                                    <a href="/"><input type="submit" name="login_submit" value="Log in" /></a>
-                                  </div>
-                                  
-                                  <div class="login-right">
-                                    <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                    <button class="social-signin google">Log in with Google</button>
-                                  </div>
-
-                                  <div class="login-or">OR</div>
-
-                                  <div class="mobile-login-right">
-                                  <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span>
-                                  <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span>
-                                  </div>
-
-                                </div>
-
-                                </div>
-                              </div>
-
-              <!-- Sign up Modal -->
-                            <div class="modal fade" id="signup-modal" role="dialog">
-                              <div class="modal-dialog">
-                              <div id="signup-box">
-                                <div class="top" style="padding: 15px;">
-                                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                                </div>
-
-                                <div class="left">
-                                  <h1>Create an account</h1>
-                                  
-                                  <input type="text" name="username" placeholder="Username" />
-                                  <input type="text" name="email" placeholder="E-mail" />
-                                  <input type="password" name="password" placeholder="Password" />
-                                  <input type="password" name="password2" placeholder="Retype password" />
-                                  
-                                  <input type="submit" name="signup_submit" value="Sign me up" />
-                                </div>
-                                
-                                <div class="signup-right">
-                                  <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                  <button class="social-signin google">Log in with Google</button>
-=======
                                     <div class="top" style="padding: 15px;">
                                         <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
                                     </div>
@@ -250,7 +126,7 @@
                                             <input type="submit" name="login_submit" value="Log in" /> </a>
                                     </div>
                                     <div class="login-right"> 
-                                        <button class="social-signin facebook">Log in with facebook</button>
+                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                         <button class="social-signin google" data-onsuccess="onSignIn">Log in with Google</button>
                                         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                                     </div>
@@ -274,12 +150,12 @@
                                         <input type="password" name="password2" placeholder="Retype password" />
                                         <input type="submit" name="signup_submit" value="Sign me up" /> </div>
                                     <div class="signup-right">
-                                        <button class="social-signin facebook">Log in with facebook</button>
+                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                         <button class="social-signin google">Log in with Google</button>
                                     </div>
                                     <div class="signup-or">OR</div>
                                     <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
->>>>>>> a1f940f66ab3ede523b62b12e0f3a15a40fd5ee0
+
                                 </div>
                             </div>
                         </div>
@@ -368,71 +244,7 @@
 <!--    google+-->
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
 </body>
-
-<<<<<<< HEAD
-            </nav>
-        </div>
-
-
-        <div class = "body">
-          {% block content1 %}
-          {% endblock content1 %}
-        </div>
-
-        <div class = "body-2">
-          {% block content2 %}
-          {% endblock content2 %}
-        </div>
-
-        <div class = "footer">
-        </div>
-
-
-        <!-- ##### JAVASCRIPTS ##### -->
-        <!-- jQuery Library -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <!-- jQuery ui custom Library -->
-        <script type="text/javascript" src="{% static 'jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
-        <!-- Bootstrap js -->
-        <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <!-- Navbar js -->
-        <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
-        <!-- Textfield js -->
-        <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
-        <!-- Sentence js -->
-        <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script>
-        <!-- Usermap js -->
-        <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
-        <!-- Painting js -->
-        <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
-
-        <!-- WorldMAP js -->
-        <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
-        <script type="text/javascript">
-          jQuery(document).ready(function() {
-            jQuery('#vmap').vectorMap({ map: 'world_en' });
-          });
-        </script>
-        <!-- Morris Charts JavaScript -->
-        <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
-        <!-- Imagefile js -->
-        <script>
-            var icon1 = "{% static 'images/whale.png' %}";
-            var icons = new Array();
-            icons[0] = new Image();
-            icons[0].src = "{% static 'images/whale.png' %}";
-            
-            icons[1] = new Image();
-            icons[1].src = "{% static 'images/fish.png' %}"
-        </script>
-        
-       
-    </body>
-    
+<!--    facebookApi-->
      <script type="text/javascript">
     window.fbloaded = function(){
     FB.Event.subscribe('auth.statusChange', function(response){
@@ -441,7 +253,7 @@
                 $("#my-profile-picture").attr("src", response.data.url);
     });
     FB.api("/me",function(response){
-        $("#user-name").html(response.name);
+        $('#user-name').html(response.name);
     });
     }
     });
@@ -453,7 +265,7 @@
             FB.logout(function(response){
                 $(".facebook-login-btn").html("Facebook Login");
                 $("#my-profile-picture").attr("src", "");
-                $("user-name").html(null);
+                $("#user-name").html(null);
                 /*facebook friend list
                 $(".friend-block").empty();
                 */
@@ -472,7 +284,4 @@
     });
     </script>
 
-    
-=======
->>>>>>> a1f940f66ab3ede523b62b12e0f3a15a40fd5ee0
 </html>
