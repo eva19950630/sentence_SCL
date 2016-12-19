@@ -33,6 +33,25 @@ def user_achievement(request):
 def user_history(request):
 	return render(request, "sentence/user_history.html")
 
+#app signup
+def signup_app(request):
+    if request.method == 'POST':
+        
+        django_form = AddUser(request.POST)
+        if django_form.is_valid():
+           
+            """ Assign data in Django Form to local variables """
+            new_member_name = django_form.data.get("name")
+            new_member_email = django_form.data.get("email")
+            new_member_password= django_form.data.get('password')
+            
+            """ This is how your model connects to database and create a new member """
+            User.objects.create(
+                name =  new_member_name, 
+                email = new_member_email,
+                password = new_member_password,
+                )
+
 #google+
 def signup_google(request):
     if request.method == 'POST':
