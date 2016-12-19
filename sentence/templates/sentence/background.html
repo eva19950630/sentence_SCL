@@ -41,6 +41,10 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="17252888188-om3sbh9djgv8gk720e7gl5tcrjj2r6hn.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--    google+-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
+    <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
 </head>
 
 <body>
@@ -178,8 +182,8 @@
                                     </div>
                                     <div class="login-right"> 
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                        <button class="social-signin google" data-onsuccess="onSignIn">Log in with Google</button>
-                                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                                        <button class="social-signin google" id="customBtn-login">Log in with Google</button>
+<!--                                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>-->
                                     </div>
                                     <div class="login-or">OR</div>
                                     <div class="mobile-login-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
@@ -212,7 +216,7 @@
                                     
                                     <div class="signup-right">
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                        <button class="social-signin google">Log in with Google</button>
+                                        <button class="social-signin google" id="customBtn-signup">Log in with Google</button>
                                     </div>
                                      
     <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
@@ -310,8 +314,7 @@
         icons[1] = new Image();
         icons[1].src = "{% static 'images/fish.png' %}"
     </script>  
-<!--    google+-->
-    <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
+
 </body>
 <!--    facebookApi-->
      <script type="text/javascript">
@@ -351,6 +354,7 @@
      $('.facebook-login-btn').click(function(){
        loginCheck(); 
     });
+         startApp();
     </script>
 
 </html>
