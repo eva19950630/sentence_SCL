@@ -156,8 +156,7 @@
                                 </span> <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >
-                                  <font color=#000 id="user-name">USER NAME
-                                  <b class="caret"></b></font>
+                                  <span id="user-name"><font color=#000>USER NAME<b class="caret"></b></font></span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
@@ -212,7 +211,7 @@
                                           <input type="password" name="password" placeholder="Password" />
                                           <input type="password" name="password" placeholder="Retype password" />
                                           <!--<a href="/login"></a>-->
-                                          <input type="submit" name="signup_submit" value="Sign me up" />
+                                          <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
                                         </form>
                                         
                                     </div>      
@@ -367,4 +366,16 @@
          startApp();
     </script>
 
+
+<!-- sign up js -->
+    {% for user in users %}
+    
+    <script type="text/javascript">
+        $('.signupBtn').click(function() {
+    		$('#user-name').html("{{ user.name }}");
+    	});
+    </script>
+    
+    {%  endfor %}
+    
 </html>
