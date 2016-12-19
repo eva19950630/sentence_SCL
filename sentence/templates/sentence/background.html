@@ -197,6 +197,10 @@
                                         <h1>Create an account</h1>
                                         
                                         <form method = "POST">
+                                          
+                                          {% csrf_token %}
+                                          {{ form.as_p }}
+                                          
                                           <input type="text" id="name" name="username" placeholder="Username" />
                                           <input type="text" id="email" name="email" placeholder="E-mail" />
                                           <input type="password" id="password" name="password" placeholder="Password" />
