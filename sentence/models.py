@@ -8,7 +8,7 @@ from django.db import models
 #USER
 class User(models.Model):
 
-	UID = models.BigIntegerField(primary_key=True, null=False, unique=True)
+	# UID = models.BigIntegerField(primary_key=True, null=False, unique=True)
 	UserName = models.CharField(max_length=50, null=False)
 	Email = models.EmailField(max_length=254)
 	Password = models.CharField(max_length=50, null=False)
