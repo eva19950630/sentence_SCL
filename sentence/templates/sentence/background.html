@@ -41,6 +41,10 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="17252888188-om3sbh9djgv8gk720e7gl5tcrjj2r6hn.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--    google+-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
+    <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
 </head>
 
 <body>
@@ -48,6 +52,42 @@
     <div id=”fb-root”></div>
         <!--facebook login block-->
     <script>
+        // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+        
+        
+        
+        
+        
         var FaceBookAppId = '233902740370813';
         window.fbAsyncInit = function () {
             FB.init({
@@ -71,7 +111,23 @@
         }(document, 'script', 'facebook-jssdk'));
         
         
+<<<<<<< HEAD
+=======
+        
+        function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+>>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
     </script>
+    
+    
+
+    
     
     <div class="header">
         <!-- Navigation -->
@@ -129,8 +185,8 @@
                                     </div>
                                     <div class="login-right"> 
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                        <button class="social-signin google" data-onsuccess="onSignIn">Log in with Google</button>
-                                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                                        <button class="social-signin google" id="customBtn-login">Log in with Google</button>
+<!--                                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>-->
                                     </div>
                                     <div class="login-or">OR</div>
                                     <div class="mobile-login-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
@@ -146,15 +202,31 @@
                                     </div>
                                     <div class="left">
                                         <h1>Create an account</h1>
-                                        <input type="text" name="username" placeholder="Username" />
-                                        <input type="text" name="email" placeholder="E-mail" />
-                                        <input type="password" name="password" placeholder="Password" />
-                                        <input type="password" name="password2" placeholder="Retype password" />
-                                        <input type="submit" name="signup_submit" value="Sign me up" /> </div>
+                                        
+                                        <form method = "POST">
+                                          
+                                          {% csrf_token %}
+                                          {{ form.as_p }}
+                                          
+                                          <input type="text" id="name" name="username" placeholder="Username" />
+                                          <input type="text" id="email" name="email" placeholder="E-mail" />
+                                          <input type="password" id="password" name="password" placeholder="Password" />
+                                          <!--<input type="password" id="password" name="password2" placeholder="Retype password" />-->
+                                          <input type="submit" name="signup_submit" value="Sign me up" />
+                                        </form>
+                                        
+                                    </div>      
+                                    
                                     <div class="signup-right">
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                        <button class="social-signin google">Log in with Google</button>
+                                        <button class="social-signin google" id="customBtn-signup">Log in with Google</button>
                                     </div>
+                                     
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
                                     <div class="signup-or">OR</div>
                                     <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
 
@@ -200,6 +272,8 @@
             </div>
         </nav>
     </div>
+    
+   
     <div class="body"> {% block content1 %} {% endblock content1 %} </div>
     <div class="body-2"> {% block content2 %} {% endblock content2 %} </div>
     <div class="footer"> </div>
@@ -243,8 +317,7 @@
         icons[1] = new Image();
         icons[1].src = "{% static 'images/fish.png' %}"
     </script>  
-<!--    google+-->
-    <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
+
 </body>
 <!--    facebookApi-->
      <script type="text/javascript">
@@ -252,12 +325,19 @@
     FB.Event.subscribe('auth.statusChange', function(response){
          console.log("fbEvent");
         if(response.status === 'connected'){
+<<<<<<< HEAD
             console.log("fbEvent-connected");
             FB.api("/me/picture?widrh=30" , function(response){
                 $("#my-profile-picture").attr("src", response.data.url);
     });
     FB.api("/me",function(response){
         console.log("responseName");
+=======
+            FB.api('/me/picture?widrh=30' , function(response){
+                $('#my-profile-picture').attr("src", response.data.url);
+    });
+    FB.api('/me',function(response){
+>>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
         $('#user-name').html(response.name);
     });
     }
@@ -270,9 +350,9 @@
             if(response.status === 'connected'){
                 console.log("connected");
             FB.logout(function(response){
-                $(".facebook-login-btn").html("Facebook Login");
-                $("#my-profile-picture").attr("src", "");
-                $("#user-name").html(null);
+                $('.facebook-login-btn').html("Facebook Login");
+                $('#my-profile-picture').attr("src", "");
+                $('#user-name').html(null);
                 /*facebook friend list
                 $(".friend-block").empty();
                 */
@@ -281,16 +361,21 @@
             else{
                 console.log("unconnected");
                 FB.login(function(response){
-                    $(".fb-log-out").html("Facebook Logout")
+                    $('.fb-log-out').html("Facebook Logout")
                 });
             }
         });
     }
      
+<<<<<<< HEAD
      $(".facebook-login-btn").click(function(){
          console.log("click");
+=======
+     $('.facebook-login-btn').click(function(){
+>>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
        loginCheck(); 
     });
+         startApp();
     </script>
 
 </html>
