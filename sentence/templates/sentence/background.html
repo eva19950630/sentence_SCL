@@ -45,7 +45,7 @@
 
 <body>
     
-    
+    <div id=”fb-root”></div>
         <!--facebook login block-->
     <script>
         var FaceBookAppId = '233902740370813';
@@ -69,6 +69,8 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+        
+        
     </script>
     
     <div class="header">
@@ -248,11 +250,14 @@
      <script type="text/javascript">
     window.fbloaded = function(){
     FB.Event.subscribe('auth.statusChange', function(response){
+         console.log("fbEvent");
         if(response.status === 'connected'){
+            console.log("fbEvent-connected");
             FB.api("/me/picture?widrh=30" , function(response){
                 $("#my-profile-picture").attr("src", response.data.url);
     });
     FB.api("/me",function(response){
+        console.log("responseName");
         $('#user-name').html(response.name);
     });
     }
@@ -261,7 +266,9 @@
     
      var loginCheck = function(){
         FB.getLoginStatus(function(response){
+            console.log("getLoginStatus");
             if(response.status === 'connected'){
+                console.log("connected");
             FB.logout(function(response){
                 $(".facebook-login-btn").html("Facebook Login");
                 $("#my-profile-picture").attr("src", "");
@@ -272,6 +279,7 @@
             });
             }
             else{
+                console.log("unconnected");
                 FB.login(function(response){
                     $(".fb-log-out").html("Facebook Logout")
                 });
@@ -280,6 +288,7 @@
     }
      
      $(".facebook-login-btn").click(function(){
+         console.log("click");
        loginCheck(); 
     });
     </script>
