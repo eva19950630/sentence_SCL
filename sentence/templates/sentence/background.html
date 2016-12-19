@@ -195,11 +195,17 @@
                                     </div>
                                     <div class="left">
                                         <h1>Create an account</h1>
-                                        <input type="text" name="username" placeholder="Username" />
-                                        <input type="text" name="email" placeholder="E-mail" />
-                                        <input type="password" name="password" placeholder="Password" />
-                                        <input type="password" name="password2" placeholder="Retype password" />
-                                        <input type="submit" name="signup_submit" value="Sign me up" /> </div>
+                                        
+                                        <form method = "POST">
+                                          <input type="text" id="name" name="username" placeholder="Username" />
+                                          <input type="text" id="email" name="email" placeholder="E-mail" />
+                                          <input type="password" id="password" name="password" placeholder="Password" />
+                                          <!--<input type="password" id="password" name="password2" placeholder="Retype password" />-->
+                                          <input type="submit" name="signup_submit" value="Sign me up" />
+                                        </form>
+                                        
+                                    </div>      
+                                    
                                     <div class="signup-right">
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                         <button class="social-signin google">Log in with Google</button>
