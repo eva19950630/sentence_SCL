@@ -111,8 +111,7 @@
         }(document, 'script', 'facebook-jssdk'));
         
         
-<<<<<<< HEAD
-=======
+
         
         function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
@@ -122,7 +121,7 @@
         'Thanks for logging in, ' + response.name + '!';
     });
   }
->>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
+
     </script>
     
     
@@ -222,11 +221,7 @@
                                         <button class="social-signin google" id="customBtn-signup">Log in with Google</button>
                                     </div>
                                      
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
+   
                                     <div class="signup-or">OR</div>
                                     <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
 
@@ -325,19 +320,15 @@
     FB.Event.subscribe('auth.statusChange', function(response){
          console.log("fbEvent");
         if(response.status === 'connected'){
-<<<<<<< HEAD
+
             console.log("fbEvent-connected");
             FB.api("/me/picture?widrh=30" , function(response){
-                $("#my-profile-picture").attr("src", response.data.url);
+                $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40">');
+                    
     });
     FB.api("/me",function(response){
         console.log("responseName");
-=======
-            FB.api('/me/picture?widrh=30' , function(response){
-                $('#my-profile-picture').attr("src", response.data.url);
-    });
-    FB.api('/me',function(response){
->>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
+
         $('#user-name').html(response.name);
     });
     }
@@ -351,7 +342,7 @@
                 console.log("connected");
             FB.logout(function(response){
                 $('.facebook-login-btn').html("Facebook Login");
-                $('#my-profile-picture').attr("src", "");
+                $('#user-pic').attr("src", "");
                 $('#user-name').html(null);
                 /*facebook friend list
                 $(".friend-block").empty();
@@ -367,14 +358,11 @@
         });
     }
      
-<<<<<<< HEAD
+
      $(".facebook-login-btn").click(function(){
+         loginCheck();
          console.log("click");
-=======
-     $('.facebook-login-btn').click(function(){
->>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
-       loginCheck(); 
-    });
+     });
          startApp();
     </script>
 
