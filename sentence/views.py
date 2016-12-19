@@ -35,6 +35,7 @@ def user_history(request):
 
 #app signup
 def signup_app(request):
+    # print "hello world"
     if request.method == 'POST':
         
         django_form = AddUser(request.POST)
@@ -44,12 +45,12 @@ def signup_app(request):
             new_member_name = django_form.data.get("name")
             new_member_email = django_form.data.get("email")
             new_member_password= django_form.data.get('password')
-            
+           
             """ This is how your model connects to database and create a new member """
             User.objects.create(
-                name =  new_member_name, 
-                email = new_member_email,
-                password = new_member_password,
+                UserName =  new_member_name, 
+                Email = new_member_email,
+                Password = new_member_password,
                 )
             return render(request, "sentence/index.html")
             
@@ -60,27 +61,27 @@ def signup_app(request):
         return render(request, 'sentence/index.html')
 
 #google+
-def signup_google(request):
-    if request.method == 'POST':
+# def signup_google(request):
+#     if request.method == 'POST':
     
-        user_form = AddUser(request.POST)
-        if user_form.is_valid():
+#         user_form = AddUser(request.POST)
+#         if user_form.is_valid():
         
-            new_user_id = user_form.data.get("uid")
-            new_user_name = user_form.data.get("username")
-            new_user_email = user_form.data.get("email")
+#             new_user_id = user_form.data.get("uid")
+#             new_user_name = user_form.data.get("username")
+#             new_user_email = user_form.data.get("email")
             
             
-            User.objects.create(
-                uid = new_user_id,
-                username = new_user_name,
-                email = new_user_email,
-            )
+#             User.objects.create(
+#                 uid = new_user_id,
+#                 username = new_user_name,
+#                 email = new_user_email,
+#             )
             
-            return render(request, 'sentence/index.html')
+#             return render(request, 'sentence/index.html')
         
-        else:
-            return render(request, 'sentence/index.html')
+#         else:
+#             return render(request, 'sentence/index.html')
         
-    else:
-        return render(request, 'sentence/index.html')
+#     else:
+#         return render(request, 'sentence/index.html')
