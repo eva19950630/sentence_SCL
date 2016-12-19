@@ -52,6 +52,42 @@
     
         <!--facebook login block-->
     <script>
+        // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+        
+        
+        
+        
+        
         var FaceBookAppId = '233902740370813';
         window.fbAsyncInit = function () {
             FB.init({
@@ -73,7 +109,22 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+        
+        
+        
+        function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
     </script>
+    
+    
+
+    
     
     <div class="header">
         <!-- Navigation -->
@@ -148,15 +199,27 @@
                                     </div>
                                     <div class="left">
                                         <h1>Create an account</h1>
-                                        <input type="text" name="username" placeholder="Username" />
-                                        <input type="text" name="email" placeholder="E-mail" />
-                                        <input type="password" name="password" placeholder="Password" />
-                                        <input type="password" name="password2" placeholder="Retype password" />
-                                        <input type="submit" name="signup_submit" value="Sign me up" /> </div>
+                                        
+                                        <form method = "POST">
+                                          <input type="text" id="name" name="username" placeholder="Username" />
+                                          <input type="text" id="email" name="email" placeholder="E-mail" />
+                                          <input type="password" id="password" name="password" placeholder="Password" />
+                                          <!--<input type="password" id="password" name="password2" placeholder="Retype password" />-->
+                                          <input type="submit" name="signup_submit" value="Sign me up" />
+                                        </form>
+                                        
+                                    </div>      
+                                    
                                     <div class="signup-right">
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
                                         <button class="social-signin google" id="customBtn-signup">Log in with Google</button>
                                     </div>
+                                     
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
                                     <div class="signup-or">OR</div>
                                     <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
 
@@ -202,6 +265,8 @@
             </div>
         </nav>
     </div>
+    
+   
     <div class="body"> {% block content1 %} {% endblock content1 %} </div>
     <div class="body-2"> {% block content2 %} {% endblock content2 %} </div>
     <div class="footer"> </div>
@@ -252,10 +317,10 @@
     window.fbloaded = function(){
     FB.Event.subscribe('auth.statusChange', function(response){
         if(response.status === 'connected'){
-            FB.api("/me/picture?widrh=30" , function(response){
-                $("#my-profile-picture").attr("src", response.data.url);
+            FB.api('/me/picture?widrh=30' , function(response){
+                $('#my-profile-picture').attr("src", response.data.url);
     });
-    FB.api("/me",function(response){
+    FB.api('/me',function(response){
         $('#user-name').html(response.name);
     });
     }
@@ -266,9 +331,9 @@
         FB.getLoginStatus(function(response){
             if(response.status === 'connected'){
             FB.logout(function(response){
-                $(".facebook-login-btn").html("Facebook Login");
-                $("#my-profile-picture").attr("src", "");
-                $("#user-name").html(null);
+                $('.facebook-login-btn').html("Facebook Login");
+                $('#my-profile-picture').attr("src", "");
+                $('#user-name').html(null);
                 /*facebook friend list
                 $(".friend-block").empty();
                 */
@@ -276,13 +341,13 @@
             }
             else{
                 FB.login(function(response){
-                    $(".fb-log-out").html("Facebook Logout")
+                    $('.fb-log-out').html("Facebook Logout")
                 });
             }
         });
     }
      
-     $(".facebook-login-btn").click(function(){
+     $('.facebook-login-btn').click(function(){
        loginCheck(); 
     });
          startApp();
