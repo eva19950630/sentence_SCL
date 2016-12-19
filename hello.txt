@@ -1,3 +1,8 @@
+**git pull發生問題，強制用伺服端覆蓋本機端文件
+git fetch --all
+git reset --hard origin/master 
+
+
 heroku login
 heroku create [appname]
 git init
