@@ -5,5 +5,5 @@ class AddUser(forms.Form):
     
     class Meta:
         model = User
-        fields = ('uid', 'username', 'email', 'password',)
+        fields = ('username', 'email', 'password',)
         
