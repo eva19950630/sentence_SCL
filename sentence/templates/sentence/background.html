@@ -49,7 +49,7 @@
 
 <body>
     
-    
+    <div id=”fb-root”></div>
         <!--facebook login block-->
     <script>
         // This is called with the results from from FB.getLoginStatus().
@@ -111,6 +111,8 @@
         }(document, 'script', 'facebook-jssdk'));
         
         
+<<<<<<< HEAD
+=======
         
         function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
@@ -120,6 +122,7 @@
         'Thanks for logging in, ' + response.name + '!';
     });
   }
+>>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
     </script>
     
     
@@ -320,11 +323,21 @@
      <script type="text/javascript">
     window.fbloaded = function(){
     FB.Event.subscribe('auth.statusChange', function(response){
+         console.log("fbEvent");
         if(response.status === 'connected'){
+<<<<<<< HEAD
+            console.log("fbEvent-connected");
+            FB.api("/me/picture?widrh=30" , function(response){
+                $("#my-profile-picture").attr("src", response.data.url);
+    });
+    FB.api("/me",function(response){
+        console.log("responseName");
+=======
             FB.api('/me/picture?widrh=30' , function(response){
                 $('#my-profile-picture').attr("src", response.data.url);
     });
     FB.api('/me',function(response){
+>>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
         $('#user-name').html(response.name);
     });
     }
@@ -333,7 +346,9 @@
     
      var loginCheck = function(){
         FB.getLoginStatus(function(response){
+            console.log("getLoginStatus");
             if(response.status === 'connected'){
+                console.log("connected");
             FB.logout(function(response){
                 $('.facebook-login-btn').html("Facebook Login");
                 $('#my-profile-picture').attr("src", "");
@@ -344,6 +359,7 @@
             });
             }
             else{
+                console.log("unconnected");
                 FB.login(function(response){
                     $('.fb-log-out').html("Facebook Logout")
                 });
@@ -351,7 +367,12 @@
         });
     }
      
+<<<<<<< HEAD
+     $(".facebook-login-btn").click(function(){
+         console.log("click");
+=======
      $('.facebook-login-btn').click(function(){
+>>>>>>> dadbad5374f691e97e1f48d9c8f24697cf085599
        loginCheck(); 
     });
          startApp();
