@@ -54,7 +54,9 @@ def signup_app(request):
                 Email = new_member_email,
                 Password = new_member_password,
                 )
-            return render(request, "sentence/index.html")
+                
+            
+            return render(request, 'sentence/index.html')
             
         else:
             return render(request, 'sentence/index.html')
