@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from datetime import datetime
 
 
 #   Create your models here.
@@ -18,14 +19,14 @@ class User(models.Model):
 	# Money = models.DecimalField(max_digits=20,decimal_places=0)
 # 	language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
 
-# #SENTENCE
-# class Sentence(models.Model):
-# 	SID = models.BigIntegerField(primary_key=True, null=False, unique=True)
-# 	#Date = models.
-# 	Content = models.TextField()
-# 	Sentence_tag = models.TextField()pyh
-# 	Topic_tag = models.TextField()
-# 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+#SENTENCE
+class Sentence(models.Model):
+	SID = models.BigIntegerField(primary_key=True, null=False, unique=True)
+	Date = models.DateTimeField(default=datetime.now, blank=True)
+	Content = models.TextField()
+	Sentence_tag = models.TextField()
+	Topic_tag = models.TextField()
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)
 
 # #TRANSLATION
 # class Translation(models.Model):
