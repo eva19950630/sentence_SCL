@@ -32,6 +32,8 @@ urlpatterns = [
     
     url(r'^login/', views.signup_app),
     
+    #fb
+    url(r'^getuserid/$', views.getuserid, name = 'getuserid'),
     #google+
     #url(r'^allauth/accounts/', include('allauth.urls')),
 ]

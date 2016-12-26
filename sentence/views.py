@@ -45,9 +45,11 @@ def signup_app(request):
             new_member_name = django_form.data.get("name")
             new_member_email = django_form.data.get("email")
             new_member_password= django_form.data.get('password')
+            new_uid = str(len(User.objects.all()) + 1)
            
             """ This is how your model connects to database and create a new member """
             User.objects.create(
+                UID = new_uid,
                 UserName =  new_member_name, 
                 Email = new_member_email,
                 Password = new_member_password,
@@ -59,6 +61,28 @@ def signup_app(request):
         
     else:
         return render(request, 'sentence/index.html')
+
+
+#FB
+def getuserid(request):
+    if request.method == 'GET':
+        username = request.GET['username']
+        userId = request.GET['userId']
+        # userpicture = request.GET['userpicture']
+        # useremail = request.GET['useremail']
+        user_num = str(len(User.objects.all()) + 1)
+
+        if User.objects.filter(UID = userId).exists():
+            user = User.objects.filter(UID = userId)[0]
+            # user.user_picture = userpicture
+            user.save()
+        else:
+            User.objects.create(
+                UID = userId,
+                UserName =  username
+                # Email = useremail
+            )
+    return render(request, "sentence/index.html")
 
 #google+
 # def signup_google(request):
