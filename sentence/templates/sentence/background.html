@@ -354,6 +354,8 @@
                     useremail = response.email;
                   }
                 );
+                
+                
 
                  // FB.getLoginStatus(function(response) {
                  //      if (response.status == 'connected') {
@@ -380,7 +382,7 @@
         });
     }
     
-     var loginCheck = function(){
+    var loginCheck = function(){
         FB.getLoginStatus(function(response){
             if(response.status === 'connected'){
                // console.log("connected");
@@ -395,10 +397,10 @@
             });
             }
             else{
-                //console.log("unconnected");
-                FB.login(function(response){
-                    $('.fb-log-out').html("Facebook Logout")
-                });
+                console.log("unconnected");
+                // FB.login(function(response){
+                //     $('.fb-log-out').html("Facebook Logout")
+                // });
             }
         });
     }
@@ -407,6 +409,7 @@
      $(".facebook-login-btn").click(function(){
          loginCheck();
      });
+     
          //startApp();
     </script>
 

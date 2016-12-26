@@ -138,13 +138,13 @@ STATIC_URL = '/static/'
 #google+
 
 #FB
-FACEBOOK_APP_ID='1868740400028340'
-FACEBOOK_API_SECRET='19e7c57de38977b804fc9212a9b88925'
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
-)
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'locale': 'ru_RU',
-    'fields': 'id,name,email', 
-}
+# FACEBOOK_APP_ID='1868740400028340'
+# FACEBOOK_API_SECRET='19e7c57de38977b804fc9212a9b88925'
+# AUTHENTICATION_BACKENDS = (
+#     'social_auth.backends.facebook.FacebookBackend',
+# )
+# FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+#     'locale': 'ru_RU',
+#     'fields': 'id,name,email', 
+# }
