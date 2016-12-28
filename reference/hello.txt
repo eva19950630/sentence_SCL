@@ -1,0 +1,72 @@
+**git pull發生問題，強制用伺服端覆蓋本機端文件
+git fetch --all
+git reset --hard origin/master 
+
+
+heroku login
+heroku create [appname]
+git init
+git add .
+git commit -m "first commit"
+heroku git:remote -a [appname]
+git push heroku master
+
+---if need to push again
+git add .
+git commit -m "ooo"
+git push heroku master
+
+
+0. 增加一個雲端伺服器(只用一次)
+git remote add NAME URL(伺服器)
+
+
+1. 先看修改好的檔案
+git status
+
+2. 增加
+git add 修改好的檔案
+
+3. 註解
+git commit
+(進入vi 寫在第一行)
+
+*4. 預備用
+-進入master branch
+git checkout master
+
+-merge到master
+git merge 要合併到的branch
+
+5. 上傳
+git push
+
+6. 更新本機端的檔案 
+git pull NAME BRANCH(master)
+
+
+
+**取消對檔案的修改
+git checkout -- 檔案名
+
+**建立新repository
+git init
+
+**一次加入全部檔案
+git add .
+
+
+
+裝python環境
+cmd打指令可以進入>>>
+跳出python
+
+pip install django
+安裝django
+再進入python
+下指令 >>>import django
+
+pip install 要裝的東西的套件名稱
+
+
+兩個人在fb互相是朋友，但兩人都要登入自己的APP才會知道雙方在fb上是朋友關係
