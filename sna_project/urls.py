@@ -20,7 +20,7 @@ from sentence import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index),
+    url(r'^$', views.index,name="index"),
     url(r'^sentence/', views.sentence),
     url(r'^sentence_world/', views.sentence_world),
     url(r'^post_world/', views.post_world),
@@ -31,9 +31,11 @@ urlpatterns = [
     url(r'^user/history/', views.user_history),
     
     url(r'^login/', views.signup_app),
-    
+    url(r'^login_true/', views.login_app),
+    url(r'^sentence_post/', views.sentence_post,name = 'sentence_post'),
+    url(r'^logout/', views.logout,name = "logout"),
     #fb
-    url(r'^getuserid/$', views.getuserid, name = 'getuserid'),
+    url(r'^getuserid/', views.getuserid, name = 'getuserid'),
     #google+
     #url(r'^allauth/accounts/', include('allauth.urls')),
 ]

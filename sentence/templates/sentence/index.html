@@ -3,16 +3,24 @@
 {% block content1 %}
 
 <!-- Inputfield and Post modal -->
+ 
 <div class="inputfield-container">
     <section>
         <div class="row">
-            <div class="col-md-6 fields">
-                <label for="input">What do you want to say today?</label>
-                <input id="input" type='text'></input>
-            </div>
-            <div class="col-md-6 postbtn">
-                <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal">POST</button>
-            </div>
+            <form method = "POST" action="/sentence_post/" name="sentence_post">
+                {% csrf_token %}
+                {{ form.as_p }}          
+              <div class="col-md-6 fields">
+                  <label for="input">What do you want to say today?</label>
+                  <input id="input" type='text' name='sentence'></input>
+                  <input type="text" name="language" placeholder="#language" />
+                  <!-- {{ form.sentence_post.errors }} -->
+              </div>
+              <div class="col-md-6 postbtn">
+                  <input type="submit" name="sentence_submit" type="button" class="btn btn-default navbar-btn" id="post-btn" value="POST"></input> 
+                  <!-- <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal" name="sentence_post">POST</button>  -->
+              </div>
+            </form>
         </div>
     </section>
 </div>
@@ -29,14 +37,15 @@
                                       <h2>Hash tag your language</h2>
 
                                       <input type="text" name="language" placeholder="#language" />
-
-                                      <a href="/post_world"><input type="submit" name="post_submit" value="Submit" /></a>
+                                      <!-- <input type="submit" name="post_submit" value="Submit" /> -->
+                                      <a ><input type="submit" name="post_submit" value="Submit"/></a>
                                   </div>
 
                               </div>
 
                           </div>
                       </div>
+                      
 
 {% endblock content1 %}
 

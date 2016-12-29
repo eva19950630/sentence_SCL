@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
+# from social_auth.backends import get_backend
 #google+
 #import django.contrib.sites
 #import allauth
@@ -62,6 +62,9 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #session
+    'django.contrib.sessions.middleware.SessionMiddleware',
+
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -138,13 +141,22 @@ STATIC_URL = '/static/'
 #google+
 
 #FB
-# FACEBOOK_APP_ID='1868740400028340'
-# FACEBOOK_API_SECRET='19e7c57de38977b804fc9212a9b88925'
-# AUTHENTICATION_BACKENDS = (
-#     'social_auth.backends.facebook.FacebookBackend',
-# )
+FACEBOOK_APP_ID='1868740400028340'
+FACEBOOK_API_SECRET='19e7c57de38977b804fc9212a9b88925'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    #old time
+    # 'social_auth.backends.facebook.FacebookBackend',
+    'social.backends.facebook.FacebookOAuth2',
+)
 # FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 # SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 #     'locale': 'ru_RU',
 #     'fields': 'id,name,email', 
 # }
+
+
+
+
+#session cache db
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
