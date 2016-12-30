@@ -10,6 +10,7 @@ $('.fields input').on('blur', function() {
   }
 });
 
+
 $(document).ready(function(){
 	$('#post-btn').click(function() {
 		$('#post-modal').appendTo("body").modal('show');

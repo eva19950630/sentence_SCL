@@ -6,14 +6,15 @@
 <div class="inputfield-container">
     <section>
         <div class="row">
-            <div class="col-md-6 fields">
+            <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
                 <label for="input">What do you want to say today?</label>
                 <input id="input" type='text'></input>
             </div>
-            <div class="col-md-6 postbtn">
-                <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal">POST</button>
-            </div>
+            
         </div>
+        
+        <!-- <span class="postbtn"><button type="button" class="btn btn-default navbar-btn" >POST</button></span> -->
+            
     </section>
 </div>
 
@@ -26,9 +27,11 @@
                                   </div>
 
                                   <div class="postbox-content">
-                                      <h2>Hash tag your language</h2>
-
-                                      <input type="text" name="language" placeholder="#language" />
+                                      <h2>POST</h2>
+                                      <input id="input" type='text' placeholder="What do you want to say today?"></input>
+                                      <input type='text' placeholder="Paste Link (Optional)"></input>
+                                      <input type="text" name="language" placeholder="#Topic Keyword (Optional)" />
+                                      <input type="text" name="language" placeholder="#Language" />
 
                                       <a href="/post_world"><input type="submit" name="post_submit" value="Submit" /></a>
                                   </div>
@@ -42,32 +45,47 @@
 
 {% block content2 %}
 
-<!-- Post list -->
-<div class="postcard-container">
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
-    <a href="/sentence">
-        <div class="card card-1"></div>
-    </a>
+<div class="row">
+  <div class="col-xs-3">
+    <a href="#">Daily Topic</a>
+    <a href="#">Daily Sentence</a>
+  </div>
+  <div class="col-xs-9">
+    <!-- Post list -->
+    <div class="postcard-container">
+        <a href="/sentence">
+            <div class="card card-1">POST1</div>
+
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST2</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST3</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST4</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST5</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST6</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST7</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST8</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST9</div>
+        </a>
+        <a href="/sentence">
+            <div class="card card-1">POST10</div>
+        </a>
+    </div>
+  </div>
 </div>
 
 {% endblock content2 %}

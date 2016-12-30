@@ -260,25 +260,31 @@ input[type=search-mobile]:focus {
 /* top */
 
 .header-1 {
-    height: 80px;
-    background: white;
+    height: 60px;
+    background: #00CCCC;
     margin-bottom: 0;
     border: none;
     border-radius: 0;
 }
 
-.header-2 {
+/*.header-2 {
     height: 50px;
     background: #2B2B2B;
     margin-bottom: 0;
     border: none;
     border-radius: 0;
-}
+}*/
 
-#header-logo {
+/*.header-logo {
     height: 80px;
     padding: 0;
+}*/
+
+.header-logo {
+    position: relative;
+    margin-top: 30px;
 }
+
 
 
 /*.header-contact {
@@ -301,7 +307,7 @@ input[type=search-mobile]:focus {
 }*/
 
 .header-mobile-sm {
-    height: 80px;
+    height: 60px;
     padding: 0;
     display: flex;
     justify-content: flex-end;
@@ -311,9 +317,17 @@ input[type=search-mobile]:focus {
 
 /* SOCIAL MEDIA */
 
-.header-sm span {
-    padding: 3px;
+.header-sm span,
+.header-sm-user span,
+.header-sm-notification span {
+    padding: 5px;
 }
+
+.header-sm-search span {
+    padding: 20px;
+}
+
+
 
 .sm {
     color: white !important;
@@ -543,6 +557,60 @@ input[type=search-mobile]:focus {
 }
 
 
+/*Search bar*/
+
+
+
+
+
+
+.btn1 {
+  padding: 8px 15px;
+  text-decoration: none;
+  background: #FFF;
+  border: 2px solid #22949b;
+  color: #005454;
+  display: inline-block;
+  position: relative;
+  text-transform: uppercase;
+  font-size: 14px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: background 0.3s ease;
+  -moz-transition: background 0.3s ease;
+  -ms-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+  -webkit-box-shadow: 2px 2px 0 #22949b;
+  -moz-box-shadow: 2px 2px 0 #22949b;
+  -ms-box-shadow: 2px 2px 0 #22949b;
+  box-shadow: 2px 2px 0 #22949b;
+}
+.btn1:hover {
+  background: white;
+  box-shadow: none;
+  border: 2px solid #22949b;
+  top: 2px;
+  left: 2px;
+  color: #005454;
+  -webkit-box-shadow: 2px 2px 0 transparent;
+  -moz-box-shadow: 2px 2px 0 transparent;
+  -ms-box-shadow: 2px 2px 0 transparent;
+  box-shadow: 2px 2px 0 transparent;
+}
+.btn1:focus,
+.btn1:active {
+  outline: 0;
+  box-shadow: none;
+  border: 2px solid #22949b;
+  top: 2px;
+  left: 2px;
+  color: #005454;
+}
+
+
+
 /*login,signupbox*/
 
 #login-box {
@@ -742,6 +810,22 @@ button.social-signin.google {
 }
 
 
+
+/*google*/
+
+#customBtn {
+    display: inline-block;
+    background: white;
+    color: #444;
+    width: 190px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
+}
+
+
+
 /* smartphone 767 */
 
 @media (max-width: 767px) {
@@ -778,19 +862,33 @@ button.social-signin.google {
     .navbar-collapse {
         box-shadow: inset 0px -80px 80px -80px rgba(0, 0, 0, 0.3);
     }
-    .header-2 {
+    /*.header-2 {
         background: transparent;
-    }
-    .logo {
+    }*/
+    /*.logo {
         margin-top: 10px;
-    }
-    .header-sm button {
+    }*/
+    
+    /*.header-sm button {
         width: 70%;
         margin-left: 20px;
+    }*/
+    /*.btn1 {
+        padding: 4px 10px;
+    }*/
+
+    .header-sm span {
+        padding: 0px;
+    }
+    .btn1 {
+        max-width: 100%;
+        font-size: 12px;
     }
     .header-mobile-sm {
-        height: 110px;
+        height: 60px;
     }
+
+
     #login-box,
     #signup-box {
         width: 100%;
@@ -820,18 +918,4 @@ button.social-signin.google {
         margin-right: 30px;
         margin-top: 280px;
     }
-}
-
-
-/*google*/
-
-#customBtn {
-    display: inline-block;
-    background: white;
-    color: #444;
-    width: 190px;
-    border-radius: 5px;
-    border: thin solid #888;
-    box-shadow: 1px 1px 1px grey;
-    white-space: nowrap;
 }

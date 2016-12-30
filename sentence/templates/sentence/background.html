@@ -138,27 +138,28 @@
             <div class="navbar header-1">
                 <div class="container">
                     <!-- Logo -->
-                    <div id="header-logo" class="col-md-3 col-sm-6 col-xs-6">
-                        <a href="/"> <img class="logo img-valign img-responsive" src="{% static 'images/logo.png' %}"> </a>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="header-logo">
+                            <a href="/"> <img class="logo img-valign img-responsive" src="{% static 'images/logo2.png' %}"> </a>
+                        </div>
                     </div>
-                    <!-- Social media + Menu MOBILE -->
+                    <!-- Right: LogIn SignUp / profile notification  search -->
                     <div class="col-md-9 col-sm-6 col-xs-6 header-mobile-sm">
-                        <!-- Log in / Sign up -->
-                        <div class="header-sm"> <span class="before-login">
-                                <button type="button" class="btn btn-default navbar-btn" id="login-btn" data-toggle="modal">Log In</button>
-                            </span> <span class="before-login">
-                            <button type="button" class="btn btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
-                            </span> <span class="after-login">
+                        <div class="header-sm">
+                            <!-- Log in / Sign up -->
+                            <span class="before-login">
+                                <button type="button" class="btn1 btn-default navbar-btn" id="login-btn" data-toggle="modal">Log In</button>
+                            </span>
+                            <span class="before-login">
+                                <button type="button" class="btn1 btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
+                            </span>
+                        </div>
 
+                        <div class="header-sm-user">
+                            <!-- User Profile -->
+                            <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="fa fa-bell" style="font-size: 25px; color:#000"></i>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <div><font color=white>&emsp;Notifications</font></div>
-                                  </ul>
-                                </span> <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >
+                                    <i class="fa fa-user-circle" style="font-size: 30px; color:#000" id="user-pic"></i>
                                   <span id="user-name"><font color=#000>USER NAME<b class="caret"></b></font></span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -168,7 +169,35 @@
                                       <!--class="fb-log-out" written by gim for fb log out-->
                                     <li><a href="#"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
-                                </span> </div>
+                            </span>
+                        </div>
+
+                        <div class="header-sm-notification">
+                            <!-- Notification -->
+                            <span class="after-login">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-bell" style="font-size: 30px; color:#fff;"></i>
+                                  </a>
+                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <div><font color=white>&emsp;Notifications</font></div>
+                                  </ul>
+                            </span>
+                        </div>
+                        
+                        <div class="header-sm-search">
+                            <!-- Search -->
+                            <span class="after-login">
+                                <a href="#" class="search-toggle">
+                                  <i class="fa fa-search" style="font-size: 30px; color:#fff;"></i>
+                                </a>
+                                <!-- <form action="" class="search-box">
+                                  <input type="text" class="text search-input" placeholder="Type here to search..." />
+                                </form> -->
+                            </span>
+                        </div>
+
+                        
+
                         <!-- Log in Modal -->
                         <div class="modal fade" id="login-modal" role="dialog">
                             <div class="modal-dialog">
@@ -232,34 +261,19 @@
                             </div>
                         </div>
                         <!-- Menu MOBILE -->
-                        <div class=".header-mobile navbar-header">
+                        <!-- <div class=".header-mobile navbar-header">
                             <button type="button" class="navbar-toggle icon-ao-bar-4 ao-menu-bar" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
             <!-- 2 POZIOM MENU -->
-            <div class="navbar header-2">
+            <!-- <div class="navbar header-2">
                 <div class="container">
-                    <!-- Menu -->
                     <div class="collapse navbar-collapse scroll navbar-bg" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="ao_menu_list active"> <a href="/">DAILY TOPIC</a> </li>
                             <li class="ao_menu_list"> <a href="/">DAILY SENTENCE</a> </li>
-                            <!--<li class="dropdown ao_menu_list">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">OFERTA <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="#">STRONY WWW</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">ANYONE WORDPRESS THEME</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">PLUGINS</a>
-                                            </li>
-                                        </ul>
-                                    </li>-->
                             <div class="ao_menu_search">
                                 <input type="search-mobile"> <i class="icon-ao-loupe-2 search-icon-loupe"></i>
                                 <button class="icon-ao-close-2 search-icon-close ao_menu_close"></button>
@@ -267,7 +281,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </nav>
     </div>
     

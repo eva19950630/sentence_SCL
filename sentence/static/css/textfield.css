@@ -5,21 +5,22 @@
   position: absolute;
   left: 35%;
   
-  /*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
-  background-color: white;*/
-  width: 800px;
-  height: 100px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
+  background-color: white;
+  width: 450px;
+  height: 130px;
 }
 
 .fields {
-  left: 5%;
-  padding: 0 2em 0 2em;
+  left: 10%;
+  padding: 1em 2em 0 2em;
 }
 
-.inputfield-container .postbtn {
+/*.inputfield-container .postbtn {
   position: relative;
   transform:translateY(50%);
-}
+  left: 80%;
+}*/
 
 
 .fields label {
@@ -34,7 +35,7 @@
 }
 .fields label.filled {
   -webkit-transform: translateX(-2em) translateY(-0.2em) scale(0.75);
-  transform: translateX(-2em) translateY(-0.2em) scale(0.75);
+  transform: translateX(-2.5em) translateY(-0.2em) scale(0.75);
 }
 .fields label.focused {
   color: #00CCCC;
@@ -46,7 +47,7 @@
   border: none;
   border-bottom: 2px solid rgba(0, 0, 0, 0.3);
   border-radius: 0px;
-  font-size: 1em;
+  font-size: 1.5em;
   outline: none;
   width: 100%;
   padding-bottom: 0.4em;
@@ -58,12 +59,13 @@
   width: 320px;
 }
 
+
 /*postbox*/
 #post-box {
   position: relative;
   margin: 5% auto;
   width: 500px;
-  height: 250px;
+  height: 400px;
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -75,6 +77,13 @@
   transform:translateX(15%);
 }
 
+.postbox-content input[type="text"] {
+
+  font-size: 18px;
+  width: 350px;
+}
+
+
 
 /* smartphone 767 */
 @media (max-width: 767px) {
@@ -83,10 +92,10 @@
     left: -15%;
   }
 
-  .inputfield-container .postbtn {
+  /*.inputfield-container .postbtn {
     position: relative;
     transform:translateX(50%);
-  }
+  }*/
 
   .fields {
     left: 20%;
