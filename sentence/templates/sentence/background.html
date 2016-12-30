@@ -166,7 +166,7 @@
                                     <li class="divider"></li>
                                       <!--class="fb-log-out" written by gim for fb log out-->
                                     <li><button class="fa fa-sign-out fb-log-out">Logout</button>
-                                    <a href="#"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <a href="/logout/"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
@@ -207,7 +207,7 @@
                                     </div>
                                     <div class="left">
                                         <h1>Welcome back!</h1>
-                                        <form method = "POST" action = "/login_true/">
+                                        <form method = "POST" action = "/login/">
                                           
                                           {% csrf_token %}
                                           {{ form.as_p }}
@@ -346,7 +346,7 @@
             FB.init({
                 appId: FaceBookAppId,
                 status: true,
-                cookie: true
+                cookie: false
                 , xfbml: true
                 , version: 'v2.8'
             });
@@ -477,6 +477,7 @@
 
      $(".fb-log-out").click(function(){
         loginCheck();
+
      });     
      //console.log(loginState);
          //startApp();

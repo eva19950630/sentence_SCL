@@ -30,8 +30,8 @@ urlpatterns = [
     url(r'^user/achievement/', views.user_achievement),
     url(r'^user/history/', views.user_history),
     
-    url(r'^login/', views.signup_app),
-    url(r'^login_true/', views.login_app),
+    # url(r'^login/', views.signup_app),
+    url(r'^login/', views.login_app),
     url(r'^sentence_post/', views.sentence_post,name = 'sentence_post'),
     url(r'^logout/', views.logout,name = "logout"),
     #fb

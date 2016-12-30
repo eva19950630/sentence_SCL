@@ -39,7 +39,7 @@ def sentence_post(request):
                     UID = usermodel,
                 )            
             print("sentence  store")
-            return render(request, 'sentence/sentence.html')
+            return render(request, 'sentence/sentence.html')  
             
         else:
             return render(request, 'sentence/index.html')
@@ -72,11 +72,20 @@ def user_achievement(request):
 def user_history(request):
 	return render(request, "sentence/user_history.html")
 
-#app signup
-def signup_app(request):
-    # print "hello world"
-    if request.method == 'POST':
-        
+
+
+def login_app(request):
+    if User.objects.filter(Email=request.POST.get('email')).exists():
+        m = User.objects.get(Email=request.POST.get('email'))
+        if m.Password == request.POST.get('password'):
+            request.session['UID'] = m.UID
+            print(m.UserName)
+            return render(request, 'sentence/index.html') 
+        else:
+            print('Password WRONG')
+            return render(request, 'sentence/index.html')
+    else:
+        print('NOT USER')
         django_form = AddUser(request.POST)
         if django_form.is_valid():
            
@@ -100,35 +109,6 @@ def signup_app(request):
         else:
             print('wrong form')
             return render(request, 'sentence/index.html',{'username': 'UserName'})
-        
-    else:
-        return render(request, 'sentence/index.html')
-
-#log in 
-# def login_app(request):
-#     if request.method == 'POST':
-#         useremail = request.POST.get('email')
-#         password = request.POST.get('password')
-
-#         if User.objects.filter(Email=useremail, Password=password).exists():
-#             print(login)
-#             user = User.objects.filter(Email=useremail)[0]
-#             username = user.UserName
-#             print('login '+username)
-#             return render(request, 'sentence/index.html') 
-#     return render(request, 'sentence/index.html') 
-
-def login_app(request):
-    if User.objects.filter(Email=request.POST.get('email')).exists():
-        m = User.objects.get(Email=request.POST.get('email'))
-        if m.Password == request.POST.get('password'):
-            request.session['UID'] = m.UID
-            # print(m.UID)
-            return render(request, 'sentence/index.html') 
-        else:
-            print('WRONG')
-            return render(request, 'sentence/index.html')
-    else:
         return render(request, 'sentence/index.html')            
 
 #FB
