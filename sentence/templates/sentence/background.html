@@ -332,7 +332,7 @@
             FB.init({
                 appId: FaceBookAppId,
                 status: true,
-                cookie: true
+                cookie: false
                 , xfbml: true
                 , version: 'v2.8'
             });
@@ -353,12 +353,13 @@
         }(document, 'script', 'facebook-jssdk'));
      
     window.fbloaded = function(){
+        
         var userpicture;
         var useremail;
 
         //fb status connected not_authorized unknown
         FB.Event.subscribe('auth.statusChange', function(response){
-            console.log(response.status);
+            // console.log(response.status);
             if(response.status === 'connected'){
                 FB.api("/me/picture?widrh=30" , function(response){
                     userpicture = response.data.url;
@@ -411,10 +412,27 @@
 
             }
         });
+        // FB.getLoginStatus(handleSessionResponse);
     } 
+
+//     function handleSessionResponse(response) {
+//     //if we dont have a session (which means the user has been logged out, redirect the user)
+//     if (!response.session) {
+//         // window.location = "/mysite/Login.aspx";
+//         console.log("not session");
+//         $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+//         $('#user-name').html('USER NAME');
+//         return;
+//     }
+
+//     //if we do have a non-null response.session, call FB.logout(),
+//     //the JS method will log the user out of Facebook and remove any authorization cookies
+//     FB.logout(handleSessionResponse);
+// }
 
     var loginCheck = function(){
         FB.getLoginStatus(function(response){
+            console.log('button '+response.status);
             if(response.status === 'connected'){
                // console.log("connected");
                 FB.logout(function(response){
