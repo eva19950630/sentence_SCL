@@ -54,77 +54,74 @@
         <script src="http://connect.facebook.net/en_US/all.js"></script>
     <script>
         // This is called with the results from from FB.getLoginStatus().
-      function statusChangeCallback(response) {
-        console.log('statusChangeCallback');
-        console.log(response);
-        // The response object is returned with a status field that lets the
-        // app know the current login status of the person.
-        // Full docs on the response object can be found in the documentation
-        // for FB.getLoginStatus().
-        if (response.status === 'connected') {
-          // Logged into your app and Facebook.
-          testAPI();
-        } else if (response.status === 'not_authorized') {
-          // The person is logged into Facebook, but not your app.
-          document.getElementById('status').innerHTML = 'Please log ' +
-            'into this app.';
-        } else {
-          // The person is not logged into Facebook, so we're not sure if
-          // they are logged into this app or not.
-          document.getElementById('status').innerHTML = 'Please log ' +
-            'into Facebook.';
-        }
-      }
+      // function statusChangeCallback(response) {
+      //   console.log('statusChangeCallback');
+      //   console.log(response);
+      //   // The response object is returned with a status field that lets the
+      //   // app know the current login status of the person.
+      //   // Full docs on the response object can be found in the documentation
+      //   // for FB.getLoginStatus().
+      //   if (response.status === 'connected') {
+      //     // Logged into your app and Facebook.
+      //     testAPI();
+      //   } else if (response.status === 'not_authorized') {
+      //     // The person is logged into Facebook, but not your app.
+      //     document.getElementById('status').innerHTML = 'Please log ' +
+      //       'into this app.';
+      //   } else {
+      //     // The person is not logged into Facebook, so we're not sure if
+      //     // they are logged into this app or not.
+      //     document.getElementById('status').innerHTML = 'Please log ' +
+      //       'into Facebook.';
+      //   }
+      // }
 
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
-      function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-         FB.login(function(){
-
-        },{scope: 'email',
-            return_scopes: true
-        });
-      }  
+      // function checkLoginState() {
+      //   FB.getLoginStatus(function(response) {
+      //     statusChangeCallback(response);
+      //   });
+      // }  
         
-        var FaceBookAppId = '1868740400028340';//localhost:8000
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: FaceBookAppId,
-                status: true,
-                cookie: true
-                , xfbml: true
-                , version: 'v2.8'
-            });
-            window.fbloaded();
-        };
+        // var FaceBookAppId = '1868740400028340';//localhost:8000
+        // window.fbAsyncInit = function () {
+        //     FB.init({
+        //         appId: FaceBookAppId,
+        //         status: true,
+        //         cookie: true
+        //         , xfbml: true
+        //         , version: 'v2.8'
+        //     });
+        //     window.fbloaded();
+        //     FB.AppEvents.logPageView();
+        // };
         
         
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        // (function (d, s, id) {
+        //     var js, fjs = d.getElementsByTagName(s)[0];
+        //     if (d.getElementById(id)) {
+        //         return;
+        //     }
+        //     js = d.createElement(s);
+        //     js.id = id;
+        //     js.src = "//connect.facebook.net/en_US/sdk.js";
+        //     fjs.parentNode.insertBefore(js, fjs);
+        // }(document, 'script', 'facebook-jssdk'));
         
         
 
         
-        function testAPI() {
-            console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function(response) {
-              console.log('Successful login for: ' + response.name);
-              document.getElementById('status').innerHTML =
-                'Thanks for logging in, ' + response.name + '!';
-            });
-        }
+        // function testAPI() {
+        //     console.log('Welcome!  Fetching your information.... ');
+        //     FB.api('/me', function(response) {
+        //       console.log('Successful login for: ' + response.name);
+        //       document.getElementById('status').innerHTML =
+        //         'Thanks for logging in, ' + response.name + '!';
+        //     });
+        // }
+
     </script>
     
     
@@ -161,13 +158,15 @@
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#000" id="user-pic"></i>
                                   <span id="user-name"><font color=#000>USER NAME<b class="caret"></b></font></span>
+                                  <!-- <span id="user-backend-name"><font color=#000>{{username}}</font></span> -->
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
                                     <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
                                     <li class="divider"></li>
                                       <!--class="fb-log-out" written by gim for fb log out-->
-                                    <li><a href="#"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <li><button class="fa fa-sign-out fb-log-out">Logout</button>
+                                    <a href="#"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
@@ -208,10 +207,17 @@
                                     </div>
                                     <div class="left">
                                         <h1>Welcome back!</h1>
-                                        <input type="text" name="email" placeholder="E-mail" />
-                                        <input type="password" name="password" placeholder="Password" />
-                                        <a href="/">
-                                            <input type="submit" name="login_submit" value="Log in" /> </a>
+                                        <form method = "POST" action = "/login_true/">
+                                          
+                                          {% csrf_token %}
+                                          {{ form.as_p }}
+                                          
+                                            <input type="text" name="email" placeholder="E-mail" />
+                                            <input type="password" name="password" placeholder="Password" />
+                                            <!-- <a href="/"> -->
+                                            <input type="submit" class="loginButton" name="login_submit" value="Log in" /> 
+                                            <!-- </a>                                          -->
+                                        </form>                                       
                                     </div>
                                     <div class="login-right"> 
                                         <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
@@ -243,7 +249,7 @@
                                           <input type="password" name="password" placeholder="Password" />
                                           <input type="password" name="password" placeholder="Retype password" />
                                           <!--<a href="/login"></a>-->
-                                          <input type="submit" id="signupBtn" name="signup_submit" value="Sign me up" />
+                                          <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
                                         </form>
                                         
                                     </div>      
@@ -333,25 +339,51 @@
 </body>
 <!--    facebookApi-->
      <script type="text/javascript">
-     
+
+
+     var FaceBookAppId = '1868740400028340';//localhost:8000
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: FaceBookAppId,
+                status: true,
+                cookie: true
+                , xfbml: true
+                , version: 'v2.8'
+            });
+            window.fbloaded();
+            FB.AppEvents.logPageView();
+        };
+        
+        
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
      
     window.fbloaded = function(){
+        
         var userpicture;
         var useremail;
+
+        //fb status connected not_authorized unknown
         FB.Event.subscribe('auth.statusChange', function(response){
+            // console.log(response.status);
             if(response.status === 'connected'){
-                //console.log("fbEvent-connected");
                 FB.api("/me/picture?widrh=30" , function(response){
                     userpicture = response.data.url;
-                    $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40">');
+                    $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
                         
                 });
         
                 var userId;
                 FB.api("/me",function(response){
-                   // console.log("responseName");
                     var username = response.name;
-                    
                     $('#user-name').html(response.name);
                     $.get('/getuserid/',{
                         username: response.name,
@@ -363,12 +395,12 @@
                     console.log(username );
                 });
 
-                FB.api('/me', {fields: 'email' },function(response) {
-                    console.log(response.email);
-                    useremail = response.email;
-                  }
-                );
-                
+                // FB.api('/me', {fields: 'email' },function(response) {
+                //     console.log(response.email);
+                //     useremail = response.email;
+                //   }
+                // );
+                // loginState = true;
                 
 
                  // FB.getLoginStatus(function(response) {
@@ -394,27 +426,46 @@
 
             }
         });
-    }
-    
+        // FB.getLoginStatus(handleSessionResponse);
+    } 
+
+//     function handleSessionResponse(response) {
+//     //if we dont have a session (which means the user has been logged out, redirect the user)
+//     if (!response.session) {
+//         // window.location = "/mysite/Login.aspx";
+//         console.log("not session");
+//         $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+//         $('#user-name').html('USER NAME');
+//         return;
+//     }
+
+//     //if we do have a non-null response.session, call FB.logout(),
+//     //the JS method will log the user out of Facebook and remove any authorization cookies
+//     FB.logout(handleSessionResponse);
+// }
+
     var loginCheck = function(){
         FB.getLoginStatus(function(response){
+            console.log('button '+response.status);
             if(response.status === 'connected'){
                // console.log("connected");
-            FB.logout(function(response){
-                console.log("connected");
-                $('.facebook-login-btn').html("Facebook Login");
-                $('#user-pic').attr("src", "");
-                $('#user-name').html(null);
-                /*facebook friend list
-                $(".friend-block").empty();
-                */
-            });
-            }
-            else{
-                console.log("unconnected");
-                // FB.login(function(response){
-                //     $('.fb-log-out').html("Facebook Logout")
-                // });
+                FB.logout(function(response){
+                    $.get('/logout/');
+                    $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+                    $('#user-name').html('USER NAME');
+                    console.log("logout");
+                    // $('.facebook-login-btn').html("Facebook Login");
+                    // $('#user-pic').attr("src", "");
+                    // $('#user-name').html(null);
+                    /*facebook friend list
+                    $(".friend-block").empty();
+                    */
+                });
+            }else{
+                console.log("login");
+                FB.login(function(response){
+                    $('.facebook-login-btn').html("facebook Logout");
+                });
             }
         });
     }
@@ -423,10 +474,27 @@
      $(".facebook-login-btn").click(function(){
          loginCheck();
      });
-     
+
+     $(".fb-log-out").click(function(){
+        loginCheck();
+     });     
+     //console.log(loginState);
          //startApp();
     </script>
 
 
+<!-- sign up js -->
+    {% for user in users %}
+    
+    <script type="text/javascript">
+        $('.signupBtn').click(function() {
+    		$('#user-name').html({{ username }});
+    	});
+        $('.loginButton').click(function() {
+            $('#user-name').html({{ username }});
+        });
+    </script>
+    
+    {%  endfor %}
     
 </html>

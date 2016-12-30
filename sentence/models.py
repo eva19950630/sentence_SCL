@@ -1,18 +1,18 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from datetime import datetime
-
-
+# from datetime import datetime
+from django.utils import timezone
 #   Create your models here.
 
 #USER
 class User(models.Model):
 
-	UID = models.AutoField(primary_key=True, null=False, unique=True)
+	UID = models.AutoField(primary_key=True)
 	UserName = models.CharField(max_length=50, null=False)
-	Email = models.EmailField(max_length=254)
+	Email = models.EmailField(max_length=254,unique = True)
 	Password = models.CharField(max_length=50, null=False)
+	SocialID = models.BigIntegerField(null=True,unique = True)
 # 	UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
 	#IconPosition = models.
 	# EXP = models.IntegerField()
@@ -21,8 +21,10 @@ class User(models.Model):
 
 #SENTENCE
 class Sentence(models.Model):
-	SID = models.BigIntegerField(primary_key=True, null=False, unique=True)
-	Date = models.DateTimeField(default=datetime.now, blank=True)
+	SID = models.AutoField(primary_key=True, null=False, unique=True)
+	# SID = models.BigIntegerField(primary_key=True, null=False, unique=True)
+	Date = models.DateTimeField(default=timezone.now, blank=True)
+	# Date = models.DateTimeField(blank=True)
 	Content = models.TextField()
 	Sentence_tag = models.TextField()
 	Topic_tag = models.TextField()

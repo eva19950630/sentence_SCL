@@ -6,11 +6,12 @@
 <div class="inputfield-container">
     <section>
         <div class="row">
+           
             <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
                 <label for="input">What do you want to say today?</label>
                 <input id="input" type='text'></input>
             </div>
-            
+
         </div>
         
         <!-- <span class="postbtn"><button type="button" class="btn btn-default navbar-btn" >POST</button></span> -->
@@ -27,19 +28,28 @@
                                   </div>
 
                                   <div class="postbox-content">
+                                  
+                                  <form method = "POST" action="/sentence_post/" name="sentence_post">
+                                      {% csrf_token %}
+                                      {{ form.as_p }}
+
                                       <h2>POST</h2>
-                                      <input id="input" type='text' placeholder="What do you want to say today?"></input>
-                                      <input type='text' placeholder="Paste Link (Optional)"></input>
-                                      <input type="text" name="language" placeholder="#Topic Keyword (Optional)" />
-                                      <input type="text" name="language" placeholder="#Language" />
+                                      <input id="input" type='text' name='sentence' placeholder="What do you want to say today?"></input>
+                                      <input type='text' name='link' placeholder="Paste Link (Optional)"></input>
+                                      <input type="text" name="topic" placeholder="#Topic Keyword (Optional)" />
+                                      <input type="text" name="language" placeholder="#Language"/>
 
                                       <a href="/post_world"><input type="submit" name="post_submit" value="Submit" /></a>
+
+                                  </form>
+
                                   </div>
 
                               </div>
 
                           </div>
                       </div>
+                      
 
 {% endblock content1 %}
 
