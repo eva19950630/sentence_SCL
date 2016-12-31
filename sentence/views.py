@@ -19,28 +19,42 @@ def sentence_post(request):
     if request.method == 'POST':
         django_form = PostSentence(request.POST)
         if django_form.is_valid():
-            """ Assign data in Django Form to local variables """
-            new_sentence = django_form.data.get("sentence")
-            new_sentence_tag = django_form.data.get("language")
-            get_uid = request.session['UID']
-            # new_sid = str(len(Sentence.objects.all()) + 1)
-            usermodel = User.objects.get(UID=get_uid)
+            if django_form.data.get("topic"):
+                new_sentence = django_form.data.get("sentence")
+                new_sentence_tag = django_form.data.get("language")
+                new_sentence_topic = django_form.data.get("topic")
+                
+                # link
 
-            # current_tz = timezone.get_current_timezone()
-            # createTime = current_tz.date()
-            print("sentence  post")
-            if User.objects.filter(UID = get_uid).exists():
-                """ This is how your model connects to database and create a new member """
-                Sentence.objects.create(
-                    # SID = new_sid,
-                    # Date = createTime,
-                    Content = new_sentence,
-                    Sentence_tag =  new_sentence_tag, 
-                    UID = usermodel,
-                )            
-            print("sentence  store")
-            return render(request, 'sentence/sentence.html')  
-            
+                get_uid = request.session['UID']
+                usermodel = User.objects.get(UID=get_uid)
+
+                if User.objects.filter(UID = get_uid).exists():
+                    """ This is how your model connects to database and create a new member """
+                    Sentence.objects.create(
+                        Content = new_sentence,
+                        Sentence_tag =  new_sentence_tag, 
+                        UID = usermodel,
+                        Topic_tag = new_sentence_topic,
+                    )            
+                print("topic sentence  store")
+                return render(request, 'sentence/sentence.html')
+            else:       
+                """ daily sentence """
+                new_sentence = django_form.data.get("sentence")
+                new_sentence_tag = django_form.data.get("language")
+                get_uid = request.session['UID']
+                usermodel = User.objects.get(UID=get_uid)
+
+                if User.objects.filter(UID = get_uid).exists():
+                    """ This is how your model connects to database and create a new member """
+                    Sentence.objects.create(
+                        Content = new_sentence,
+                        Sentence_tag =  new_sentence_tag, 
+                        UID = usermodel,
+                    )            
+                print("daily sentence  store")
+                return render(request, 'sentence/sentence.html')                     
         else:
             return render(request, 'sentence/index.html')
         
