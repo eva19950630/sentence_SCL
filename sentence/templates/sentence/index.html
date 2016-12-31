@@ -24,24 +24,32 @@
                           <div class="modal-dialog">
                               <div id="post-box">
                                   <div class="top" style="padding: 15px;">
-                                      <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                      <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                                   </div>
 
                                   <div class="postbox-content">
                                   
-                                  <form method = "POST" action="/sentence_post/" name="sentence_post">
-                                      {% csrf_token %}
-                                      {{ form.as_p }}
+                                    <form method = "POST" action="/sentence_post/" name="sentence_post">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
 
-                                      <h2>POST</h2>
-                                      <input id="input" type='text' name='sentence' placeholder="What do you want to say today?"></input>
-                                      <input type="text" name="language" placeholder="#Language"/>
-                                      <input type='text' name='link' placeholder="Paste Link (Optional)"></input>
-                                      <input type="text" name="topic" placeholder="#Topic Keyword (Optional)" />
+                                        <h2>DAILY POST</h2>
 
-                                      <a href="/post_world"><input type="submit" name="post_submit" value="Submit" /></a>
+                                          <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
+                                          <input id="input" type='text' name='sentence' placeholder="No more than 20 words"></input>
+                                          
+                                          <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
+                                          <input type="text" name="language" placeholder="#Language"/>
+                                          
+                                          <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TOPIC LINK</font>
+                                          <input type='text' name='link' placeholder="Paste Link (Optional)"></input>
+                                          
+                                          <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG TOPIC KEYWORDS</font>
+                                          <input type="text" name="topic" placeholder="#Topic Keywords (Optional)" />
+                                        
+                                        <a href="/post_world"><input id="post-submit" type="submit" name="post_submit" value="Submit" /></a>
 
-                                  </form>
+                                    </form>
 
                                   </div>
 
