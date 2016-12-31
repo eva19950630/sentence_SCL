@@ -38,10 +38,10 @@ class Sentence(models.Model):
 # 	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
 # 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
 
-# #LANGUAGE
-# class Language(models.Model):
-# 	Language_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
-# 	Language = models.CharField(max_length=20)
+ #LANGUAGE
+class Language(models.Model):
+ 	Language_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
+ 	Language = models.CharField(max_length=20)
 
 #USER-LANGUAGE
 #class User_language(models.Model):
@@ -85,16 +85,16 @@ class Sentence(models.Model):
 #    Area_ID = models.ForeignKey('Area', on_delete=models.CASCADE)
 #    
 #COUNTRY_LANGUAGE
-#class Country_language(models.Model):
-#    Country_ID = models.ForeignKey('Country', on_delete=models.CASCADE)
-# 	Language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
+class Country_language(models.Model):
+    Country_ID = models.ForeignKey('Country', on_delete=models.CASCADE)
+    Language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
 #    
 #COUNTRY
-#class Country(models.Model):
-#    Country_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
-# 	Country_name = models.CharField(max_length=20)
-#    
-#AREA
+class Country(models.Model):
+    Country_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
+    Country_name = models.CharField(max_length=20)
+ 
+ #AREA
 #class Area(models.Model):
 #    Area_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
 # 	Area_name = models.CharField(max_length=20)
