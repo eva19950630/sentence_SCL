@@ -1,7 +1,7 @@
 from django.shortcuts import render
 #google+
-from .forms import AddUser, PostSentence, PostTranslate
-from .models import User, Sentence, Translation
+from .forms import AddUser, PostSentence, PostTranslate, PostTopic
+from .models import User, Sentence, Translation, Topic
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 
 def index(request): 
-    if request.session['UID']:
+    if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session['UID'])
         return render(request, "sentence/index.html",{'username': usermodel})
     else:
@@ -24,16 +24,22 @@ def index(request):
 
 def sentence_url(request, sid):
     # print('sentence_url called')
-    usermodel = User.objects.get(UID=request.session['UID'])
-    new_sentence = Sentence.objects.get(SID = int(sid))
-    print('sentence url '+usermodel.UserName)
-    return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session['UID'])
+        new_sentence = Sentence.objects.get(SID = int(sid))
+        return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
+    else:
+        new_sentence = Sentence.objects.get(SID = int(sid))
+        return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence})
 
 def sentence_post(request):
     # print('sentence_post called')
     # print(sid)
     if request.method == 'POST':
         django_form = PostSentence(request.POST)
+        get_uid = request.session.get('UID')
+        usermodel = User.objects.get(UID=get_uid)
+
         if django_form.is_valid():
             if django_form.data.get("topic"):
                 new_sentence = django_form.data.get("sentence")
@@ -41,18 +47,21 @@ def sentence_post(request):
                 new_sentence_topic ='#' + django_form.data.get("topic")
                 new_sentence_link = django_form.data.get("link")
 
-                get_uid = request.session['UID']
-                usermodel = User.objects.get(UID=get_uid)
-
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
+
+                    new_topic_model = Topic.objects.create(
+                        Topic_tag = new_sentence_topic,
+                        Link = new_sentence_link,
+                    ) 
+
                     new_sentence_model = Sentence.objects.create(
                         Content = new_sentence,
                         Sentence_tag =  new_sentence_tag, 
                         UID = usermodel,
-                        Topic_tag = new_sentence_topic,
-                        Link = new_sentence_link,
-                    )            
+                        TopicID = new_topic_model,
+                    )           
+
                 print("topic sentence  store")
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
                 # return render(request, 'sentence/sentence.html')
@@ -60,8 +69,6 @@ def sentence_post(request):
                 """ daily sentence """
                 new_sentence = django_form.data.get("sentence")
                 new_sentence_tag = '#' + django_form.data.get("language")
-                get_uid = request.session['UID']
-                usermodel = User.objects.get(UID=get_uid)
 
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
@@ -93,7 +100,7 @@ def translation_post(request, get_sid):
                 
                 # link
 
-                get_uid = request.session['UID']
+                get_uid = request.session.get('UID')
                 usermodel = User.objects.get(UID=get_uid)
 
                 #get sid
@@ -107,7 +114,8 @@ def translation_post(request, get_sid):
                         SID =sentencemodel,
                     )            
                 print("translation store")
-                return render(request, "sentence/post_world.html",{'translation_model': new_translation_model,'username': usermodel})                    
+                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': get_sid}))
+                # return render(request, "sentence/sentence.html",{'translation_model': new_translation_model,'username': usermodel})                    
         else:
             return render(request, 'sentence/index.html')
         
@@ -137,7 +145,7 @@ def user_achievement(request):
 	return render(request, "sentence/user_achievement.html")
 
 def user_history(request):
-    get_uid = request.session['UID']
+    get_uid = request.session.get('UID')
     sentencemodel = Sentence.objects.filter(UID=get_uid)
     translationmodel = Translation.objects.filter(UID=get_uid)
     return render(request, "sentence/user_history.html",{'sentence_model': sentencemodel,'translation_model': translationmodel})

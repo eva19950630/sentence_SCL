@@ -27,9 +27,8 @@ class Sentence(models.Model):
 	# Date = models.DateTimeField(blank=True)
 	Content = models.TextField()
 	Sentence_tag = models.TextField(null=False, default='unknown')
-	Topic_tag = models.TextField()
+	TopicID = models.ForeignKey('Topic',null=True,on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
-	Link = models.TextField(null=False, default='unknown')
 
 # #TRANSLATION
 class Translation(models.Model):
@@ -39,6 +38,12 @@ class Translation(models.Model):
 	Translation_tag = models.TextField(null = False, default='unknown')
 	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+
+#TOPIC
+class Topic(models.Model):
+	TopicID = models.AutoField(primary_key=True, null=False, unique=True)
+	Topic_tag = models.TextField(null = False, default='unknown')
+	Link = models.TextField(null=False, default='unknown')
 
 # #LANGUAGE
 # class Language(models.Model):

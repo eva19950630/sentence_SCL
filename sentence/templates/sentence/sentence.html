@@ -22,8 +22,8 @@
                   <a href=""><button type="button" class="btn btn-default navbar-btn" id="chooseArea-btn">CLICK COUNTRY</button></a> -->
               </div>
           </form>
-          {% if sentence_content.Topic_tag %}
-            #{{ sentence_content.Topic_tag }}
+          {% if sentence_content.TopicID %}
+            {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
     </section>
