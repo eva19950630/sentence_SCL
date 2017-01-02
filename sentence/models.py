@@ -26,17 +26,19 @@ class Sentence(models.Model):
 	Date = models.DateTimeField(default=timezone.now, blank=True)
 	# Date = models.DateTimeField(blank=True)
 	Content = models.TextField()
-	Sentence_tag = models.TextField()
+	Sentence_tag = models.TextField(null=False, default='unknown')
 	Topic_tag = models.TextField()
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+	Link = models.TextField(null=False, default='unknown')
 
 # #TRANSLATION
-# class Translation(models.Model):
-# 	TID = models.BigIntegerField(primary_key=True, null=False, unique=True)
-# 	#Date = models.
-# 	Content = models.TextField()
-# 	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
-# 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+class Translation(models.Model):
+	TID = models.AutoField(primary_key=True, null=False, unique=True)
+	Date = models.DateTimeField(default=timezone.now, blank=True)
+	Content = models.TextField()
+	Translation_tag = models.TextField(null = False, default='unknown')
+	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)
 
  #LANGUAGE
 class Language(models.Model):

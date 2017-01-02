@@ -6,14 +6,25 @@
 <div class="inputfield-container">
     <section>
         <div class="row">
-            <div class="col-md-6 fields">
-                <label for="input">I want to translate this sentence</label>
-                <input id="input" type='text'></input>
-            </div>
-            <div class="col-md-6 postbtn">
-                <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal">POST</button>
-                <a href="/sentence_world"><button type="button" class="btn btn-default navbar-btn" id="chooseArea-btn">CLICK COUNTRY</button></a>
-            </div>
+          <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID %}" >
+              <!-- <form method = "POST" action="/translation_post/" > -->
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="col-md-6 fields">
+                  <label for="input">I want to translate this sentence</label>
+                  <input id="input" type='text' name="translation"></input>
+                  
+              </div>
+              <div class="col-md-6 postbtn">
+                  <input type="text" name="translation_tag" placeholder="#language" />
+                  <input type="submit" name="post_submit" value="Submit" style="margin: 0;" />
+      <!--             <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal">POST</button>
+                  <a href=""><button type="button" class="btn btn-default navbar-btn" id="chooseArea-btn">CLICK COUNTRY</button></a> -->
+              </div>
+          </form>
+          {% if sentence_content.Topic_tag %}
+            #{{ sentence_content.Topic_tag }}
+          {% endif %}
         </div>
     </section>
 </div>
@@ -28,17 +39,18 @@
 
                                   <div class="postbox-content">
                                       <h2>Hash tag your language</h2>
+                                      
+                                        
+                                      <input type="text" name="translation_tag" placeholder="#language" />
 
-                                      <input type="text" name="language" placeholder="#language" />
-
-                                      <a href="/post_world"><input type="submit" name="post_submit" value="Submit" /></a>
+                                      <a href=""><input type="submit" name="post_submit" value="Submit" /></a>
+                                      
                                   </div>
 
                               </div>
 
                           </div>
                       </div>
-
 {% endblock content1 %}
 
 {% block content2 %}
@@ -47,7 +59,7 @@
 <div class="map-container-fluid">
     <div class="row map-block ">
         <div id="vmap" style="width: 100vw; height: 100vh;">
-            <div id="float-sentence" class="col-lg-6 col-lg-offset-5 text-center ">THE SENTENCE</div>
+            <div id="float-sentence" class="col-lg-6 col-lg-offset-5 text-center ">{{ sentence_content.Content }}</div>
 
         </div>
     </div>
