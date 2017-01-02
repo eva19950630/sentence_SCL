@@ -157,8 +157,8 @@
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
-                                  <span id="user-name"><font color=#FFF>USER NAME<b class="caret"></b></font></span>
-                                  <!-- <span id="user-backend-name"><font color=#000>{{username}}</font></span> -->
+                                  <!-- <span id="user-name"><font color=#FFF>USER NAME<b class="caret"></b></font></span> -->
+                                  <span id="user-name"><font color=#000>{{username.UserName}}</font></span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
@@ -343,7 +343,7 @@
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
-                status: true,
+                status: false,
                 cookie: true
                 , xfbml: true
                 , version: 'v2.8'
@@ -482,18 +482,25 @@
     </script>
 
 
+    <script type="text/javascript">
+      $('#link').focus(function(){
+        var link =  $('#link').val();
+        console.log('link ' + link);
+        $('#show_link').replaceWith('<iframe id="show_link" src="'+ link +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+      });
+    </script>
+
 <!-- sign up js -->
-    {% for user in users %}
+<!--     {% for user in users %} -->
     
     <script type="text/javascript">
         $('.signupBtn').click(function() {
-    		$('#user-name').html({{ username }});
+    		$('#user-name').html({{ username.UserName }});
     	});
         $('.loginButton').click(function() {
-            $('#user-name').html({{ username }});
+            $('#user-name').html({{ username.UserName }});
         });
     </script>
-    
-    {%  endfor %}
+    <!-- {%  endfor %} -->
     
 </html>

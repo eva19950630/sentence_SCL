@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Sentence
+from .models import User, Sentence ,Translation
 
 class AddUser(forms.Form):
     
@@ -11,5 +11,12 @@ class PostSentence(forms.Form):
 	"""docstring for ClassName"""
 	class Meta:
 		model = Sentence
-		fields = ('SID','Date','Content','Sentence_tag','Tpoic_tag','UID',)
+		fields = ('Content','Sentence_tag','Tpoic_tag','UID','Link',)
+
+
+class PostTranslate(forms.Form):
+	"""docstring for ClassName"""
+	class Meta:
+		model = Translation
+		fields = ('Content','SID','UID','Translation_tag',)
 
