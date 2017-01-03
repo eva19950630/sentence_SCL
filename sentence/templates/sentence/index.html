@@ -29,7 +29,7 @@
 
                                   <div class="postbox-content">
                                   
-                                    <form method = "POST" action="/sentence_post/" name="sentence_post">
+                                    <form method = "POST" action="/sentence_post/">
                                         {% csrf_token %}
                                         {{ form.as_p }}
 
@@ -40,14 +40,16 @@
                                           
                                           <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
                                           <input type="text" name="language" placeholder="#Language"/>
-                                          
-                                          <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TOPIC LINK</font>
-                                          <input type='text' name='link' placeholder="Paste Link (Optional)"></input>
-                                          
+
                                           <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG TOPIC KEYWORDS</font>
                                           <input type="text" name="topic" placeholder="#Topic Keywords (Optional)" />
+
+                                          <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TOPIC LINK</font>
+                                          <input type='text' id="link" name='link' placeholder="Paste Link (Optional)"></input>
+                                          <div id="show_link"></div>
+
+                                        <a href=""><input id="post-submit" type="submit" name="post_submit" value="Submit" /></a>
                                         
-                                        <a href="/post_world"><input id="post-submit" type="submit" name="post_submit" value="Submit" /></a>
 
                                     </form>
 
@@ -152,6 +154,5 @@
     <button id="right"><i class="fa fa-angle-double-right"><i></button> -->
     
 </div>
-
 
 {% endblock content2 %}

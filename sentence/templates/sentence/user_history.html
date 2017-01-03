@@ -19,29 +19,36 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4">
+                sentence
+                {% for sentence in sentence_model %}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">2016/11/28</h3>
+                            <h3 class="panel-title">{{ sentence.Date }}</h3>
                         </div>
                         <div class="panel-body">
-                            I have a dream.
+                            {{ sentence.Content }}
                         </div>
                     </div>
+                {% endfor %}
+                </div>
+                <div class="col-sm-4">
+                translation
+                {% for translation in translation_model %}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">2016/10/5</h3>
+                            <h3 class="panel-title">{{ translation.Date }}</h3>
                         </div>
                         <div class="panel-body">
-                            Gutten Tag!
+                            {{ translation.Content }}
                         </div>
                     </div>
+                {% endfor %}
                 </div>
             </div>
-        </div>
-        <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
 
+        </div>
     </div>
-</div>
-<!-- /#wrapper -->
+    <!-- /#wrapper -->
 
 {% endblock content1 %}

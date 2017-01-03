@@ -1,52 +1,118 @@
 from django.shortcuts import render
 #google+
-from .forms import AddUser, PostSentence
-from .models import User, Sentence
+from .forms import AddUser, PostSentence, PostTranslate
+from .models import User, Sentence, Translation
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 # from django.utils import timezone
 import datetime
+from django.core.urlresolvers import reverse
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
 # Create your views here.
 
-def index(request):
-    return render(request, "sentence/index.html")
+def index(request): 
+    if request.session['UID']:
+        usermodel = User.objects.get(UID=request.session['UID'])
+        return render(request, "sentence/index.html",{'username': usermodel})
+    else:
+        return render(request, "sentence/index.html")
+
+# def show_link(request, obj):
+
+def sentence_url(request, sid):
+    # print('sentence_url called')
+    usermodel = User.objects.get(UID=request.session['UID'])
+    new_sentence = Sentence.objects.get(SID = int(sid))
+    print('sentence url '+usermodel.UserName)
+    return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
 
 def sentence_post(request):
+    # print('sentence_post called')
+    # print(sid)
     if request.method == 'POST':
         django_form = PostSentence(request.POST)
         if django_form.is_valid():
-            """ Assign data in Django Form to local variables """
-            new_sentence = django_form.data.get("sentence")
-            new_sentence_tag = django_form.data.get("language")
-            get_uid = request.session['UID']
-            # new_sid = str(len(Sentence.objects.all()) + 1)
-            usermodel = User.objects.get(UID=get_uid)
+            if django_form.data.get("topic"):
+                new_sentence = django_form.data.get("sentence")
+                new_sentence_tag ='#' + django_form.data.get("language")
+                new_sentence_topic ='#' + django_form.data.get("topic")
+                new_sentence_link = django_form.data.get("link")
 
-            # current_tz = timezone.get_current_timezone()
-            # createTime = current_tz.date()
-            print("sentence  post")
-            if User.objects.filter(UID = get_uid).exists():
-                """ This is how your model connects to database and create a new member """
-                Sentence.objects.create(
-                    # SID = new_sid,
-                    # Date = createTime,
-                    Content = new_sentence,
-                    Sentence_tag =  new_sentence_tag, 
-                    UID = usermodel,
-                )            
-            print("sentence  store")
-            return render(request, 'sentence/sentence.html')  
-            
+                get_uid = request.session['UID']
+                usermodel = User.objects.get(UID=get_uid)
+
+                if User.objects.filter(UID = get_uid).exists():
+                    """ This is how your model connects to database and create a new member """
+                    new_sentence_model = Sentence.objects.create(
+                        Content = new_sentence,
+                        Sentence_tag =  new_sentence_tag, 
+                        UID = usermodel,
+                        Topic_tag = new_sentence_topic,
+                        Link = new_sentence_link,
+                    )            
+                print("topic sentence  store")
+                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
+                # return render(request, 'sentence/sentence.html')
+            else:       
+                """ daily sentence """
+                new_sentence = django_form.data.get("sentence")
+                new_sentence_tag = '#' + django_form.data.get("language")
+                get_uid = request.session['UID']
+                usermodel = User.objects.get(UID=get_uid)
+
+                if User.objects.filter(UID = get_uid).exists():
+                    """ This is how your model connects to database and create a new member """
+                    new_sentence_model = Sentence.objects.create(
+                        Content = new_sentence,
+                        Sentence_tag =  new_sentence_tag, 
+                        UID = usermodel,
+                    )            
+                print("daily sentence  store " + str(new_sentence_model.SID))
+                # return Redirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
+                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
+                # return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence})                     
         else:
             return render(request, 'sentence/index.html')
         
     else:
         return render(request, 'sentence/index.html')
 
+
+def translation_post(request, get_sid):
+    # print('get_sid '+get_sid)
+    if request.method == 'POST':
+        django_form = PostTranslate(request.POST)
+        if django_form.is_valid():
+                
+                sentencemodel = Sentence.objects.get(SID = int(get_sid))
+                new_translation = django_form.data.get("translation")
+                new_translation_tag = '#' + django_form.data.get("translation_tag")
+                
+                # link
+
+                get_uid = request.session['UID']
+                usermodel = User.objects.get(UID=get_uid)
+
+                #get sid
+
+                if User.objects.filter(UID = get_uid).exists():
+                    """ This is how your model connects to database and create a new member """
+                    new_translation_model = Translation.objects.create(
+                        Content = new_translation,
+                        Translation_tag =  new_translation_tag, 
+                        UID = usermodel,
+                        SID =sentencemodel,
+                    )            
+                print("translation store")
+                return render(request, "sentence/post_world.html",{'translation_model': new_translation_model,'username': usermodel})                    
+        else:
+            return render(request, 'sentence/index.html')
+        
+    else:
+        return render(request, 'sentence/index.html')
 
 def sentence(request):
     return render(request, "sentence/sentence.html")
@@ -55,7 +121,8 @@ def sentence_world(request):
 	return render(request, "sentence/sentence_world.html")
 
 def post_world(request):
-	return render(request, "sentence/post_world.html")
+    # print('post_world called')
+    return render(request, "sentence/post_world.html")
 
 def usermap(request):
 	return render(request, "sentence/usermap.html")
@@ -70,7 +137,10 @@ def user_achievement(request):
 	return render(request, "sentence/user_achievement.html")
 
 def user_history(request):
-	return render(request, "sentence/user_history.html")
+    get_uid = request.session['UID']
+    sentencemodel = Sentence.objects.filter(UID=get_uid)
+    translationmodel = Translation.objects.filter(UID=get_uid)
+    return render(request, "sentence/user_history.html",{'sentence_model': sentencemodel,'translation_model': translationmodel})
 
 
 
@@ -80,7 +150,7 @@ def login_app(request):
         if m.Password == request.POST.get('password'):
             request.session['UID'] = m.UID
             print(m.UserName)
-            return render(request, 'sentence/index.html') 
+            return render(request, 'sentence/index.html',{'username': m}) 
         else:
             print('Password WRONG')
             return render(request, 'sentence/index.html')
@@ -96,19 +166,19 @@ def login_app(request):
             # new_uid = str(len(User.objects.all()) + 1)
            
             """ This is how your model connects to database and create a new member """
-            User.objects.create(
+            new_user_model=User.objects.create(
                 # UID = new_uid,
                 UserName =  new_member_name, 
                 Email = new_member_email,
                 Password = new_member_password,
             )
                 
-            request.session['UID'] = User.objects.get(Email= new_member_email).UID
-            return render(request, 'sentence/index.html',{'username': new_member_name})
+            request.session['UID'] = new_user_model.UID
+            return render(request, 'sentence/index.html',{'username': new_user_model})
             
         else:
             print('wrong form')
-            return render(request, 'sentence/index.html',{'username': 'UserName'})
+            return render(request, 'sentence/index.html')
         return render(request, 'sentence/index.html')            
 
 #FB
@@ -117,14 +187,8 @@ def getuserid(request):
         username = request.GET.get('username')
         userId = request.GET.get('userId')
         password = '000'
-        # username = request.GET['username']
-        # userId = request.GET['userId']
-        # userpicture = request.GET['userpicture']
-        # useremail = request.GET['useremail']
-        # user_num = str(len(User.objects.all()) + 1)
-        print('get')
         if User.objects.filter(SocialID = userId).exists():
-            print('in session')
+            # print('in session')
             request.session['UID'] = User.objects.get(UserName = username).UID
             # limit userId found to 0 object
             user = User.objects.filter(SocialID = userId)[0]
@@ -132,7 +196,7 @@ def getuserid(request):
             user.save()
         else:
             print('create')
-            User.objects.create(
+            new_user_model = User.objects.create(
                 # UID = userId,
                 UserName =  username,
                 Password = password,
