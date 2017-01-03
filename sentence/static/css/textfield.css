@@ -12,7 +12,7 @@
 }
 
 .fields {
-  width: 370px;
+  width: 380px;
   left: 10%;
   padding: 1em 2em 0 2em;
 }
@@ -93,7 +93,7 @@
 
 .postbox-content #post-submit {
   position: relative;
-  left: 24%;
+  left: 23%;
 }
 
 
