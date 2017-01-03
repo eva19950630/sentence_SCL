@@ -14,10 +14,10 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 
 def index(request): 
-    if request.session['UID']:
-        usermodel = User.objects.get(UID=request.session['UID'])
-        return render(request, "sentence/index.html",{'username': usermodel})
-    else:
+    # if request.session['UID']:
+    #     usermodel = User.objects.get(UID=request.session['UID'])
+    #     return render(request, "sentence/index.html",{'username': usermodel})
+    # else:
         return render(request, "sentence/index.html")
 
 # def show_link(request, obj):
