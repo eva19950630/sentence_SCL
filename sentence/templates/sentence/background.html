@@ -140,8 +140,17 @@
                             <a href="/"> <img class="logo img-valign img-responsive" src="{% static 'images/logo2.png' %}"> </a>
                         </div>
                     </div>
-                    <!-- Right: LogIn SignUp / profile notification  search -->
-                    <div class="col-md-9 col-sm-6 col-xs-6 header-mobile-sm">
+
+                    <!-- Search bar -->
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <form class="search">
+                            <input class="searchTerm" placeholder="Enter sentence or tag keywords" />
+                            <input class="searchButton" name="search_submit" type="submit" />
+                        </form>
+                    </div>
+
+                    <!-- Right: LogIn SignUp / profile notification -->
+                    <div class="col-md-3 col-sm-6 col-xs-6 header-mobile-sm">
                         <div class="header-sm">
                             <!-- Log in / Sign up -->
                             <span class="before-login">
@@ -151,52 +160,8 @@
                                 <button type="button" class="btn1 btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
                             </span>
                         </div>
-
-                        <div class="header-sm-user">
-                            <!-- User Profile -->
-                            <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
-                                  <!-- <span id="user-name"><font color=#FFF>USER NAME<b class="caret"></b></font></span> -->
-                                  <span id="user-name"><font color=#000>{{username.UserName}}</font></span>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
-                                    <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
-                                    <li class="divider"></li>
-                                      <!--class="fb-log-out" written by gim for fb log out-->
-                                    <li><button class="fa fa-sign-out fb-log-out">Logout</button>
-                                    <a href="/logout/"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
-                                  </ul>
-                            </span>
-                        </div>
-
-                        <div class="header-sm-notification">
-                            <!-- Notification -->
-                            <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="fa fa-bell" style="font-size: 30px; color:#fff;"></i>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <div><font color=white>&emsp;Notifications</font></div>
-                                  </ul>
-                            </span>
-                        </div>
                         
-                        <div class="header-sm-search">
-                            <!-- Search -->
-                            <span class="after-login">
-                                <a href="#" class="search-toggle">
-                                  <i class="fa fa-search" style="font-size: 30px; color:#fff;"></i>
-                                </a>
-                                <!-- <form action="" class="search-box">
-                                  <input type="text" class="text search-input" placeholder="Type here to search..." />
-                                </form> -->
-                            </span>
-                        </div>
-
                         
-
                         <!-- Log in Modal -->
                         <div class="modal fade" id="login-modal" role="dialog">
                             <div class="modal-dialog">
@@ -227,6 +192,8 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- end Log in Modal -->
+                        
                         <!-- Sign up Modal -->
                         <div class="modal fade" id="signup-modal" role="dialog">
                             <div class="modal-dialog">
@@ -263,36 +230,22 @@
 
                                 </div>
                             </div>
-                        </div>
-                        <!-- Menu MOBILE -->
-                        <!-- <div class=".header-mobile navbar-header">
-                            <button type="button" class="navbar-toggle icon-ao-bar-4 ao-menu-bar" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> </button>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            <!-- 2 POZIOM MENU -->
-            <!-- <div class="navbar header-2">
-                <div class="container">
-                    <div class="collapse navbar-collapse scroll navbar-bg" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="ao_menu_list active"> <a href="/">DAILY TOPIC</a> </li>
-                            <li class="ao_menu_list"> <a href="/">DAILY SENTENCE</a> </li>
-                            <div class="ao_menu_search">
-                                <input type="search-mobile"> <i class="icon-ao-loupe-2 search-icon-loupe"></i>
-                                <button class="icon-ao-close-2 search-icon-close ao_menu_close"></button>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
-        </nav>
-    </div>
+                        </div> 
+                        <!-- end Sign up Modal -->
+
+                    </div> <!-- end Right side button -->
+                </div> <!-- end Container -->
+            </div> <!-- end nav header1 -->
+        </nav> <!-- end navbar-fixed-top -->
+    </div> <!-- end header -->
     
    
     <div class="body"> {% block content1 %} {% endblock content1 %} </div>
     <div class="body-2"> {% block content2 %} {% endblock content2 %} </div>
+    
     <div class="footer"> </div>
+    
+
     <!-- ##### JAVASCRIPTS ##### -->
     <!-- jQuery Library -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
