@@ -1,5 +1,8 @@
+
 {% extends 'sentence/background.html' %}
 {% load staticfiles %}
+{% load tz %}
+
 {% block content1 %}
 
 <div class="index-wrapper">
@@ -13,7 +16,23 @@
       <div class="index-content">
         <!-- Post list -->
         <div class="postcard-container">
-            <a href="/sentence">
+          {% for surl in sentence_content %}
+            <a href="{% url 'sentence_url' sid=surl.SID%}">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">{{surl.Content}}</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">{{surl.Date|timezone:"Asia/Taipei"}}</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+          {% endfor %}
+
+
+            <!-- <a href="/sentence">
                 <div class="card card-1 new">
                   <div class="postcard-content new">POST1</div>
                   <div class="postcard-btn new">
@@ -156,7 +175,7 @@
                     <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
                   </div>
                 </div>
-            </a>
+            </a> -->
         </div> <!-- end postcard-container -->
       </div> <!-- end index-content -->
 

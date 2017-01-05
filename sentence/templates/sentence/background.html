@@ -52,82 +52,7 @@
     <div id=”fb-root”></div>
         <!--facebook login block-->
         <script src="http://connect.facebook.net/en_US/all.js"></script>
-    <script>
-        // This is called with the results from from FB.getLoginStatus().
-      // function statusChangeCallback(response) {
-      //   console.log('statusChangeCallback');
-      //   console.log(response);
-      //   // The response object is returned with a status field that lets the
-      //   // app know the current login status of the person.
-      //   // Full docs on the response object can be found in the documentation
-      //   // for FB.getLoginStatus().
-      //   if (response.status === 'connected') {
-      //     // Logged into your app and Facebook.
-      //     testAPI();
-      //   } else if (response.status === 'not_authorized') {
-      //     // The person is logged into Facebook, but not your app.
-      //     document.getElementById('status').innerHTML = 'Please log ' +
-      //       'into this app.';
-      //   } else {
-      //     // The person is not logged into Facebook, so we're not sure if
-      //     // they are logged into this app or not.
-      //     document.getElementById('status').innerHTML = 'Please log ' +
-      //       'into Facebook.';
-      //   }
-      // }
-
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-      // function checkLoginState() {
-      //   FB.getLoginStatus(function(response) {
-      //     statusChangeCallback(response);
-      //   });
-      // }  
-        
-        // var FaceBookAppId = '1868740400028340';//localhost:8000
-        // window.fbAsyncInit = function () {
-        //     FB.init({
-        //         appId: FaceBookAppId,
-        //         status: true,
-        //         cookie: true
-        //         , xfbml: true
-        //         , version: 'v2.8'
-        //     });
-        //     window.fbloaded();
-        //     FB.AppEvents.logPageView();
-        // };
-        
-        
-        // (function (d, s, id) {
-        //     var js, fjs = d.getElementsByTagName(s)[0];
-        //     if (d.getElementById(id)) {
-        //         return;
-        //     }
-        //     js = d.createElement(s);
-        //     js.id = id;
-        //     js.src = "//connect.facebook.net/en_US/sdk.js";
-        //     fjs.parentNode.insertBefore(js, fjs);
-        // }(document, 'script', 'facebook-jssdk'));
-        
-        
-
-        
-        // function testAPI() {
-        //     console.log('Welcome!  Fetching your information.... ');
-        //     FB.api('/me', function(response) {
-        //       console.log('Successful login for: ' + response.name);
-        //       document.getElementById('status').innerHTML =
-        //         'Thanks for logging in, ' + response.name + '!';
-        //     });
-        // }
-
-    </script>
-    
-    
-
-    
-    
+  
     <div class="header">
         <!-- Navigation -->
         <nav class="navbar-fixed-top" role="navigation">
@@ -292,7 +217,8 @@
      <script type="text/javascript">
 
 
-     var FaceBookAppId = '1868740400028340';//localhost:8000
+      var FaceBookAppId = '233902740370813';//localhost:8000
+     // var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
@@ -352,48 +278,9 @@
                 //   }
                 // );
                 // loginState = true;
-                
-
-                 // FB.getLoginStatus(function(response) {
-                 //      if (response.status == 'connected') {
-                 //        getCurrentUserInfo(response)
-                 //      } else {
-                 //        FB.login(function(response) {
-                 //          if (response.authResponse){
-                 //            getCurrentUserInfo(response)
-                 //          } else {
-                 //            console.log('Auth cancelled.')
-                 //          }
-                 //        }, { scope: 'email' });
-                 //      }
-                 //    });
-
-                 //    function getCurrentUserInfo() {
-                 //      FB.api('/me', function(userInfo) {
-                 //        console.log(userInfo.name + ': ' + userInfo.email);
-                 //      });
-                 //    }
-
-
             }
         });
-        // FB.getLoginStatus(handleSessionResponse);
     } 
-
-//     function handleSessionResponse(response) {
-//     //if we dont have a session (which means the user has been logged out, redirect the user)
-//     if (!response.session) {
-//         // window.location = "/mysite/Login.aspx";
-//         console.log("not session");
-//         $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
-//         $('#user-name').html('USER NAME');
-//         return;
-//     }
-
-//     //if we do have a non-null response.session, call FB.logout(),
-//     //the JS method will log the user out of Facebook and remove any authorization cookies
-//     FB.logout(handleSessionResponse);
-// }
 
     var loginCheck = function(){
         FB.getLoginStatus(function(response){
@@ -405,12 +292,6 @@
                     $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
                     $('#user-name').html('USER NAME');
                     console.log("logout");
-                    // $('.facebook-login-btn').html("Facebook Login");
-                    // $('#user-pic').attr("src", "");
-                    // $('#user-name').html(null);
-                    /*facebook friend list
-                    $(".friend-block").empty();
-                    */
                 });
             }else{
                 console.log("login");
@@ -430,30 +311,29 @@
         loginCheck();
 
      });     
-     //console.log(loginState);
          //startApp();
     </script>
 
 
     <script type="text/javascript">
-      $('#link').focus(function(){
-        var link =  $('#link').val();
-        console.log('link ' + link);
-        $('#show_link').replaceWith('<iframe id="show_link" src="'+ link +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+      var isPost = false;
+      $('#link').focusin(function(){
+        isPost = true;
+        console.log('in');  
       });
-    </script>
 
-<!-- sign up js -->
-<!--     {% for user in users %} -->
-    
-    <script type="text/javascript">
-        $('.signupBtn').click(function() {
-    		$('#user-name').html({{ username.UserName }});
-    	});
-        $('.loginButton').click(function() {
-            $('#user-name').html({{ username.UserName }});
-        });
-    </script>
-    <!-- {%  endfor %} -->
-    
+      $('#link').blur(function(){
+        isPost = false;
+      });
+      var link;
+      setInterval(function(){
+          if(isPost === true){
+            var newLink =  $('#link').val();
+            if(link != newLink){
+              $('#show_link').replaceWith('<iframe id="show_link" src="'+ newLink +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');  
+              link = newLink   
+            }
+          }
+      },1000);
+    </script>   
 </html>

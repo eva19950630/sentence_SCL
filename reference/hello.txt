@@ -70,3 +70,13 @@ pip install 要裝的東西的套件名稱
 
 
 兩個人在fb互相是朋友，但兩人都要登入自己的APP才會知道雙方在fb上是朋友關係
+
+table already exist
+python manage.py migrate your_app --fake
+
+
+<<<<<<< HEAD
+commit 記錄索引的狀態
+=======
+pull 取得遠端數據庫的內容
+>>>>>>> issue3

@@ -6,16 +6,12 @@
 <div class="inputfield-container">
     <section>
         <div class="row">
-          <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID %}" >
-              
-              <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
-                  <label for="input">I want to translate this sentence</label>
-                  <input id="input" type='text'></input>
-              </div>
-
-          </form>
-          {% if sentence_content.Topic_tag %}
-            #{{ sentence_content.Topic_tag }}
+            <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
+                <label for="input">I want to translate this sentence</label>
+                <input id="input" type='text'></input>
+            </div>
+          {% if sentence_content.TopicID %}
+            {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
     </section>

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sentence',
+    'easy_timezones',
     #google+
 #    'django.contrib.sites',
 #    'allauth',
@@ -66,6 +67,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'easy_timezones.middleware.EasyTimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'sna_project.urls'

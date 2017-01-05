@@ -13,11 +13,12 @@ class User(models.Model):
 	Email = models.EmailField(max_length=254,unique = True)
 	Password = models.CharField(max_length=50, null=False)
 	SocialID = models.BigIntegerField(null=True,unique = True)
-# 	UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
+ 	# UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
+ 	UserIcon = models.ImageField(upload_to='UserIcon_folder',default='/images/fish.png')
 	#IconPosition = models.
 	# EXP = models.IntegerField()
 	# Money = models.DecimalField(max_digits=20,decimal_places=0)
-# 	language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
+	# language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
 
 #SENTENCE
 class Sentence(models.Model):
@@ -27,9 +28,14 @@ class Sentence(models.Model):
 	# Date = models.DateTimeField(blank=True)
 	Content = models.TextField()
 	Sentence_tag = models.TextField(null=False, default='unknown')
-	Topic_tag = models.TextField()
+	TopicID = models.ForeignKey('Topic',null=True,on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
-	Link = models.TextField(null=False, default='unknown')
+	Likes = models.PositiveIntegerField(default=0)
+	Views = models.PositiveIntegerField(default=0)
+
+	@property
+	def total_like(slef):
+		return slef.Likes.count()
 
 # #TRANSLATION
 class Translation(models.Model):
@@ -39,11 +45,24 @@ class Translation(models.Model):
 	Translation_tag = models.TextField(null = False, default='unknown')
 	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+	Likes = models.PositiveIntegerField(default=0)
+	Views = models.PositiveIntegerField(default=0)
+
+
+#TOPIC
+class Topic(models.Model):
+	TopicID = models.AutoField(primary_key=True, null=False, unique=True)
+	Topic_tag = models.TextField(null = False, default='unknown')
+	Link = models.TextField(null=False, default='unknown')
+	Likes = models.PositiveIntegerField(default=0)
+	Views = models.PositiveIntegerField(default=0)
+
 
  #LANGUAGE
 class Language(models.Model):
  	Language_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
  	Language = models.CharField(max_length=20)
+
 
 #USER-LANGUAGE
 #class User_language(models.Model):
