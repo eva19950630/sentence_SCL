@@ -152,13 +152,12 @@
                     <!-- Right: LogIn SignUp / profile notification -->
                     <div class="col-md-3 col-sm-6 col-xs-6 header-mobile-sm">
 
-                        <div class="header-sm-user">
+                        <div class="header-sm user">
                             <!-- User Profile -->
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
-                                  <!-- <span id="user-name"><font color=#FFF>USER NAME<b class="caret"></b></font></span> -->
-                                  <span id="user-name"><font color=#fff>{{username.UserName}}</font></span>
+                                    <span id="user-name"><font color=#fff>{{username.UserName}}</font>&ensp;<b class="caret" style="color: #fff;"></b></span>
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
@@ -171,7 +170,18 @@
                             </span>
                         </div>
 
-                        <div class="header-sm-notification">
+                        <span style="color:#22949b; font-size: 26px;">|&ensp;</span>
+
+                        <div class="header-sm favorite">
+                            <!-- Favorite -->
+                            <span class="after-login">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-star" style="font-size: 30px; color:#fff;"></i>
+                                  </a>
+                            </span>
+                        </div>
+
+                        <div class="header-sm notification">
                             <!-- Notification -->
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -182,7 +192,6 @@
                                   </ul>
                             </span>
                         </div>
-
 
                     </div> <!-- end Right side button -->
                 </div> <!-- end Container -->
@@ -209,7 +218,7 @@
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
     <!-- Sentence js -->
-    <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script> -->
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
     <!-- Painting js -->
