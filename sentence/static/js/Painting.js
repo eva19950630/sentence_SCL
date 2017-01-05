@@ -1,6 +1,8 @@
 /* REF CODE: http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/ */
 /* Colors from http://flatuicolorpicker.com */
 /* Symbols from http://fortawesome.github.io/Font-Awesome/ */
+
+up =  $('#user-pic');
 var kit_dict = {
     'tools': [
         ['paint','fa-paint-brush'],
@@ -8,7 +10,7 @@ var kit_dict = {
         ['save','fa-floppy-o'],
         ['delete','fa-trash-o']
     ],
-    'paints': ["#000000","#00B16A","#4ECDC4","#A2DED0","#87D37C","#90C695","#26A65B","#03C9A9","#68C3A3","#65C6BB","#1BBC9B","#1BA39C","#66CC99","#36D7B7","#C8F7C5","#86E2D5","#2ECC71","#16a085","#3FC380","#019875","#03A678","#4DAF7C","#2ABB9B","#1E824C","#049372","#26C281","#446CB3","#E4F1FE","#4183D7","#59ABE3","#81CFE0","#52B3D9","#C5EFF7","#22A7F0","#3498DB","#2C3E50","#19B5FE","#336E7B","#22313F","#6BB9F0","#1E8BC3","#3A539B","#34495E","#67809F","#2574A9","#1F3A93","#89C4F4","#4B77BE","#5C97BF","#EC644B","#D24D57","#F22613","#D91E18","#96281B","#EF4836","#D64541","#C0392B","#CF000F","#E74C3C","#DB0A5B","#F64747","#F1A9A0","#D2527F","#E08283","#F62459","#E26A6A","#DCC6E0","#663399","#674172","#AEA8D3","#913D88","#9A12B3","#BF55EC","#BE90D4","#8E44AD","#9B59B6","#e9d460","#FDE3A7","#F89406","#EB9532","#E87E04","#F4B350","#F2784B","#EB974E","#F5AB35","#D35400","#F39C12","#F9690E","#F9BF3B","#F27935","#E67E22","#ececec","#6C7A89","#D2D7D3","#EEEEEE","#BDC3C7","#ECF0F1","#95A5A6","#DADFE1","#ABB7B7","#F2F1EF","#BFBFBF","#EC644B","#D24D57","#F22613","#D91E18","#96281B","#EF4836","#D64541","#C0392B","#CF000F","#E74C3C","#DB0A5B","#F64747","#F1A9A0","#D2527F","#E08283","#F62459","#E26A6A","#DCC6E0","#663399","#674172","#AEA8D3","#913D88","#9A12B3","#BF55EC","#BE90D4","#8E44AD","#9B59B6","#446CB3","#E4F1FE","#4183D7","#59ABE3","#81CFE0","#52B3D9","#C5EFF7","#22A7F0","#3498DB","#2C3E50","#19B5FE","#336E7B","#22313F","#6BB9F0","#1E8BC3","#3A539B","#34495E","#67809F","#2574A9","#1F3A93","#89C4F4","#4B77BE","#5C97BF","#4ECDC4","#A2DED0","#87D37C","#90C695","#26A65B","#03C9A9","#68C3A3","#65C6BB","#1BBC9B","#1BA39C","#66CC99","#36D7B7","#C8F7C5","#86E2D5","#2ECC71","#16a085","#3FC380","#019875","#03A678","#4DAF7C","#2ABB9B","#00B16A","#1E824C","#049372","#26C281","#e9d460","#FDE3A7","#F89406","#EB9532","#E87E04","#F4B350","#F2784B","#EB974E","#F5AB35","#D35400","#F39C12","#F9690E","#F9BF3B","#F27935","#E67E22","#ececec","#6C7A89","#D2D7D3","#EEEEEE","#BDC3C7","#ECF0F1","#95A5A6","#DADFE1","#ABB7B7","#F2F1EF","#BFBFBF"]
+    'paints': ["#000000","#DADFE1","#00B16A","#4ECDC4","#A2DED0","#87D37C","#90C695","#26A65B","#03C9A9","#68C3A3","#65C6BB","#1BBC9B","#1BA39C","#66CC99","#36D7B7","#C8F7C5","#86E2D5","#2ECC71","#16a085","#3FC380","#019875","#03A678","#4DAF7C","#2ABB9B","#1E824C","#049372","#26C281","#446CB3","#E4F1FE","#4183D7","#59ABE3","#81CFE0","#52B3D9","#C5EFF7","#22A7F0","#3498DB","#2C3E50","#19B5FE","#336E7B","#22313F","#6BB9F0","#1E8BC3","#3A539B","#34495E","#67809F","#2574A9","#1F3A93","#89C4F4","#4B77BE","#5C97BF","#EC644B","#D24D57","#F22613","#D91E18","#96281B","#EF4836","#D64541","#C0392B","#CF000F","#E74C3C","#DB0A5B","#F64747","#F1A9A0","#D2527F","#E08283","#F62459","#E26A6A","#DCC6E0","#663399","#674172","#AEA8D3","#913D88","#9A12B3","#BF55EC","#BE90D4","#8E44AD","#9B59B6","#e9d460","#FDE3A7","#F89406","#EB9532","#E87E04","#F4B350","#F2784B","#EB974E","#F5AB35","#D35400","#F39C12","#F9690E","#F9BF3B","#F27935","#E67E22","#ececec","#6C7A89","#D2D7D3","#EEEEEE","#BDC3C7","#ECF0F1","#95A5A6","#DADFE1","#ABB7B7","#F2F1EF","#BFBFBF","#EC644B","#D24D57","#F22613","#D91E18","#96281B","#EF4836","#D64541","#C0392B","#CF000F","#E74C3C","#DB0A5B","#F64747","#F1A9A0","#D2527F","#E08283","#F62459","#E26A6A","#DCC6E0","#663399","#674172","#AEA8D3","#913D88","#9A12B3","#BF55EC","#BE90D4","#8E44AD","#9B59B6","#446CB3","#E4F1FE","#4183D7","#59ABE3","#81CFE0","#52B3D9","#C5EFF7","#22A7F0","#3498DB","#2C3E50","#19B5FE","#336E7B","#22313F","#6BB9F0","#1E8BC3","#3A539B","#34495E","#67809F","#2574A9","#1F3A93","#89C4F4","#4B77BE","#5C97BF","#4ECDC4","#A2DED0","#87D37C","#90C695","#26A65B","#03C9A9","#68C3A3","#65C6BB","#1BBC9B","#1BA39C","#66CC99","#36D7B7","#C8F7C5","#86E2D5","#2ECC71","#16a085","#3FC380","#019875","#03A678","#4DAF7C","#2ABB9B","#00B16A","#1E824C","#049372","#26C281","#e9d460","#FDE3A7","#F89406","#EB9532","#E87E04","#F4B350","#F2784B","#EB974E","#F5AB35","#D35400","#F39C12","#F9690E","#F9BF3B","#F27935","#E67E22","#ececec","#6C7A89","#D2D7D3","#EEEEEE","#BDC3C7","#ECF0F1","#95A5A6","#ABB7B7","#F2F1EF","#BFBFBF"]
 };
 var clickX = new Array();
 var clickY = new Array();
@@ -47,6 +49,8 @@ function initializeDocument(){
     var paintButton = document.getElementById("paint");
     paintList[0].classList.add("selected");
     paintButton.classList.add("selected");
+
+    context.drawImage(userPicture, 100, 100, 400, 400);
 }
 
 function get_mouse_position(canvas, event) {
@@ -77,6 +81,7 @@ function resetCanvas(){
 
 function clearCanvas(context){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.drawImage(userPicture, 100, 100, 400, 400);
 }
 
 function redraw(context){
@@ -96,6 +101,7 @@ function redraw(context){
         context.strokeStyle = clickColor[i];
         context.stroke();
     }   
+    up.html("redraw");
 }
 
 // main:
@@ -114,6 +120,7 @@ function handleStart(event){
     else if (toolSelected == 'background'){
         canvas.style.background = strokeColorSetting;
     }
+    up.html("handleStart");
 }
 
 function handleMove(event){
@@ -123,12 +130,14 @@ function handleMove(event){
         addClick(mouse_position.x, mouse_position.y, true)
         redraw(context);
     }
+    up.html("handleMove");
 }
 
 function handleEnd(event){
     if (toolSelected == 'paint'){
         paint = false;
     }
+    up.html("handleEnd");
 }
 
 // Drawing board events
@@ -148,11 +157,11 @@ clearButton.addEventListener('click', function(event){
 }, false);
 
 
-var saveButton = document.getElementById('save');
-saveButton.addEventListener('click', function(event){
-    var img = canvas.toDataURL("image/png");
-    window.location = img;
-}, false);
+// var saveButton = document.getElementById('save');
+// saveButton.addEventListener('click', function(event){
+//     var img = canvas.toDataURL("image/png");
+//     // window.location = img;
+// }, false);
 
 for (var i = 0; i < paintList.length; i++) {
     paintList[i].addEventListener('click', function(event){
@@ -184,9 +193,17 @@ colorDisplay.addEventListener('change', function(event){
 for (var i = 0; i < toolList.length; i++) {
     toolList[i].addEventListener('click', function(event){
         for (var i = 0; i < toolList.length; i++) {
-            toolList[i].classList.remove("selected");
+            toolList[i].classList.remove("selected"); 
         }
         toolSelected = this.getAttribute("id");
         this.classList.add("selected");
     }, false);
 }
+
+//show user picture
+var DrawIcons = function (isrc) {
+    console.log("draw");
+    var ic = new Image();
+    ic.src = isrc;
+    context.drawImage(ic, 100, 100, 100, 100);
+};

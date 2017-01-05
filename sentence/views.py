@@ -14,18 +14,14 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 
 def index(request): 
-    if request.session.get('UID'):
-        usermodel = User.objects.get(UID=request.session['UID'])
-        return render(request, "sentence/index.html",{'username': usermodel})
-    else:
-        return render(request, "sentence/index.html")
+    return render(request, "sentence/index.html")
 
 # def show_link(request, obj):
 
 def sentence_url(request, sid):
     # print('sentence_url called')
     if request.session.get('UID'):
-        usermodel = User.objects.get(UID=request.session['UID'])
+        usermodel = User.objects.get(UID=request.session.get('UID'))
         new_sentence = Sentence.objects.get(SID = int(sid))
         return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
     else:
@@ -38,7 +34,7 @@ def sentence_post(request):
     if request.method == 'POST':
         django_form = PostSentence(request.POST)
         get_uid = request.session.get('UID')
-        usermodel = User.objects.get(UID=get_uid)
+        # usermodel = User.objects.get(UID=get_uid)
 
         if django_form.is_valid():
             if django_form.data.get("topic"):
@@ -59,7 +55,7 @@ def sentence_post(request):
                         Content = new_sentence,
                         Sentence_tag =  new_sentence_tag, 
                         UID = usermodel,
-                        TopicID = new_topic_model,
+                        # TopicID = new_topic_model,
                     )           
 
                 print("topic sentence  store")
@@ -122,33 +118,66 @@ def translation_post(request, get_sid):
     else:
         return render(request, 'sentence/index.html')
 
-def sentence(request):
-    return render(request, "sentence/sentence.html")
+# def sentence(request):
+#     return render(request, "sentence/sentence.html")
        
 def sentence_world(request):
 	return render(request, "sentence/sentence_world.html")
 
-def post_world(request):
-    # print('post_world called')
-    return render(request, "sentence/post_world.html")
+# def post_world(request):
+#     # print('post_world called')
+#     return render(request, "sentence/post_world.html")
 
 def usermap(request):
-	return render(request, "sentence/usermap.html")
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session.get('UID'))
+        return render(request, "sentence/usermap.html",{'username': usermodel})
+    else:
+	   return render(request, "sentence/usermap.html")
 
 def user_profile(request):
-	return render(request, "sentence/user_profile.html")
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session.get('UID'))
+        return render(request, "sentence/user_profile.html",{'username': usermodel})
+    else:
+	   return render(request, "sentence/user_profile.html")
+
+def get_new_user_icon(request):
+    print('in icon save')
+    if request.session.get('UID'):
+        userpicture = request.GET.get('userPicture')
+        if userpicture:
+            usermodel = User.objects.get(UID=request.session.get('UID'))
+            usermodel.UserIcon = userpicture
+            usermodel.save()
+        # return render(request, "sentence/user_profile.html",{'username': usermodel})
+    else:
+       return render(request, "sentence/user_profile.html")
+
 
 def user_account(request):
-	return render(request, "sentence/user_account.html")
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session.get('UID'))
+        return render(request, "sentence/user_account.html",{'username': usermodel})
+    else:
+	   return render(request, "sentence/user_account.html")
 
 def user_achievement(request):
-	return render(request, "sentence/user_achievement.html")
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session.get('UID'))
+        return render(request, "sentence/user_achievement.html",{'username': usermodel})
+    else:
+	   return render(request, "sentence/user_achievement.html")
 
 def user_history(request):
-    get_uid = request.session.get('UID')
-    sentencemodel = Sentence.objects.filter(UID=get_uid)
-    translationmodel = Translation.objects.filter(UID=get_uid)
-    return render(request, "sentence/user_history.html",{'sentence_model': sentencemodel,'translation_model': translationmodel})
+    if request.session.get('UID'):
+        get_uid = request.session.get('UID')
+        usermodel = User.objects.get(UID=get_uid)
+        sentencemodel = Sentence.objects.filter(UID=get_uid)
+        translationmodel = Translation.objects.filter(UID=get_uid)
+        return render(request, "sentence/user_history.html",{'sentence_model': sentencemodel,'translation_model': translationmodel,'username': usermodel})
+    else:
+        return render(request, "sentence/user_history.html")
 
 
 
@@ -197,7 +226,7 @@ def getuserid(request):
         password = '000'
         if User.objects.filter(SocialID = userId).exists():
             # print('in session')
-            request.session['UID'] = User.objects.get(UserName = username).UID
+            request.session['UID'] = User.objects.get(SocialID = userId).UID
             # limit userId found to 0 object
             user = User.objects.filter(SocialID = userId)[0]
             # user.user_picture = userpicture
@@ -208,11 +237,12 @@ def getuserid(request):
                 # UID = userId,
                 UserName =  username,
                 Password = password,
-                SocialID = userId
+                SocialID = userId,
                 # Email = useremail
             )
         # print('fb login '+username)
-        return render(request, "sentence/index.html",{'username': username})
+        # return render(request, "sentence/index.html",{'username': username})
+        return render(request, "sentence/index.html")
 
 #logout
 def logout(request):
