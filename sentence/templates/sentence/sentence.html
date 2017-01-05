@@ -24,23 +24,23 @@
                         <div class="top" style="padding: 15px;">
                             <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
                         </div>
-                        <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID %}" >
-                            <div class="postbox-content">
-                                {% csrf_token %}
-                                {{ form.as_p }}
 
-                                <h2>DALIY TRANSLATION</h2>
+                        <div class="postbox-content">
+                            {% csrf_token %}
+                            {{ form.as_p }}
 
-                                <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
-                                <input id="input" type='text' name="translation" placeholder="Translate this sentence"></input>
-                                
-                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
-                                <input type="text" name="translation_tag" placeholder="#Language (English only)"/>
+                            <h2>DALIY TRANSLATION</h2>
 
-                                <input type="submit" name="post_submit" value="Submit" />
-                                
-                            </div>
-                        </form>
+                            <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
+                            <input id="input" type='text' name="translation" placeholder="Translate this sentence with another language"></input>
+                            
+                            <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
+                            <input type="text" name="translation_tag" placeholder="Type the language (English only)"/>
+
+                            <input type="submit" name="post_submit" value="Submit" />
+                            
+                        </div>
+
                     </div>
 
                 </div>
@@ -62,50 +62,50 @@
 <!-- Sentence posts in one country -->
 <div class="map-container-fluid map-content">
     <div class="map-block">
-        <div id="vmap" style="width: 100vw; height: 100vh;">
-            
-            <div id="row">
-              <span id="float-language" class="">LANGUAGE</span>
-              <span id="float-sentence" class="text-center" style="left:35vw; top:2vh;">{{ sentence_content.Content }}</span>
-            </div>
-
-            <div style="position:absolute;">
-                <div class="cards-block float row">
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">A Basic Panel</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">A Basic Panel</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">A Basic Panel</div>
-                    </div>
-                </div>
-                <div class="cards-block float row">
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Pen Pineapple Apple Pen </div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Syuan is Pig</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">An apple a day, keeps the doctor away</div>
-                    </div>
-                </div>
-                <div class="cards-block float row">
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Pen Pineapple Apple Pen </div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Syuan is Pig</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">An apple a day, keeps the doctor away</div>
-                    </div>
-                </div>
-            </div>
-
+        <div id="row">
+          <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
+          <span id="float-sentence" class="text-center" style="left:35vw; top:2vh;">{{ sentence_content.Content }}</span>
         </div>
+
+        <div id="vmap" style="width: 100vw; height: 100vh;">
+
+            <!-- <div style="position:absolute;">
+                <div class="cards-block float row">
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">A Basic Panel</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">A Basic Panel</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">A Basic Panel</div>
+                    </div>
+                </div>
+                <div class="cards-block float row">
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Pen Pineapple Apple Pen </div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Syuan is Pig</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">An apple a day, keeps the doctor away</div>
+                    </div>
+                </div>
+                <div class="cards-block float row">
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Pen Pineapple Apple Pen </div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Syuan is Pig</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">An apple a day, keeps the doctor away</div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div> <!-- end vmap -->
     </div> <!-- end map-block -->
 </div> <!-- end map-container-fluid map-content -->
 
