@@ -14,22 +14,26 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 
 def index(request): 
-    # if request.session['UID']:
-    #     usermodel = User.objects.get(UID=request.session['UID'])
-    #     return render(request, "sentence/index.html",{'username': usermodel})
-    # else:
-    return render(request, "sentence/index.html")
+    sentencemodel = Sentence.objects.filter()
+    if request.session.get('UID'):
+        print('login index')
+        usermodel = User.objects.get(UID=request.session['UID'])
+        return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
+    else:
+        print('logout index')
+        return render(request, "sentence/index.html",{'sentence_content': sentencemodel})
 
 # def show_link(request, obj):
 
 def sentence_url(request, sid):
     # print('sentence_url called')
+    new_sentence = Sentence.objects.get(SID = int(sid))
+
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
-        new_sentence = Sentence.objects.get(SID = int(sid))
+        # new_sentence = Sentence.objects.get(SID = int(sid))
         return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
     else:
-        new_sentence = Sentence.objects.get(SID = int(sid))
         return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence})
 
 def sentence_post(request):
@@ -38,7 +42,7 @@ def sentence_post(request):
     if request.method == 'POST':
         django_form = PostSentence(request.POST)
         get_uid = request.session.get('UID')
-        # usermodel = User.objects.get(UID=get_uid)
+        usermodel = User.objects.get(UID=get_uid)
 
         if django_form.is_valid():
             if django_form.data.get("topic"):
@@ -49,18 +53,28 @@ def sentence_post(request):
 
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
+                    #if topic exist
+                    if(Topic.objects.filter(Topic_tag=new_sentence_topic).exists()):
+                        new_topic_model = Topic.objects.get(Topic_tag=new_sentence_topic)
 
-                    new_topic_model = Topic.objects.create(
-                        Topic_tag = new_sentence_topic,
-                        Link = new_sentence_link,
-                    ) 
+                        new_sentence_model = Sentence.objects.create(
+                            Content = new_sentence,
+                            Sentence_tag =  new_sentence_tag, 
+                            UID = usermodel,
+                            TopicID = new_topic_model,
+                        )           
+                    else:
+                        new_topic_model = Topic.objects.create(
+                            Topic_tag = new_sentence_topic,
+                            Link = new_sentence_link,
+                        ) 
 
-                    new_sentence_model = Sentence.objects.create(
-                        Content = new_sentence,
-                        Sentence_tag =  new_sentence_tag, 
-                        UID = usermodel,
-                        # TopicID = new_topic_model,
-                    )           
+                        new_sentence_model = Sentence.objects.create(
+                            Content = new_sentence,
+                            Sentence_tag =  new_sentence_tag, 
+                            UID = usermodel,
+                            TopicID = new_topic_model,
+                        )           
 
                 print("topic sentence  store")
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
@@ -186,15 +200,16 @@ def user_history(request):
 
 
 def login_app(request):
+    sentencemodel = Sentence.objects.filter(SID=1)
     if User.objects.filter(Email=request.POST.get('email')).exists():
         m = User.objects.get(Email=request.POST.get('email'))
         if m.Password == request.POST.get('password'):
             request.session['UID'] = m.UID
             print(m.UserName)
-            return render(request, 'sentence/index_afterlogin.html',{'username': m}) 
+            return render(request, 'sentence/index_afterlogin.html',{'username': m,'sentence_content': sentencemodel}) 
         else:
             print('Password WRONG')
-            return render(request, 'sentence/index.html')
+            return render(request, 'sentence/index.html',{'sentence_content': sentencemodel})
     else:
         print('NOT USER')
         django_form = AddUser(request.POST)
@@ -215,12 +230,12 @@ def login_app(request):
             )
                 
             request.session['UID'] = new_user_model.UID
-            return render(request, 'sentence/index_afterlogin.html',{'username': new_user_model})
+            return render(request, 'sentence/index_afterlogin.html',{'username': new_user_model,'sentence_content': sentencemodel})
             
         else:
             print('wrong form')
-            return render(request, 'sentence/index.html')
-        return render(request, 'sentence/index.html')            
+            return render(request, 'sentence/index.html',{'sentence_content': sentencemodel})
+        return render(request, 'sentence/index.html',{'sentence_content': sentencemodel})            
 
 #FB
 def getuserid(request):
@@ -253,7 +268,11 @@ def getuserid(request):
 def logout(request):
     print("logout")
     django_logout(request)
-    return render(request, "sentence/index.html")
+    return render(request, "sentence/index.html",{'extends_html': 'sentence/background.html'})
+
+#likes
+# def likes_count():
+    
 
 #google+
 # def signup_google(request):

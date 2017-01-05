@@ -51,8 +51,8 @@
     
     <div id=”fb-root”></div>
         <!--facebook login block-->
-        <script src="http://connect.facebook.net/en_US/all.js"></script>  
-    
+        <script src="http://connect.facebook.net/en_US/all.js"></script>
+  
     <div class="header">
         <!-- Navigation -->
         <nav class="navbar-fixed-top" role="navigation">
@@ -85,43 +85,7 @@
                                 <button type="button" class="btn1 btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
                             </span>
                         </div>
-
-                        <div class="header-sm-user">
-                            <!-- User Profile -->
-                            <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                  {% if username %}
-                                    <img src="{% static username.UserIcon.url %}" height="40" width="40" id="user-pic">
-                                    <span id="user-name"><font color=#000>{{username.UserName}}</font></span>
-                                  {% else %}
-                                    <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
-                                    <span id="user-name"><font color=#000>UserName</font></span>
-                                  {% endif %}
-                                  <!-- <span id="user-name"><font color=#FFF>USER NAME<b class="caret"></b></font></span> -->
-                                  
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
-                                    <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
-                                    <li class="divider"></li>
-                                      <!--class="fb-log-out" written by gim for fb log out-->
-                                    <li><button class="fa fa-sign-out fb-log-out">Logout</button>
-                                    <a href="/logout/"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
-                                  </ul>
-                            </span>
-                        </div>
-
-                        <div class="header-sm-notification">
-                            <!-- Notification -->
-                            <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="fa fa-bell" style="font-size: 30px; color:#fff;"></i>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <div><font color=white>&emsp;Notifications</font></div>
-                                  </ul>
-                            </span>
-                        </div>
+                        
                         
                         <!-- Log in Modal -->
                         <div class="modal fade" id="login-modal" role="dialog">
@@ -212,10 +176,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- jQuery ui custom Library -->
     <script type="text/javascript" src="{% static 'jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
-    <!-- Morris Charts JavaScript -->
-    <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
     <!-- Bootstrap js -->
     <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Navbar js -->
@@ -224,50 +184,10 @@
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
     <!-- Sentence js -->
     <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script>
-    <!-- Imagefile js -->
-    <script>
-        //user profile
-        var userPicture = new Image();
-        userPicture.src = "{% static username.UserIcon.url %}";
-        //context.drawImage(userPicture, 100, 100, 400, 400); 
-
-
-        //user map
-        var icon1 = "{% static 'images/whale.png' %}";
-        var icons = new Array();
-        icons[0] = new Image();
-        icons[0].src = "{% static 'images/whale.png' %}";
-        icons[1] = new Image();
-        icons[1].src = "{% static 'images/fish.png' %}";
-    </script>  
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
-    <script type="text/javascript">
-      var saveButton = document.getElementById('save');
-        saveButton.addEventListener('click', function(event){
-          var user_icon_img;
-          // canvas.toBlob(function(blob) {
-          //     user_icon_img = URL.createObjectURL(blob);
-          // });
-          // canvas.toBlob(function(blob){
-          //   user_icon_img = URL.createObjectURL(blob);
-          //   console.log(user_icon_img);
-            
-          // }, "image/png", 1);
-          user_icon_img = canvas.toDataURL("image/png");
-          
-            $.get('/get_new_user_icon/',{
-                userPicture: user_icon_img
-              });
-            // $.get('/get_new_user_icon/',{
-            //     userPicture: user_icon_img
-            //   },function(data){
-            // });
-            window.location = user_icon_img;
-        }, false);
-    </script>>
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
@@ -278,22 +198,37 @@
             });
         });
     </script>
+    <!-- Morris Charts JavaScript -->
+    <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
+    <!-- Imagefile js -->
+    <script>
+        var icon1 = "{% static 'images/whale.png' %}";
+        var icons = new Array();
+        icons[0] = new Image();
+        icons[0].src = "{% static 'images/whale.png' %}";
+        icons[1] = new Image();
+        icons[1].src = "{% static 'images/fish.png' %}"
+    </script>  
+
 </body>
 <!--    facebookApi-->
      <script type="text/javascript">
 
-     var FaceBookAppId = '233902740370813';//localhost:8000
+
+      var FaceBookAppId = '233902740370813';//localhost:8000
      // var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
-                status: true,
+                status: false,
                 cookie: true
                 , xfbml: true
                 , version: 'v2.8'
             });
             window.fbloaded();
-            //FB.AppEvents.logPageView();
+            FB.AppEvents.logPageView();
         };
         
         
@@ -308,27 +243,20 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
      
-    window.fbloaded = function(){ 
+    window.fbloaded = function(){
+        
+        var userpicture;
+        var useremail;
+
         //fb status connected not_authorized unknown
         FB.Event.subscribe('auth.statusChange', function(response){
             // console.log(response.status);
             if(response.status === 'connected'){
-              testAPI();
-            }
-        });
-    } 
-
-    function testAPI(){
-        var useremail;
                 FB.api("/me/picture?widrh=30" , function(response){
-                    $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');                        
+                    userpicture = response.data.url;
+                    $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
+                        
                 });
-
-                FB.api('/me', {fields: 'id,name,email'},function(response) {
-                    useremail = response.email;
-                    console.log(useremail);
-                  }
-                );
         
                 var userId;
                 FB.api("/me",function(response){
@@ -336,15 +264,23 @@
                     $('#user-name').html(response.name);
                     $.get('/getuserid/',{
                         username: response.name,
-                        userId: response.id
-                        // ,useremail: useremail
+                        userId: response.id,
+                        useremail: useremail
                      },function(data){
 
                      });
+                    console.log(username );
                 });
-                
-                    
-              }
+
+                // FB.api('/me', {fields: 'email' },function(response) {
+                //     console.log(response.email);
+                //     useremail = response.email;
+                //   }
+                // );
+                // loginState = true;
+            }
+        });
+    } 
 
     var loginCheck = function(){
         FB.getLoginStatus(function(response){
@@ -356,12 +292,6 @@
                     $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
                     $('#user-name').html('USER NAME');
                     console.log("logout");
-                    // $('.facebook-login-btn').html("Facebook Login");
-                    // $('#user-pic').attr("src", "");
-                    // $('#user-name').html(null);
-                    /*facebook friend list
-                    $(".friend-block").empty();
-                    */
                 });
             }else{
                 console.log("login");
@@ -381,28 +311,29 @@
         loginCheck();
 
      });     
-     //console.log(loginState);
          //startApp();
-
-  var isPost = false;
-  $('#link').focusin(function(){
-    isPost = true;
-    console.log('in');  
-  });
-
-  $('#link').blur(function(){
-    isPost = false;
-  });
-  var link;
-  setInterval(function(){
-      if(isPost === true){
-        var newLink =  $('#link').val();
-        if(link != newLink){
-          $('#show_link').replaceWith('<iframe id="show_link" src="'+ newLink +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');  
-          link = newLink   
-        }
-      }
-  },1000);
     </script>
-</html>
 
+
+    <script type="text/javascript">
+      var isPost = false;
+      $('#link').focusin(function(){
+        isPost = true;
+        console.log('in');  
+      });
+
+      $('#link').blur(function(){
+        isPost = false;
+      });
+      var link;
+      setInterval(function(){
+          if(isPost === true){
+            var newLink =  $('#link').val();
+            if(link != newLink){
+              $('#show_link').replaceWith('<iframe id="show_link" src="'+ newLink +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');  
+              link = newLink   
+            }
+          }
+      },1000);
+    </script>   
+</html>

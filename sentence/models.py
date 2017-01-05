@@ -18,7 +18,7 @@ class User(models.Model):
 	#IconPosition = models.
 	# EXP = models.IntegerField()
 	# Money = models.DecimalField(max_digits=20,decimal_places=0)
-# 	language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
+	# language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
 
 #SENTENCE
 class Sentence(models.Model):
@@ -30,6 +30,12 @@ class Sentence(models.Model):
 	Sentence_tag = models.TextField(null=False, default='unknown')
 	TopicID = models.ForeignKey('Topic',null=True,on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+	Likes = models.PositiveIntegerField(default=0)
+	Views = models.PositiveIntegerField(default=0)
+
+	@property
+	def total_like(slef):
+		return slef.Likes.count()
 
 # #TRANSLATION
 class Translation(models.Model):
@@ -39,6 +45,8 @@ class Translation(models.Model):
 	Translation_tag = models.TextField(null = False, default='unknown')
 	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+	Likes = models.PositiveIntegerField(default=0)
+	Views = models.PositiveIntegerField(default=0)
 
 
 #TOPIC
@@ -46,6 +54,8 @@ class Topic(models.Model):
 	TopicID = models.AutoField(primary_key=True, null=False, unique=True)
 	Topic_tag = models.TextField(null = False, default='unknown')
 	Link = models.TextField(null=False, default='unknown')
+	Likes = models.PositiveIntegerField(default=0)
+	Views = models.PositiveIntegerField(default=0)
 
 
  #LANGUAGE

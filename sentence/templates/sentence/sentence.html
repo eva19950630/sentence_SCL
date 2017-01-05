@@ -6,14 +6,10 @@
 <div class="inputfield-container">
     <section>
         <div class="row">
-          <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID %}" >
-              
-              <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
-                  <label for="input">I want to translate this sentence</label>
-                  <input id="input" type='text'></input>
-              </div>
-
-          </form>
+            <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
+                <label for="input">I want to translate this sentence</label>
+                <input id="input" type='text'></input>
+            </div>
           {% if sentence_content.TopicID %}
             {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
@@ -28,23 +24,23 @@
                         <div class="top" style="padding: 15px;">
                             <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
                         </div>
+                        <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID %}" >
+                            <div class="postbox-content">
+                                {% csrf_token %}
+                                {{ form.as_p }}
 
-                        <div class="postbox-content">
-                            {% csrf_token %}
-                            {{ form.as_p }}
+                                <h2>DALIY TRANSLATION</h2>
 
-                            <h2>DALIY TRANSLATION</h2>
+                                <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
+                                <input id="input" type='text' name="translation" placeholder="Translate this sentence"></input>
+                                
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
+                                <input type="text" name="translation_tag" placeholder="#Language (English only)"/>
 
-                            <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
-                            <input id="input" type='text' name="translation" placeholder="Translate this sentence"></input>
-                            
-                            <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
-                            <input type="text" name="translation_tag" placeholder="#Language (English only)"/>
-
-                            <input type="submit" name="post_submit" value="Submit" />
-                            
-                        </div>
-
+                                <input type="submit" name="post_submit" value="Submit" />
+                                
+                            </div>
+                        </form>
                     </div>
 
                 </div>

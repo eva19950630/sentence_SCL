@@ -32,10 +32,11 @@ urlpatterns = [
     
     # url(r'^login/', views.signup_app),
     url(r'^login/', views.login_app),
-    url(r'^sentence/(?P<get_sid>\d+)/translation/$', views.translation_post, name = 'translation_post'),
+    url(r'^sentence/translation/(?P<get_sid>\d+)/$', views.translation_post, name = 'translation_post'),
     url(r'^sentence_post/', views.sentence_post,name = 'sentence_post'),
     url(r'^sentence/(?P<sid>\d+)/$', views.sentence_url, name="sentence_url"),
     url(r'^user/profileIcon/', views.get_new_user_icon, name="get_new_user_icon"),
+    # url(r'^likes/', views.likes_count, name="likes_count"),
     # url(r'^sentence_post/(?P<sid>\d+)/$', views.sentence_post,name = 'sentence_post'),
     url(r'^logout/', views.logout,name = "logout"),
     #fb
