@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sentence',
-    'easy_timezones',
+    # 'easy_timezones',
     #google+
 #    'django.contrib.sites',
 #    'allauth',
@@ -162,3 +162,6 @@ AUTHENTICATION_BACKENDS = (
 
 #session cache db
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+
+# GEOIP_DATABASE = '/GeoIP.dat/GeoLiteCity.dat'
