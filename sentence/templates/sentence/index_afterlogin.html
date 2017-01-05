@@ -1,9 +1,6 @@
 {% extends 'sentence/background_afterlogin.html' %}
 {% load staticfiles %}
 {% load tz %}
-
-
-
 {% block content1 %}
 
 <!-- Inputfield and Post modal -->
@@ -91,7 +88,7 @@
                   </div>
                 </div>
             </a>
-            <button class="like"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span></button>
+            <button class="like"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart">{{surl.Likes}}</span></button>
           {% endfor %}
 
             <!-- <a href="/sentence">
