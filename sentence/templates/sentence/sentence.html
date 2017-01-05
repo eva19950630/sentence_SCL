@@ -1,4 +1,4 @@
-{% extends 'sentence/background.html' %}
+{% extends 'sentence/background_afterlogin.html' %}
 {% load staticfiles %}
 {% block content1 %}
 
@@ -7,62 +7,110 @@
     <section>
         <div class="row">
           <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID %}" >
-              <!-- <form method = "POST" action="/translation_post/" > -->
-              {% csrf_token %}
-              {{ form.as_p }}
-              <div class="col-md-6 fields">
+              
+              <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
                   <label for="input">I want to translate this sentence</label>
-                  <input id="input" type='text' name="translation"></input>
-                  
+                  <input id="input" type='text'></input>
               </div>
-              <div class="col-md-6 postbtn">
-                  <input type="text" name="translation_tag" placeholder="#language" />
-                  <input type="submit" name="post_submit" value="Submit" style="margin: 0;" />
-      <!--             <button type="button" class="btn btn-default navbar-btn" id="post-btn" data-toggle="modal">POST</button>
-                  <a href=""><button type="button" class="btn btn-default navbar-btn" id="chooseArea-btn">CLICK COUNTRY</button></a> -->
-              </div>
+
           </form>
           {% if sentence_content.TopicID %}
             {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
     </section>
-</div>
+</div> <!-- end inputfield-container -->
 
-        <!-- Post Modal -->
-                      <div class="modal fade" id="post-modal" role="dialog">
-                          <div class="modal-dialog">
-                              <div id="post-box">
-                                  <div class="top" style="padding: 15px;">
-                                      <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                                  </div>
+            <!-- Post Modal -->
+            <div class="modal fade" id="post-modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="post-box translation">
+                        <div class="top" style="padding: 15px;">
+                            <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
 
-                                  <div class="postbox-content">
-                                      <h2>Hash tag your language</h2>
-                                      
-                                        
-                                      <input type="text" name="translation_tag" placeholder="#language" />
+                        <div class="postbox-content">
+                            {% csrf_token %}
+                            {{ form.as_p }}
 
-                                      <a href=""><input type="submit" name="post_submit" value="Submit" /></a>
-                                      
-                                  </div>
+                            <h2>DALIY TRANSLATION</h2>
 
-                              </div>
+                            <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
+                            <input id="input" type='text' name="translation" placeholder="Translate this sentence"></input>
+                            
+                            <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
+                            <input type="text" name="translation_tag" placeholder="#Language (English only)"/>
 
-                          </div>
-                      </div>
+                            <input type="submit" name="post_submit" value="Submit" />
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
 {% endblock content1 %}
 
 {% block content2 %}
 
 <!-- Overworld sentence posts and let user select country -->
-<div class="map-container-fluid">
+<!-- <div class="map-container-fluid">
     <div class="row map-block ">
         <div id="vmap" style="width: 100vw; height: 100vh;">
             <div id="float-sentence" class="col-lg-6 col-lg-offset-5 text-center ">{{ sentence_content.Content }}</div>
 
         </div>
     </div>
-</div>
+</div> -->
+<!-- Sentence posts in one country -->
+<div class="map-container-fluid map-content">
+    <div class="map-block">
+        <div id="vmap" style="width: 100vw; height: 100vh;">
+            
+            <div id="row">
+              <span id="float-language" class="">LANGUAGE</span>
+              <span id="float-sentence" class="text-center" style="left:35vw; top:2vh;">{{ sentence_content.Content }}</span>
+            </div>
+
+            <div style="position:absolute;">
+                <div class="cards-block float row">
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">A Basic Panel</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">A Basic Panel</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">A Basic Panel</div>
+                    </div>
+                </div>
+                <div class="cards-block float row">
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Pen Pineapple Apple Pen </div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Syuan is Pig</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">An apple a day, keeps the doctor away</div>
+                    </div>
+                </div>
+                <div class="cards-block float row">
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Pen Pineapple Apple Pen </div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">Syuan is Pig</div>
+                    </div>
+                    <div class="panel panel-default card-size col-lg-4">
+                        <div class="panel-body">An apple a day, keeps the doctor away</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- end map-block -->
+</div> <!-- end map-container-fluid map-content -->
 
 {% endblock content2 %}

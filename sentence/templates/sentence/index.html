@@ -2,109 +2,322 @@
 {% load staticfiles %}
 {% block content1 %}
 
-<!-- Inputfield and Post modal -->
-<div class="inputfield-container">
-    <section>
-        <div class="row">
-           
-            <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
-                <label for="input">What do you want to say today?</label>
-                <input id="input" type='text'></input>
-            </div>
+<div class="index-wrapper">
 
-        </div>
-        
-        <!-- <span class="postbtn"><button type="button" class="btn btn-default navbar-btn" >POST</button></span> -->
-            
-    </section>
-</div>
+<!-- New Sentence -->
+      <div class="index-title newtitle">
+        <div class="index-title-word">New</div>
+        <div class="index-title-word">Sentence</div>
+      </div>
 
-        <!-- Post Modal -->
-                      <div class="modal fade" id="post-modal" role="dialog">
-                          <div class="modal-dialog">
-                              <div id="post-box">
-                                  <div class="top" style="padding: 15px;">
-                                      <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                  </div>
+      <div class="index-content">
+        <!-- Post list -->
+        <div class="postcard-container">
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST1</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST2</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST3</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST4</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST5</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST6</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST7</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST8</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST9</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST10</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST11</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 new">
+                  <div class="postcard-content new">POST12</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+        </div> <!-- end postcard-container -->
+      </div> <!-- end index-content -->
 
-                                  <div class="postbox-content">
-                                  
-                                    <form method = "POST" action="/sentence_post/">
-                                        {% csrf_token %}
-                                        {{ form.as_p }}
 
-                                        <h2>DAILY POST</h2>
 
-                                          <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
-                                          <input id="input" type='text' name='sentence' placeholder="No more than 20 words"></input>
-                                          
-                                          <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG LANGUAGE</font>
-                                          <input type="text" name="language" placeholder="#Language"/>
+<!-- Popular Sentence -->
+      <div class="index-title poputitle">
+        <div class="index-title-word">Popular</div>
+        <div class="index-title-word">Sentence</div>
+      </div>
 
-                                          <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG TOPIC KEYWORDS</font>
-                                          <input type="text" name="topic" placeholder="#Topic Keywords (Optional)" />
-
-                                          <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TOPIC LINK</font>
-                                          <input type='text' id="link" name='link' placeholder="Paste Link (Optional)"></input>
-                                          <div id="show_link"></div>
-
-                                        <a href=""><input id="post-submit" type="submit" name="post_submit" value="Submit" /></a>
-                                        
-
-                                    </form>
-
-                                  </div>
-
-                              </div>
-
-                          </div>
-                      </div>
+      <div class="index-content">
+        <!-- Post list -->
+        <div class="postcard-container">
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST1</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST2</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST3</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST4</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST5</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST6</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST7</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST8</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST9</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST10</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST11</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+            <a href="/sentence">
+                <div class="card card-1 popu">
+                  <div class="postcard-content popu">POST12</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">2017/01/01 00:00</span>
+                    &emsp;
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                    &emsp;
+                    <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">0</span>
+                  </div>
+                </div>
+            </a>
+        </div> <!-- end postcard-container -->
+      </div> <!-- end index-content -->
+    
+</div> <!-- end index-wrapper -->
                       
-
 {% endblock content1 %}
-
-{% block content2 %}
-
-<div class="row">
-  <div class="col-xs-3">
-    <a href="#">Daily Topic</a>
-    <a href="#">Daily Sentence</a>
-  </div>
-  <div class="col-xs-9">
-    <!-- Post list -->
-    <div class="postcard-container">
-        <a href="/sentence">
-            <div class="card card-1">POST1</div>
-
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST2</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST3</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST4</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST5</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST6</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST7</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST8</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST9</div>
-        </a>
-        <a href="/sentence">
-            <div class="card card-1">POST10</div>
-        </a>
-    </div>
-  </div>
-</div>
-{% endblock content2 %}

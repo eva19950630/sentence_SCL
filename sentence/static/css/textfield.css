@@ -12,7 +12,7 @@
 }
 
 .fields {
-  width: 370px;
+  width: 380px;
   left: 10%;
   padding: 1em 2em 0 2em;
 }
@@ -62,7 +62,7 @@
 
 
 /*postbox*/
-#post-box {
+.post-box {
   position: relative;
   margin: 5% auto;
   width: 500px;
@@ -70,6 +70,10 @@
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.post-box.translation {
+  height: 350px;
 }
 
 .postbox-content {
@@ -93,7 +97,7 @@
 
 .postbox-content #post-submit {
   position: relative;
-  left: 24%;
+  left: 23%;
 }
 
 

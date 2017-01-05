@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index,name="index"),
     # url(r'^sentence/', views.sentence),
-    url(r'^sentence_world/', views.sentence_world),
+    # url(r'^sentence_world/', views.sentence_world),
     # url(r'^post_world/', views.post_world),
     url(r'^user/usermap/', views.usermap),
     url(r'^user/profile/', views.user_profile),

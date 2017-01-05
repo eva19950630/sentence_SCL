@@ -14,6 +14,10 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 
 def index(request): 
+    # if request.session['UID']:
+    #     usermodel = User.objects.get(UID=request.session['UID'])
+    #     return render(request, "sentence/index.html",{'username': usermodel})
+    # else:
     return render(request, "sentence/index.html")
 
 # def show_link(request, obj):
@@ -187,7 +191,7 @@ def login_app(request):
         if m.Password == request.POST.get('password'):
             request.session['UID'] = m.UID
             print(m.UserName)
-            return render(request, 'sentence/index.html',{'username': m}) 
+            return render(request, 'sentence/index_afterlogin.html',{'username': m}) 
         else:
             print('Password WRONG')
             return render(request, 'sentence/index.html')
@@ -211,7 +215,7 @@ def login_app(request):
             )
                 
             request.session['UID'] = new_user_model.UID
-            return render(request, 'sentence/index.html',{'username': new_user_model})
+            return render(request, 'sentence/index_afterlogin.html',{'username': new_user_model})
             
         else:
             print('wrong form')
@@ -242,7 +246,8 @@ def getuserid(request):
             )
         # print('fb login '+username)
         # return render(request, "sentence/index.html",{'username': username})
-        return render(request, "sentence/index.html")
+        # return render(request, "sentence/index.html")
+        return render(request, "sentence/index_afterlogin.html",{'username': username})
 
 #logout
 def logout(request):
