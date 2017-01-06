@@ -13,6 +13,7 @@ class User(models.Model):
 	Email = models.EmailField(max_length=254,unique = True)
 	Password = models.CharField(max_length=50, null=False)
 	SocialID = models.BigIntegerField(null=True,unique = True)
+ 	# UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
  	UserIcon = models.ImageField(upload_to='UserIcon_folder',default='/images/fish.png')
 	#IconPosition = models.
 	# EXP = models.IntegerField()
@@ -35,6 +36,9 @@ class Sentence(models.Model):
 	@property
 	def total_like(slef):
 		return slef.Likes.count()
+
+	# class Meta:
+	# 	ordering = ['-Likes']
 
 # #TRANSLATION
 class Translation(models.Model):

@@ -1,5 +1,6 @@
-{% extends 'sentence/background_afterlogin.html' %}
+{% extends extend_index %}
 {% load staticfiles %}
+{% load tz %}
 {% block content1 %}
 
 <!-- Inputfield and Post modal -->
@@ -14,7 +15,6 @@
             {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
-    </section>
 </div> <!-- end inputfield-container -->
 
             <!-- Post Modal -->
@@ -63,6 +63,8 @@
 <div class="map-container-fluid map-content">
     <div class="map-block">
         <div id="row">
+          <button class="like" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ sentence_content.SID }}">{{ sentence_content.Likes }}</span></button>
+
           <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
           <span id="float-sentence" class="text-center" style="left:35vw; top:2vh;">{{ sentence_content.Content }}</span>
         </div>
