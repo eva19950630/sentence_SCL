@@ -117,8 +117,13 @@ class Country_language(models.Model):
 class Country(models.Model):
     Country_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
     Country_name = models.CharField(max_length=20)
- 
- #AREA
+    Country_code = models.CharField(max_length=5, default='Country_code')
+
 #class Area(models.Model):
 #    Area_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
 # 	Area_name = models.CharField(max_length=20)
+
+#COLLECTION
+class Collection(models.Model):
+	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)

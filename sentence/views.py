@@ -1,13 +1,17 @@
 from django.shortcuts import render
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
-from .models import User, Sentence, Translation, Topic, Country, Country_language, Language
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 # from django.utils import timezone
 import datetime
 from django.core.urlresolvers import reverse
+#json by Gim
+from django.http import JsonResponse
+from django.http import HttpResponse
+import json
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
@@ -58,8 +62,12 @@ def sentence_url(request, sid):
             liked = True
             print("liked {}_{}".format(liked, sid))
 
+        isCollect = 'Collect'
+        if Collection.objects.filter(UID=usermodel.UID,SID=sid).exists():
+            isCollect = 'UnCollected'
+
         context = {'sentence_content': sentencemodel,'username': usermodel,
-        'liked': liked,'extend_index': 'sentence/background_afterlogin.html'}
+        'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect}
 
         return render(request, 'sentence/sentence.html',context)
     else:
@@ -395,7 +403,24 @@ def getCountry(request):
                 "country": country.Country_name,   
             }))   
 
-                
+#collection
+def collection(request):
+    isCollect = ''
+    if request.method == 'GET':
+        sid = request.GET.get('sentence_id') 
+        uid = request.session.get('UID')
+        if Collection.objects.filter(UID=uid,SID=sid).exists():
+            isCollect = 'Collect'
+            Collection.objects.filter(UID=uid,SID=sid).delete()             
+        else:
+            isCollect = 'UnCollected'
+            usermodel = User.objects.get(UID=uid)
+            sentencemodel = Sentence.objects.get(SID= sid)
+            new_collectmodel = Collection.objects.create(
+                UID = usermodel,
+                SID = sentencemodel,
+            )
+        return HttpResponse(isCollect)
 
 #google+
 # def signup_google(request):
