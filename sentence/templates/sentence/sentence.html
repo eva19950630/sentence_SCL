@@ -4,6 +4,7 @@
 {% block content1 %}
 
 <!-- Inputfield and Post modal -->
+{% if username %}
 <div class="inputfield-container">
     <section>
         <div class="row">
@@ -15,8 +16,9 @@
             {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
+    </section>
 </div> <!-- end inputfield-container -->
-
+{% endif %}
             <!-- Post Modal -->
             <div class="modal fade" id="post-modal" role="dialog">
                 <div class="modal-dialog">
