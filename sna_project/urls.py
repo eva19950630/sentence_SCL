@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^logout/', views.logout,name = "logout"),
     #fb
     url(r'^getuserid/', views.getuserid, name = 'getuserid'),
+    url(r'^getcountry/', views.getCountry, name = 'getcountry'),
     #google+
     #url(r'^allauth/accounts/', include('allauth.urls')),
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
-from .models import User, Sentence, Translation, Topic
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -381,6 +381,19 @@ def likes_count(request):
         return HttpResponse(likes,liked)
     else:
         return HttpResponse()
+#country     
+def getCountry(request):
+   if request.method == "GET":
+        c_code = request.GET.get('country_UpperCode')
+        country = Country.objects.get(Country_code = c_code)
+        language_id = Country_language.objects.filter(Country_ID=country.Country_ID)
+        
+        for i in language_id:
+            print(i.Language_ID.Language)
+            
+        return HttpResponse(json.dumps({
+                "country": country.Country_name,   
+            }))   
 
                 
 

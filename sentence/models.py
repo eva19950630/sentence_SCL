@@ -61,7 +61,7 @@ class Topic(models.Model):
 	Views = models.PositiveIntegerField(default=0)
 
 
- #LANGUAGE
+#LANGUAGE
 class Language(models.Model):
  	Language_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
  	Language = models.CharField(max_length=20)
