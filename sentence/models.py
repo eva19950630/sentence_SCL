@@ -122,3 +122,8 @@ class Country(models.Model):
 #class Area(models.Model):
 #    Area_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
 # 	Area_name = models.CharField(max_length=20)
+
+#COLLECTION
+class Collection(models.Model):
+	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)
