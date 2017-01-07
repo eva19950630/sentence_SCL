@@ -216,13 +216,13 @@
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
-                status: false,
+                status: true,
                 cookie: true
                 , xfbml: true
                 , version: 'v2.8'
             });
             window.fbloaded();
-            FB.AppEvents.logPageView();
+            //FB.AppEvents.logPageView();
         };
         
         
@@ -306,25 +306,6 @@
 
      });     
          //startApp();
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.like').click(function() {
-                var id;
-                id = $(this).attr('data-post-id');
-                console.log(id);
-
-                $.get('/likes/', {
-
-                    sentence_id: id
-
-                }, function(data) {
-
-                    console.log('like '+data);
-                    $('.like_'+id).html(data);
-                });
-            });
-        });
     </script>
 
 </html>

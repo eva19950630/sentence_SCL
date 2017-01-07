@@ -310,6 +310,11 @@
         });
     }
 
+    $('.btn.sharebtn.btn-default.navbar-btn').click(function(){
+        console.log('share click');
+        sharing();
+    });
+
      $(".facebook-login-btn").click(function(){
          loginCheck();
      });
@@ -347,7 +352,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             //likes
-            $('.like').click(function() {
+            $('.btn.heartbtn').click(function() {
                 var id;
                 id = $(this).attr('data-post-id');
                 console.log(id);
@@ -363,7 +368,7 @@
             });
 
             //collection
-            $('.collect').click(function() {
+            $('.btn.starbtn').click(function() {
                 var id;
                 id = $(this).attr('data-post-id');
                 console.log(id);

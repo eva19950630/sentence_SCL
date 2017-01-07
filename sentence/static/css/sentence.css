@@ -16,6 +16,37 @@
 }
 
 
+/*.sentenceInfo {
+  background-color: #f0f0f0;
+}*/
+
+/*.sentenceInfo.language {
+  margin-left:10%;
+  margin-right:25%;
+  float:left;
+}*/
+
+
+/*title*/
+/*.sentenceInfo.sentence {
+  margin-left:20%;
+  margin-right:10%;
+  float:left;
+}*/
+
+.sentenceInfo.language {
+  margin: 0 0 15px 0;
+}
+
+.sentenceInfo.sentence {
+  margin: 0 0 20px 0;
+}
+
+.sentenceInfo.rightbtn {
+  float: right;
+  margin: 0 0 5px 0;
+}
+
 
 #float-sentence {
     width: auto;
@@ -23,12 +54,13 @@
     position: relative;
     z-index: 11;
     
-    background-color: rgba(12, 165, 216, 0.77);
+    background-color: rgba(0, 204, 204, 0.8);
     
+    font-size: 20px;
+    color: #005454;
+
     border-radius: 6px;
     padding: 15px 80px;
-    
-    
 }
 
 #float-language {
@@ -36,11 +68,40 @@
     height: auto;
     position: relative;
     z-index: 11;
+
+    font-size: 16px;
     
     background-color:salmon;
     border-radius: 3px;
     padding: 3px 15px;
 }
+
+.sentenceInfo.rightbtn span {
+  padding: 2px;
+}
+
+.btn.heartbtn:hover {
+  /*background-color: rgba(221, 104, 100, 0.2);*/
+}
+
+.btn.heartbtn:focus {
+  color: #dd6864;
+  border-color: #dd6864;
+  background-color: transparent;
+}
+
+.btn.starbtn:focus {
+  color: #ffc70f;
+  border-color: #ffc70f;
+  background-color: transparent;
+}
+
+.btn.sharebtn {
+  color: #fff;
+  border-color: #3b5998;
+  background-color:  #3b5998;
+}
+
 
 .float {
     position: relative;
@@ -82,4 +143,24 @@
 
 .cards-block {
     margin: 30px;
+}
+
+
+/*translation post box*/
+.modal-sentence {
+  /*position: absolute;
+  left: 10%;*/
+  position: relative;
+  margin: 0 0 35px 10px;
+  padding: 10px;
+  width: 350px;
+  background-color: #f0f0f0;
+  text-align: center;
+  word-wrap: break-word; 
+  word-break: normal; 
+}
+
+.modalSentence-content {
+  font-size: 20px;
+  margin-bottom: 20px;
 }

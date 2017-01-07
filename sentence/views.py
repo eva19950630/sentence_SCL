@@ -23,12 +23,19 @@ def index(request):
 
     if request.session.get('UID'):
         print('login index')
+        # try:
+        #     usermodel = User.objects.get(UID=request.session['UID'])
+        # except User.DoesNotExist:
+        #     usermodel = None
+        # return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
+        
         usermodel = User.objects.get(UID=request.session['UID'])
 
         context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
 
         return render(request, "sentence/index_afterlogin.html",context)
+    
     else:
         print('logout index')
         context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
@@ -56,6 +63,13 @@ def sentence_url(request, sid):
         sentencemodel.save()    
 
     if request.session.get('UID'):
+        # usermodel = User.objects.get(UID=request.session.get('UID'))
+        # try:
+        #     usermodel = User.objects.get(UID=request.session['UID'])
+        # except User.DoesNotExist:
+        #     usermodel = None
+        # # new_sentence = Sentence.objects.get(SID = int(sid))
+        # return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
         usermodel = User.objects.get(UID=request.session.get('UID'))
         liked = False
         if request.session.get('has_liked_'+str(sid), liked):
