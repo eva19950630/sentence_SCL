@@ -17,7 +17,10 @@ def index(request):
     sentencemodel = Sentence.objects.filter()
     if request.session.get('UID'):
         print('login index')
-        usermodel = User.objects.get(UID=request.session['UID'])
+        try:
+            usermodel = User.objects.get(UID=request.session['UID'])
+        except User.DoesNotExist:
+            usermodel = None
         return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
     else:
         print('logout index')
@@ -30,7 +33,11 @@ def sentence_url(request, sid):
     new_sentence = Sentence.objects.get(SID = int(sid))
 
     if request.session.get('UID'):
-        usermodel = User.objects.get(UID=request.session.get('UID'))
+        # usermodel = User.objects.get(UID=request.session.get('UID'))
+        try:
+            usermodel = User.objects.get(UID=request.session['UID'])
+        except User.DoesNotExist:
+            usermodel = None
         # new_sentence = Sentence.objects.get(SID = int(sid))
         return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
     else:

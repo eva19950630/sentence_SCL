@@ -29,15 +29,19 @@
                             {% csrf_token %}
                             {{ form.as_p }}
 
-                            <h2>DALIY TRANSLATION</h2>
+                            <h2>DAILY TRANSLATION</h2>
+
+                            <div class="modal-sentence">
+                                <span class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</span>
+                            </div>
 
                             <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
-                            <input id="input" type='text' name="translation" placeholder="Translate this sentence with another language"></input>
+                            <input id="input" type='text' name="translation" placeholder="With another language"></input>
                             
                             <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
                             <input type="text" name="translation_tag" placeholder="Type the language (English only)"/>
 
-                            <input type="submit" name="post_submit" value="Submit" />
+                            <input id="post-submit" type="submit" name="post_submit" value="Submit" />
                             
                         </div>
 
@@ -62,10 +66,26 @@
 <!-- Sentence posts in one country -->
 <div class="map-container-fluid map-content">
     <div class="map-block">
-        <div id="row">
-          <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
-          <span id="float-sentence" class="text-center" style="left:35vw; top:2vh;">{{ sentence_content.Content }}</span>
-        </div>
+            <div class="sentenceInfo language">
+                <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
+            </div>
+            <div class="sentenceInfo sentence">
+                
+                <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
+            </div>
+            <div class="sentenceInfo rightbtn">
+                <!-- Like / Share -->
+                <span class="like">
+                    <button type="button" class="btn heartbtn btn-default navbar-btn" data-toggle="modal"><i class="fa fa-heart"></i>&ensp;Like</button>
+                </span>
+                <span class="star">
+                    <button type="button" class="btn starbtn btn-default navbar-btn" data-toggle="modal"><i class="fa fa-star"></i>&ensp;Star</button>
+                </span>
+                <span class="share">
+                    <button type="button" class="btn sharebtn btn-default navbar-btn" data-toggle="modal"><i class="fa fa-facebook"></i>&ensp;Share</button>
+                </span>
+            </div>
+        
 
         <div id="vmap" style="width: 100vw; height: 100vh;">
 
