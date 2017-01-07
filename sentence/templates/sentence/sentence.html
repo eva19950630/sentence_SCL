@@ -7,6 +7,7 @@
 {% if username %}
 
 <!-- Inputfield and Post modal -->
+{% if username %}
 <div class="inputfield-container">
     <section>
         <div class="row">
@@ -20,7 +21,7 @@
         </div>
     </section>
 </div> <!-- end inputfield-container -->
-
+{% endif %}
             <!-- Post Modal -->
             <div class="modal fade" id="post-modal" role="dialog">
                 <div class="modal-dialog">
@@ -69,7 +70,7 @@
             
             <button type="button" class="btn starbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star&ensp;{{ collected }}</span></button>
             
-            <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+            <button type="button" data-post-id="{{ sentence_content.SID }}" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
         </div>
 
         <div id="vmap" style="width: 100vw; height: 100vh;">

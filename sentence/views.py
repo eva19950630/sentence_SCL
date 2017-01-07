@@ -358,9 +358,7 @@ def getuserid(request):
                 SocialID = userId,
                 # Email = useremail
             )
-        # print('fb login '+username)
-        # return render(request, "sentence/index.html",{'username': username})
-        # return render(request, "sentence/index.html")
+
         context = {'username': username,'sentence_content': sentencemodel_like_order,
         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
         

@@ -45,6 +45,10 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
+    
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+<!--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>-->
 </head>
 
 <body>
@@ -211,18 +215,18 @@
      <script type="text/javascript">
 
 
-      var FaceBookAppId = '233902740370813';//localhost:8000
-     // var FaceBookAppId = '1868740400028340';//web
+      //var FaceBookAppId = '233902740370813';//localhost:8000
+      var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
-                status: false,
+                status: true,
                 cookie: true
                 , xfbml: true
                 , version: 'v2.8'
             });
             window.fbloaded();
-            FB.AppEvents.logPageView();
+            //FB.AppEvents.logPageView();
         };
         
         
