@@ -149,15 +149,15 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     #old time
     # 'social_auth.backends.facebook.FacebookBackend',
-    'social.backends.facebook.FacebookOAuth2',
+    # 'social.backends.facebook.FacebookOAuth2',
 )
 # FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 # SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 #     'locale': 'ru_RU',
 #     'fields': 'id,name,email', 
 # }
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
+# FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+# FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
 
 
 #session cache db

@@ -341,6 +341,8 @@ def getuserid(request):
     if request.method == 'GET':
         username = request.GET.get('username')
         userId = request.GET.get('userId')
+        useremail = request.GET.get('useremail')
+        print(useremail)
         password = '000'
         if User.objects.filter(SocialID = userId).exists():
             # print('in session')
@@ -356,7 +358,7 @@ def getuserid(request):
                 UserName =  username,
                 Password = password,
                 SocialID = userId,
-                # Email = useremail
+                Email = useremail,
             )
 
         context = {'username': username,'sentence_content': sentencemodel_like_order,

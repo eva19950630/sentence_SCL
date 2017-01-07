@@ -256,6 +256,12 @@
                         
                 });
         
+                FB.api('/me', {fields: 'email' },function(response) {
+                    console.log(response.email);
+                    useremail = response.email;
+                  }
+                );
+        
                 var userId;
                 FB.api("/me",function(response){
                     var username = response.name;
@@ -270,12 +276,6 @@
                     console.log(username );
                 });
 
-                // FB.api('/me', {fields: 'email' },function(response) {
-                //     console.log(response.email);
-                //     useremail = response.email;
-                //   }
-                // );
-                // loginState = true;
             }
         });
     } 
