@@ -21,23 +21,30 @@ def index(request):
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
 
-    if request.session.get('UID'):
-        print('login index')
-        # try:
-        #     usermodel = User.objects.get(UID=request.session['UID'])
-        # except User.DoesNotExist:
-        #     usermodel = None
-        # return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
+    uid = request.session.get('UID')
+
+    if User.objects.filter(UID = uid).exists():
+        if request.session.get('UID'):
+            print('login index')
+            # try:
+            #     usermodel = User.objects.get(UID=request.session['UID'])
+            # except User.DoesNotExist:
+            #     usermodel = None
+            # return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
+            
+            usermodel = User.objects.get(UID=request.session['UID'])
+
+            context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
+
+            return render(request, "sentence/index_afterlogin.html",context)
         
-        usermodel = User.objects.get(UID=request.session['UID'])
-
-        context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
-        'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
-
-        return render(request, "sentence/index_afterlogin.html",context)
-    
+        else:
+            print('logout index')
+            context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
+            ,'extend_index': 'sentence/background.html'}
+            return render(request, "sentence/index.html",context)
     else:
-        print('logout index')
         context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
         ,'extend_index': 'sentence/background.html'}
         return render(request, "sentence/index.html",context)
@@ -70,6 +77,7 @@ def sentence_url(request, sid):
         #     usermodel = None
         # # new_sentence = Sentence.objects.get(SID = int(sid))
         # return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence,'username': usermodel})
+        collectionmodel = Collection.objects.filter(UID=request.session.get('UID'),SID=sid)
         usermodel = User.objects.get(UID=request.session.get('UID'))
         liked = False
         if request.session.get('has_liked_'+str(sid), liked):
@@ -80,8 +88,13 @@ def sentence_url(request, sid):
         if Collection.objects.filter(UID=usermodel.UID,SID=sid).exists():
             isCollect = 'UnCollected'
 
-        context = {'sentence_content': sentencemodel,'username': usermodel,
-        'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect}
+        if collectionmodel:
+            context = {'sentence_content': sentencemodel,'username': usermodel,
+            'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect,
+            'collect':collectionmodel}
+        else:
+            context = {'sentence_content': sentencemodel,'username': usermodel,
+            'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect}
 
         return render(request, 'sentence/sentence.html',context)
     else:
@@ -255,6 +268,19 @@ def user_achievement(request):
         context = {'extend_index': 'sentence/background.html'}
         return render(request, "sentence/user_achievement.html",context)
 
+def user_collection(request):
+    if request.session.get('UID'):
+        get_uid = request.session.get('UID')
+        collectionmodel = Collection.objects.filter(UID=get_uid)
+        usermodel = User.objects.get(UID=get_uid)
+
+        context = {'username': usermodel,'collection_model': collectionmodel,'extend_index': 'sentence/background_afterlogin.html'}
+
+        return render(request, "sentence/user_collection.html",context)
+    else:
+        context = {'extend_index': 'sentence/background.html'}
+        return render(request, "sentence/user_collection.html",context)
+
 def user_history(request):
     if request.session.get('UID'):
         get_uid = request.session.get('UID')
@@ -415,12 +441,14 @@ def logout(request):
 #likes
 def likes_count(request):
     liked = False
+    state = False
     if request.method == 'GET':
         sentence_id = request.GET.get('sentence_id')
         sentence = Sentence.objects.get(SID=sentence_id)
         likes = sentence.Likes
         if request.session.get('has_liked_'+str(sentence_id),liked):
             print("unlike")
+            state = False
             if sentence.Likes > 0:
                 likes = likes - 1
                 try:
@@ -431,12 +459,14 @@ def likes_count(request):
                 sentence.Likes = likes
                 sentence.save()
         else:
+            state= True
             print("like")
             request.session['has_liked_'+sentence_id] = True
             likes = likes + 1
             sentence.Likes = likes
-            sentence.save()    
-        return HttpResponse(likes,liked)
+            sentence.save()   
+        data = {'data':likes,'state':state} 
+        return HttpResponse(json.dumps(data),liked)
     else:
         return HttpResponse()
 #country     
@@ -455,15 +485,15 @@ def getCountry(request):
 
 #collection
 def collection(request):
-    isCollect = ''
+    isCollect = False
     if request.method == 'GET':
         sid = request.GET.get('sentence_id') 
         uid = request.session.get('UID')
         if Collection.objects.filter(UID=uid,SID=sid).exists():
-            isCollect = 'Collect'
+            isCollect = False
             Collection.objects.filter(UID=uid,SID=sid).delete()             
         else:
-            isCollect = 'UnCollected'
+            isCollect = True
             usermodel = User.objects.get(UID=uid)
             sentencemodel = Sentence.objects.get(SID= sid)
             new_collectmodel = Collection.objects.create(

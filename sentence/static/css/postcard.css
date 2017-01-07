@@ -191,6 +191,17 @@
   color: #FFA500;
 }
 
+.cardheart {
+   border: none;
+   background-color: transparent;
+   outline: 0;
+}
+
+.cardheart:hover {
+  opacity: 0.6;
+}
+
+
 /* smartphone 767 */
 @media (max-width: 767px) {
   .postcard-container {

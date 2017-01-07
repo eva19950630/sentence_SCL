@@ -45,6 +45,11 @@
 .sentenceInfo.rightbtn {
   float: right;
   margin: 0 0 5px 0;
+  margin-right: 20px;
+}
+
+.sentenceInfo.rightbtn span {
+  padding: 5px;
 }
 
 
@@ -76,21 +81,37 @@
     padding: 3px 15px;
 }
 
-.sentenceInfo.rightbtn span {
-  padding: 2px;
+.btn.heartbtn {
+  font-size: 20px;
+  outline: 0;
+}
+
+.btn.heartbtn.active {
+  background-color: rgba(221, 104, 100, 0.6);
+  color: #fff;
+  border-color: rgba(221, 104, 100, 0.6);
 }
 
 .btn.heartbtn:hover {
-  /*background-color: rgba(221, 104, 100, 0.2);*/
-}
-
-.btn.heartbtn:focus {
+  outline: 0;
   color: #dd6864;
   border-color: #dd6864;
   background-color: transparent;
 }
 
-.btn.starbtn:focus {
+.btn.starbtn {
+  font-size: 20px;
+  outline: 0;
+}
+
+.btn.starbtn.active {
+  background-color: rgba(255, 199, 15, 0.6);
+  color: #fff;
+  border-color: rgba(255, 199, 15, 0.6);
+}
+
+.btn.starbtn:hover {
+  outline: 0;
   color: #ffc70f;
   border-color: #ffc70f;
   background-color: transparent;
@@ -100,7 +121,25 @@
   color: #fff;
   border-color: #3b5998;
   background-color:  #3b5998;
+  font-size: 20px;
+  outline: 0;
 }
+
+.btn.sharebtn:hover {
+  opacity: 0.9;
+}
+
+.heart-show {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #dd6864;
+  border-radius: 6px;
+  font-size: 20px;
+  background-color: #dd6864;
+  color: #fff;
+  padding: 5px 10px;
+}
+
 
 
 .float {

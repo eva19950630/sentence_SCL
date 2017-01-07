@@ -1,38 +1,23 @@
-{% extends extend_index %}
+{% extends 'sentence/userSidebar.html' %}
 {% load staticfiles %}
-{% block content1 %}
+{% block pagecontent1 %}
 
 <!-- User Achievement -->
-<div id="wrapper">
-    <ul class="nav navbar-nav side-nav">
-        <div class="sidebar-menu">
-            <a href="/user/profile"><button type="button" class="btn btn-default navbar-btn">User Profile</button></a>
-            <a href="/user/account"><button type="button" class="btn btn-default navbar-btn">Accounts</button></a>
-            <a href="/user/achievement"><button type="button" class="btn btn-default navbar-btn">Achievement</button></a>
-            <a href="/user/history"><button type="button" class="btn btn-default navbar-btn">History</button></a>
+<div class="container-fluid">
+    <div class="row achieve-panel">
+        <div class="col-sm-3 achieve-panel">
+            <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
+                <h3 class="col-sm-6 achieve-panel">20 Setences</h3> </div>
         </div>
-    </ul>
-
-
-    <div id="page-wrapper">
-        <div class="container-fluid">
-            <div class="row achieve-panel">
-                <div class="col-sm-3 achieve-panel">
-                    <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
-                        <h3 class="col-sm-6 achieve-panel">20 Setences</h3> </div>
-                </div>
-                <div class="col-sm-3 achieve-panel">
-                    <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
-                        <h3 class="col-sm-6 achieve-panel">Level 10</h3> </div>
-                </div>
-                <div class="col-sm-3 achieve-panel">
-                    <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
-                        <h3 class="col-sm-6 achieve-panel">Swim 30 Miles</h3> </div>
-                </div>
-            </div>
-            <!-- /.container-fluid -->
+        <div class="col-sm-3 achieve-panel">
+            <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
+                <h3 class="col-sm-6 achieve-panel">Level 10</h3> </div>
         </div>
-    </div>
-    <!-- /#wrapper -->
+        <div class="col-sm-3 achieve-panel">
+            <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
+                <h3 class="col-sm-6 achieve-panel">Swim 30 Miles</h3> </div>
+        </div>
+    </div> <!-- end row -->
+</div> <!-- end container-fluid -->
 
-{% endblock content1 %}
+{% endblock pagecontent1 %}
