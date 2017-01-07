@@ -47,6 +47,10 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -207,12 +211,14 @@
      <script type="text/javascript">
 
 
-      var FaceBookAppId = '233902740370813';//localhost:8000
-     // var FaceBookAppId = '1868740400028340';//web
+
+
+      //var FaceBookAppId = '233902740370813';//localhost:8000
+      var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
-                status: false,
+                status: true,
                 cookie: true
                 , xfbml: true
                 , version: 'v2.8'
@@ -247,27 +253,37 @@
                     $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
                         
                 });
+
+                FB.api('/me', {fields: 'email' },function(response) {
+                    console.log(response.email);
+                    useremail = response.email;
+                  }
+                );
         
                 var userId;
                 FB.api("/me",function(response){
                     var username = response.name;
                     $('#user-name').html(response.name);
-                    $.get('/getuserid/',{
+                    $.get('/login/',{
                         username: response.name,
                         userId: response.id,
-                        useremail: useremail
+                        email: useremail
                      },function(data){
 
                      });
                     console.log(username );
                 });
 
-                // FB.api('/me', {fields: 'email' },function(response) {
-                //     console.log(response.email);
-                //     useremail = response.email;
-                //   }
-                // );
-                // loginState = true;
+                FB.api("/me/friends",function(response){
+                    var len = Object.keys(response.data).length;
+                    console.log(len);
+                    for (var i = 0; i < len; i++) {
+                        var iDiv = document.createElement('img');
+                        iDiv.className = 'friend-pic img-rounded';
+                        iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
+                        document.getElementByClassName('friend-block')[0].appendChild(iDiv);
+                    }
+                });
                 
             }
         });
@@ -288,11 +304,33 @@
                 console.log("login");
                 FB.login(function(response){
                     $('.facebook-login-btn').html("facebook Logout");
-                });
+                },{scope: 'user_friends,email'});
             }
         });
     }
      
+
+    var sharing = function(){
+        var bannerImage = new Image();
+        bannerImage.src = "{% static 'images/fish.png' %}";
+        '{{sentence_content.Content}}';
+        var id = $('.sharebtn').attr('data-post-id');
+        FB.ui({
+            method: 'share',
+            href:'https://sentence-eva19950630.c9users.io/'+id,
+            // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
+            //href:'localhost:8000'
+            title: 'A SENTENCE A DAY',  // The same than name in feed method
+            picture: bannerImage.src,  
+            caption: 'by A Sentence A Day',  
+            description: '{{sentence_content.Content}}',
+        });
+    }
+
+    $('.btn.sharebtn.btn-default.navbar-btn').click(function(){
+        console.log('share click');
+        sharing();
+    });
 
      $(".facebook-login-btn").click(function(){
          loginCheck();

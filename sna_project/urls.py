@@ -42,7 +42,7 @@ urlpatterns = [
     # url(r'^sentence_post/(?P<sid>\d+)/$', views.sentence_post,name = 'sentence_post'),
     url(r'^logout/', views.logout,name = "logout"),
     #fb
-    url(r'^getuserid/', views.getuserid, name = 'getuserid'),
+    # url(r'^getuserid/', views.getuserid, name = 'getuserid'),
     url(r'^getcountry/', views.getCountry, name = 'getcountry'),
     #google+
     #url(r'^allauth/accounts/', include('allauth.urls')),
