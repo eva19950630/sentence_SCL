@@ -368,6 +368,7 @@ def login_app(request):
         return render(request, 'sentence/index.html',context)            
 
 #FB
+<<<<<<< HEAD
 # def getuserid(request):
 #     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
 #     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
@@ -393,6 +394,33 @@ def login_app(request):
 #                 SocialID = userId,
 #                 Email = useremail,
 #             )
+=======
+def getuserid(request):
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        userId = request.GET.get('userId')
+        useremail = request.GET.get('useremail')
+        print(useremail)
+        password = '000'
+        if User.objects.filter(SocialID = userId).exists():
+            # print('in session')
+            request.session['UID'] = User.objects.get(SocialID = userId).UID
+            # limit userId found to 0 object
+            user = User.objects.filter(SocialID = userId)[0]
+            # user.user_picture = userpicture
+            user.save()
+        else:
+            print('create')
+            new_user_model = User.objects.create(
+                # UID = userId,
+                UserName =  username,
+                Password = password,
+                SocialID = userId,
+                Email = useremail,
+            )
+>>>>>>> 44236511ddd158dcd1afd0e8c5e21399fc295b50
 
 #         context = {'username': username,'sentence_content': sentencemodel_like_order,
 #         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
