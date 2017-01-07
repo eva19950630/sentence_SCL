@@ -156,8 +156,8 @@ AUTHENTICATION_BACKENDS = (
 #     'locale': 'ru_RU',
 #     'fields': 'id,name,email', 
 # }
-
-
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
 
 
 #session cache db

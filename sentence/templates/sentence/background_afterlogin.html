@@ -195,13 +195,7 @@
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            jQuery('#vmap').vectorMap({
-                map: 'world_en'
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
     <!-- Morris Charts JavaScript -->
     <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
@@ -216,7 +210,7 @@
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
-                status: false,
+                status: true,
                 cookie: true
                 , xfbml: true
                 , version: 'v2.8'
@@ -251,6 +245,12 @@
                     $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
                         
                 });
+
+                FB.api('/me', {fields: 'email' },function(response) {
+                    console.log(response.email);
+                    useremail = response.email;
+                  }
+                );
         
                 var userId;
                 FB.api("/me",function(response){
@@ -259,19 +259,23 @@
                     $.get('/getuserid/',{
                         username: response.name,
                         userId: response.id,
-                        useremail: useremail
+                        // useremail: useremail
                      },function(data){
 
                      });
                     console.log(username );
                 });
 
-                // FB.api('/me', {fields: 'email' },function(response) {
-                //     console.log(response.email);
-                //     useremail = response.email;
-                //   }
-                // );
-                // loginState = true;
+                FB.api("/me/friends",function(response){
+                    var len = Object.keys(response.data).length;
+                    console.log(len);
+                    for (var i = 0; i < len; i++) {
+                        var iDiv = document.createElement('img');
+                        iDiv.className = 'friend-pic img-rounded';
+                        iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
+                        document.getElementByClassName('friend-block')[0].appendChild(iDiv);
+                    }
+                });
                 
             }
         });
@@ -292,11 +296,19 @@
                 console.log("login");
                 FB.login(function(response){
                     $('.facebook-login-btn').html("facebook Logout");
-                });
+                },{scope: 'user_friends,email'});
             }
         });
     }
      
+
+    var sharing = function(){
+        FB.ui({
+            method: 'share',
+            //href:'https://sentence-eva19950630.c9users.io/',
+            href:'localhost:8000'
+        });
+    }
 
      $(".facebook-login-btn").click(function(){
          loginCheck();

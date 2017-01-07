@@ -1,13 +1,17 @@
 from django.shortcuts import render
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
-from .models import User, Sentence, Translation, Topic, Collection
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 # from django.utils import timezone
 import datetime
 from django.core.urlresolvers import reverse
+#json by Gim
+from django.http import JsonResponse
+from django.http import HttpResponse
+import json
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
@@ -340,9 +344,7 @@ def getuserid(request):
                 SocialID = userId,
                 # Email = useremail
             )
-        # print('fb login '+username)
-        # return render(request, "sentence/index.html",{'username': username})
-        # return render(request, "sentence/index.html")
+
         context = {'username': username,'sentence_content': sentencemodel_like_order,
         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
         
@@ -385,6 +387,19 @@ def likes_count(request):
         return HttpResponse(likes,liked)
     else:
         return HttpResponse()
+#country     
+def getCountry(request):
+   if request.method == "GET":
+        c_code = request.GET.get('country_UpperCode')
+        country = Country.objects.get(Country_code = c_code)
+        language_id = Country_language.objects.filter(Country_ID=country.Country_ID)
+        
+        for i in language_id:
+            print(i.Language_ID.Language)
+            
+        return HttpResponse(json.dumps({
+                "country": country.Country_name,   
+            }))   
 
 #collection
 def collection(request):
