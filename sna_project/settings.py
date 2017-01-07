@@ -143,8 +143,8 @@ STATIC_URL = '/static/'
 #google+
 
 #FB
-# FACEBOOK_APP_ID='1868740400028340'
-# FACEBOOK_API_SECRET='19e7c57de38977b804fc9212a9b88925'
+FACEBOOK_APP_ID='1868740400028340'
+FACEBOOK_API_SECRET='19e7c57de38977b804fc9212a9b88925'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     #old time
@@ -156,8 +156,8 @@ AUTHENTICATION_BACKENDS = (
 #     'locale': 'ru_RU',
 #     'fields': 'id,name,email', 
 # }
-# FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-# FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
 
 
 #session cache db

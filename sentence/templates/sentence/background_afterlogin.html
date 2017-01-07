@@ -48,7 +48,7 @@
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
 <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+<!--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>-->
 </head>
 
 <body>
@@ -99,8 +99,8 @@
                                     <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
                                     <li class="divider"></li>
                                       <!--class="fb-log-out" written by gim for fb log out-->
-                                    <li><button class="fa fa-sign-out fb-log-out">Logout</button>
-                                    <a href="/logout/"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <!--<li><button class="fa fa-sign-out fb-log-out">Logout</button>-->
+                                    <a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
@@ -173,28 +173,28 @@
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
     <script type="text/javascript">
-      var saveButton = document.getElementById('save');
-        saveButton.addEventListener('click', function(event){
-          var user_icon_img;
-          // canvas.toBlob(function(blob) {
-          //     user_icon_img = URL.createObjectURL(blob);
-          // });
-          // canvas.toBlob(function(blob){
-          //   user_icon_img = URL.createObjectURL(blob);
-          //   console.log(user_icon_img);
+    //   var saveButton = document.getElementById('save');
+    //     saveButton.addEventListener('click', function(event){
+    //       var user_icon_img;
+    //       // canvas.toBlob(function(blob) {
+    //       //     user_icon_img = URL.createObjectURL(blob);
+    //       // });
+    //       // canvas.toBlob(function(blob){
+    //       //   user_icon_img = URL.createObjectURL(blob);
+    //       //   console.log(user_icon_img);
             
-          // }, "image/png", 1);
-          user_icon_img = canvas.toDataURL("image/png");
+    //       // }, "image/png", 1);
+    //       user_icon_img = canvas.toDataURL("image/png");
           
-            $.get('/get_new_user_icon/',{
-                userPicture: user_icon_img
-              });
-            // $.get('/get_new_user_icon/',{
-            //     userPicture: user_icon_img
-            //   },function(data){
-            // });
-            window.location = user_icon_img;
-        }, false);
+    //         $.get('/get_new_user_icon/',{
+    //             userPicture: user_icon_img
+    //           });
+    //         // $.get('/get_new_user_icon/',{
+    //         //     userPicture: user_icon_img
+    //         //   },function(data){
+    //         // });
+    //         window.location = user_icon_img;
+    //     }, false);
     </script>>
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
@@ -222,7 +222,7 @@
                 , version: 'v2.8'
             });
             window.fbloaded();
-            FB.AppEvents.logPageView();
+          //  FB.AppEvents.logPageView();
         };
         
         
@@ -240,7 +240,6 @@
     window.fbloaded = function(){
         
         var userpicture;
-        var useremail;
 
         //fb status connected not_authorized unknown
         FB.Event.subscribe('auth.statusChange', function(response){
@@ -252,30 +251,32 @@
                         
                 });
 
-                FB.api('/me', {fields: 'email' },function(response) {
-                    console.log(response.email);
-                    useremail = response.email;
-                  }
-                );
-        
+
+                var useremail;
                 var userId;
-                FB.api("/me",function(response){
-                    var username = response.name;
-                    $('#user-name').html(response.name);
+                var username;
+                FB.api("/me",{fields: 'name,email'},function(response){
+                    username = response.name;
+                    useremail = response.email;
+                    userId = response.id;
+                    
                     $.get('/login/',{
-                        username: response.name,
-                        userId: response.id,
+                        username: username,
+                        userId: userId,
                         email: useremail
                      },function(data){
 
                      });
-                    console.log(username );
+                     $('#user-name').html(username);
+                    console.log('after '+username );
+                    console.log(useremail);
+                    console.log(userId);
                 });
 
                 FB.api("/me/friends",function(response){
                     var len = Object.keys(response.data).length;
-                    console.log(len);
                     for (var i = 0; i < len; i++) {
+                        console.log('friends ' +len);
                         var iDiv = document.createElement('img');
                         iDiv.className = 'friend-pic img-rounded';
                         iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
@@ -287,25 +288,25 @@
         });
     } 
 
-    var loginCheck = function(){
-        FB.getLoginStatus(function(response){
-            console.log('button '+response.status);
-            if(response.status === 'connected'){
-               // console.log("connected");
-                FB.logout(function(response){
-                    $.get('/logout/');
-                    $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
-                    $('#user-name').html('USER NAME');
-                    console.log("logout");
-                });
-            }else{
-                console.log("login");
-                FB.login(function(response){
-                    $('.facebook-login-btn').html("facebook Logout");
-                },{scope: 'user_friends,email'});
-            }
-        });
-    }
+    // var loginCheck = function(){
+    //     FB.getLoginStatus(function(response){
+    //         console.log('button '+response.status);
+    //         if(response.status === 'connected'){
+    //           // console.log("connected");
+    //             FB.logout(function(response){
+    //                 $.get('/logout/');
+    //                 // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+    //                 // $('#user-name').html('USER NAME');
+    //                 console.log("logout");
+    //             });
+    //         }else{
+    //             console.log("login");
+    //             FB.login(function(response){
+    //                 $('.facebook-login-btn').html("facebook Logout");
+    //             },{scope: 'user_friends,email'});
+    //         }
+    //     });
+    // }
      
 
     var sharing = function(){
@@ -331,12 +332,24 @@
     });
 
      $(".facebook-login-btn").click(function(){
-         loginCheck();
+        // loginCheck();
      });
 
-     $(".fb-log-out").click(function(){
-        loginCheck();
-
+     $(".fb-log-out").focus(function(){
+        //loginCheck();
+        FB.getLoginStatus(function(response){
+            // console.log('button '+response.status);
+            if(response.status === 'connected'){
+               // console.log("connected");
+                FB.logout(function(response){
+                    $.get('/logout/');
+                    // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+                    // $('#user-name').html('USER NAME');
+                    console.log("logout");
+                });
+            }
+            console.log("fb logout");
+        });
      });     
      //console.log(loginState);
          //startApp();

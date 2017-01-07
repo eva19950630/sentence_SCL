@@ -242,10 +242,13 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
      
+     
+    var useremail;
+    var userId;
+    var username;
     window.fbloaded = function(){
         
         var userpicture;
-        var useremail;
 
         //fb status connected not_authorized unknown
         FB.Event.subscribe('auth.statusChange', function(response){
@@ -256,58 +259,81 @@
                     $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
                         
                 });
-        
-                FB.api('/me', {fields: 'email' },function(response) {
-                    console.log(response.email);
+                
+                
+                FB.api("/me",{'fields': 'name,email'},function(response){
+                    username = response.name;
                     useremail = response.email;
-                  }
-                );
-        
-                var userId;
-                FB.api("/me",function(response){
-                    var username = response.name;
-                    $('#user-name').html(response.name);
+                    userId = response.id;
+                    
                     $.get('/login/',{
-                        username: response.name,
-                        userId: response.id,
+                        username: username,
+                        userId: userId,
                         email: useremail
                      },function(data){
-
+                        
                      });
-                    console.log(username );
+                     $('#user-name').html(username);
+                    console.log('before ' +username );
+                    console.log(useremail);
+                    console.log(userId);
                 });
 
             }
         });
     } 
 
-    var loginCheck = function(){
-        FB.getLoginStatus(function(response){
+    // var loginCheck = function(){
+    //     FB.getLoginStatus(function(response){
+    //         console.log('button '+response.status);
+    //         if(response.status === 'connected'){
+    //           // console.log("connected");
+    //             FB.logout(function(response){
+    //                 $.get('/logout/');
+    //                 $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+    //                 $('#user-name').html('USER NAME');
+    //                 console.log("logout");
+    //             });
+    //         }else{
+    //             console.log("login");
+    //             FB.login(function(response){
+                    
+                    
+                    
+    //                 $('.facebook-login-btn').html("facebook Logout");
+    //                 if(username != ''){
+    //                      $.get('/login/',{
+    //                         username: username,
+    //                         userId: userId,
+    //                         email: useremail
+    //                      },function(data){
+                            
+    //                      });
+    //                     location.reload();
+    //                 }
+    //           },{'scope': 'user_friends,email'});
+               
+    //         }
+    //     });
+    // }
+     
+
+     $(".facebook-login-btn").click(function(){
+         //loginCheck();
+         FB.getLoginStatus(function(response){
             console.log('button '+response.status);
             if(response.status === 'connected'){
-               // console.log("connected");
-                FB.logout(function(response){
-                    $.get('/logout/');
-                    $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
-                    $('#user-name').html('USER NAME');
-                    console.log("logout");
-                });
             }else{
                 console.log("login");
                 FB.login(function(response){
                     $('.facebook-login-btn').html("facebook Logout");
-                });
+                },{'scope': 'user_friends,email'});
             }
         });
-    }
-     
-
-     $(".facebook-login-btn").click(function(){
-         loginCheck();
      });
 
      $(".fb-log-out").click(function(){
-        loginCheck();
+        //loginCheck();
 
      });     
          //startApp();
