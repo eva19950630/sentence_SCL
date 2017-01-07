@@ -28,6 +28,7 @@ def index(request):
         # except User.DoesNotExist:
         #     usermodel = None
         # return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
+        
         usermodel = User.objects.get(UID=request.session['UID'])
 
         context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
