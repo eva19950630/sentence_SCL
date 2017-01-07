@@ -1,5 +1,6 @@
-{% extends 'sentence/background_afterlogin.html' %}
+{% extends extend_index %}
 {% load staticfiles %}
+{% load tz %}
 {% block content1 %}
 
 <!-- Inputfield and Post modal -->
@@ -14,7 +15,6 @@
             {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
-    </section>
 </div> <!-- end inputfield-container -->
 
             <!-- Post Modal -->
@@ -66,26 +66,27 @@
 <!-- Sentence posts in one country -->
 <div class="map-container-fluid map-content">
     <div class="map-block">
-            <div class="sentenceInfo language">
-                <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
-            </div>
-            <div class="sentenceInfo sentence">
-                
-                <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
-            </div>
-            <div class="sentenceInfo rightbtn">
-                <!-- Like / Share -->
-                <span class="like">
-                    <button type="button" class="btn heartbtn btn-default navbar-btn" data-toggle="modal"><i class="fa fa-heart"></i>&ensp;Like</button>
-                </span>
-                <span class="star">
-                    <button type="button" class="btn starbtn btn-default navbar-btn" data-toggle="modal"><i class="fa fa-star"></i>&ensp;Star</button>
-                </span>
-                <span class="share">
-                    <button type="button" class="btn sharebtn btn-default navbar-btn" data-toggle="modal"><i class="fa fa-facebook"></i>&ensp;Share</button>
-                </span>
-            </div>
-        
+    {% if username %}        
+        <div class="sentenceInfo language">
+            <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
+        </div>
+        <div class="sentenceInfo sentence">
+            
+            <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
+        </div>
+        <div class="sentenceInfo rightbtn">
+            <!-- Like / Share -->
+            <span class="like" class="postcount heart like_{{ sentence_content.SID }}">
+                <button type="button" class="btn heartbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i>&ensp;Like&ensp;{{ sentence_content.Likes }}</button>
+            </span>
+            <span class="star" class="collect_{{ sentence_content.SID }}">
+                <button type="button" class="btn starbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i>&ensp;Star&ensp;{{ collected }}</button>
+            </span>
+            <span class="share">
+                <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+            </span>
+        </div>
+    {% endif %}
 
         <div id="vmap" style="width: 100vw; height: 100vh;">
 

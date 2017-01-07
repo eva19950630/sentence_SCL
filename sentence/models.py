@@ -37,6 +37,9 @@ class Sentence(models.Model):
 	def total_like(slef):
 		return slef.Likes.count()
 
+	# class Meta:
+	# 	ordering = ['-Likes']
+
 # #TRANSLATION
 class Translation(models.Model):
 	TID = models.AutoField(primary_key=True, null=False, unique=True)
@@ -58,7 +61,7 @@ class Topic(models.Model):
 	Views = models.PositiveIntegerField(default=0)
 
 
- #LANGUAGE
+#LANGUAGE
 class Language(models.Model):
  	Language_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
  	Language = models.CharField(max_length=20)
@@ -114,8 +117,13 @@ class Country_language(models.Model):
 class Country(models.Model):
     Country_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
     Country_name = models.CharField(max_length=20)
- 
- #AREA
+    Country_code = models.CharField(max_length=5, default='Country_code')
+
 #class Area(models.Model):
 #    Area_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
 # 	Area_name = models.CharField(max_length=20)
+
+#COLLECTION
+class Collection(models.Model):
+	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)

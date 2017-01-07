@@ -28,7 +28,7 @@
     <!-- Postcard CSS -->
     <link rel="stylesheet" href="{% static 'css/postcard.css' %}">
     <!-- Sentence CSS -->
-    <!-- <link rel="stylesheet" href="{% static 'css/sentence.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
     <!-- Usermap CSS -->
     <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
     <!-- WorldMAP CSS -->
@@ -183,7 +183,7 @@
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
     <!-- Sentence js -->
-    <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script> -->
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
     <!-- Painting js -->
@@ -191,13 +191,7 @@
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            jQuery('#vmap').vectorMap({
-                map: 'world_en'
-            });
-        });
-    </script>
+     <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
     <!-- Morris Charts JavaScript -->
     <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
@@ -314,26 +308,4 @@
          //startApp();
     </script>
 
-
-    <script type="text/javascript">
-      var isPost = false;
-      $('#link').focusin(function(){
-        isPost = true;
-        console.log('in');  
-      });
-
-      $('#link').blur(function(){
-        isPost = false;
-      });
-      var link;
-      setInterval(function(){
-          if(isPost === true){
-            var newLink =  $('#link').val();
-            if(link != newLink){
-              $('#show_link').replaceWith('<iframe id="show_link" src="'+ newLink +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');  
-              link = newLink   
-            }
-          }
-      },1000);
-    </script>   
 </html>

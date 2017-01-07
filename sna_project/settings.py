@@ -162,3 +162,6 @@ AUTHENTICATION_BACKENDS = (
 
 #session cache db
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+
+# GEOIP_DATABASE = '/GeoIP.dat/GeoLiteCity.dat'

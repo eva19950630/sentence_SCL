@@ -195,13 +195,7 @@
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            jQuery('#vmap').vectorMap({
-                map: 'world_en'
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
     <!-- Morris Charts JavaScript -->
     <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
@@ -331,6 +325,40 @@
             }
           }
       },1000);
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //likes
+            $('.btn.heartbtn').click(function() {
+                var id;
+                id = $(this).attr('data-post-id');
+                console.log(id);
+
+                $.get('/likes/', {
+
+                    sentence_id: id
+
+                }, function(data) {
+
+                    $('.like_'+id).html(data);
+                });
+            });
+
+            //collection
+            $('.btn.starbtn').click(function() {
+                var id;
+                id = $(this).attr('data-post-id');
+                console.log(id);
+
+                $.get('/collect/', {
+
+                    sentence_id: id
+
+                }, function(data) {
+                    $('.collect_'+id).html(data);
+                });
+            });
+        });
     </script>
     
 </html>
