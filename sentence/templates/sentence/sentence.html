@@ -26,26 +26,29 @@
                 <div class="modal-dialog">
                     <div class="post-box translation">
                         <div class="top" style="padding: 15px;">
-                            <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                         </div>
 
                         <div class="postbox-content">
-                            {% csrf_token %}
-                            {{ form.as_p }}
+                            <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID%}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
 
-                            <h2>DAILY TRANSLATION</h2>
+                                <h2>DAILY TRANSLATION</h2>
 
-                            <div class="modal-sentence">
-                                <span class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</span>
-                            </div>
+                                <div class="modal-sentence">
+                                    <span class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</span>
+                                </div>
 
-                            <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
-                            <input id="input" type='text' name="translation" placeholder="With another language"></input>
-                            
-                            <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
-                            <input type="text" name="translation_tag" placeholder="Type the language (English only)"/>
+                                <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
+                                <input id="input" type='text' name="translation" placeholder="With another language"></input>
+                                
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
+                                <input type="text" name="translation_tag" placeholder="Type the language (English only)"/>
 
-                            <input id="post-submit" type="submit" name="post_submit" value="Submit" />
+                                <input id="post-submit" type="submit" name="post_submit" value="Submit" />
+
+                            </form>
                             
                         </div>
 
@@ -55,7 +58,7 @@
             </div>
 
 <!-- Sentence posts in one country -->
-<div class="map-container-fluid map-content">
+<div class="map-container-fluid map-content" style="position: absolute; margin-top: 150px;">
     <div class="map-block">    
         <div class="sentenceInfo language">
             <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
@@ -64,12 +67,30 @@
             <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
         </div>
         <div class="sentenceInfo rightbtn">
-            <!-- Like / Share -->
-            <button type="button" class="btn heartbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;Like&ensp;{{ sentence_content.Likes }}</span></button>
-            
-            <button type="button" class="btn starbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star&ensp;{{ collected }}</span></button>
-            
-            <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+            <!-- Like / Stae / Share -->
+
+            {% if liked %}
+            <span>
+                <button type="button" class="btn heartbtn active btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;{{ sentence_content.Likes }}</span></button>
+            </span>
+            {% else %}
+            <span>
+                <button type="button" class="btn heartbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;{{ sentence_content.Likes }}</span></button>
+            </span>
+            {% endif %}
+
+            {% if collect %}
+            <span>
+                <button type="button" class="btn starbtn active btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star</span></button>
+            </span>
+            {% else %}
+            <span>
+                <button type="button" class="btn starbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star</span></button>
+            </span>
+            {% endif %}
+            <span>
+                <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+            </span>
         </div>
 
         <div id="vmap" style="width: 100vw; height: 100vh;">
@@ -90,12 +111,11 @@
             <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
         </div>
         <div class="sentenceInfo rightbtn">
-            <!-- Like / Share -->
-            <button type="button" class="btn heartbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;Like&ensp;{{ sentence_content.Likes }}</span></button>
-            
-            <button type="button" class="btn starbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star&ensp;{{ collected }}</span></button>
-            
-            <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+            <!-- Like -->
+            <div class="heart-show">
+               <i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;Like&ensp;{{ sentence_content.Likes }}</span>
+            </div>
+
         </div>
 
         <div id="vmap" style="width: 100vw; height: 100vh;">

@@ -49,7 +49,6 @@
 
                                 <input id="post-submit" type="submit" name="post_submit" value="Submit" />
                               
-
                           </form>
 
                         </div>
@@ -84,7 +83,7 @@
                     &emsp;
                     <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{ surl.Views }}</span>
                     &emsp;
-                    <a><button class="like" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a>
+                    <a><button class="cardheart" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a>
                   </div>
                 </div>
             </a>
@@ -112,8 +111,7 @@
                     &emsp;
                     <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{ surl.Views }}</span>
                     &emsp;
-                    <!-- <a><button class="btn heartbtn" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a> -->
-                    <button type="button" class="btn heartbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;Like&ensp;{{ sentence_content.Likes }}</span></button>
+                    <a><button class="cardheart" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a>
                   </div>
                 </div>
             </a>

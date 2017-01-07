@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
     <!-- Usermap CSS -->
     <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
+    <!-- Userprofile CSS -->
+    <link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
     <!-- WorldMAP CSS -->
     <link href="{% static 'css/jqvmap.css' %}" media="screen" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
@@ -103,8 +105,8 @@
 
                         <span style="color:#22949b; font-size: 26px;">|&ensp;</span>
 
-                        <div class="header-sm favorite">
-                            <!-- Favorite -->
+                        <div class="header-sm star">
+                            <!-- Star -->
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-star" style="font-size: 30px; color:#fff;"></i>
@@ -339,8 +341,34 @@
                     sentence_id: id
 
                 }, function(data) {
+                    json_like = JSON.parse(data);
+                    console.log(json_like.data + ' ' +json_like.state);
+                    if (json_like.state) {
+                        console.log("like");
+                        $('.btn.heartbtn').addClass('active');
+                    } else {
+                        console.log("unlike");
+                        $('.btn.heartbtn').removeClass('active');
+                    }
 
-                    $('.like_'+id).html(data);
+                    $('.like_'+id).html(' '+json_like.data);
+                });
+            });
+
+            $('.cardheart').click(function() {
+                var id;
+                id = $(this).attr('data-post-id');
+                console.log(id);
+
+                $.get('/likes/', {
+
+                    sentence_id: id
+
+                }, function(data) {
+                    json_like = JSON.parse(data);
+                    console.log(json_like.data + ' ' +json_like.state);
+
+                    $('.like_'+id).html(' '+json_like.data);
                 });
             });
 
@@ -355,7 +383,16 @@
                     sentence_id: id
 
                 }, function(data) {
-                    $('.collect_'+id).html(data);
+                    console.log(data);
+                    if (data === "True") {
+                        console.log("collect");
+                        $('.btn.starbtn').addClass('active');
+                    } else {
+                        console.log("uncollect");
+                        $('.btn.starbtn').removeClass('active');
+                    }
+                    
+                    // $('.collect_'+id).html(data);
                 });
             });
         });

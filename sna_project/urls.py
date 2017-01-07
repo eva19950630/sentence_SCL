@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^user/profile/', views.user_profile),
     url(r'^user/account/', views.user_account),
     url(r'^user/achievement/', views.user_achievement),
+    url(r'^user/collection/', views.user_collection),
     url(r'^user/history/', views.user_history),
     
     # url(r'^login/', views.signup_app),
