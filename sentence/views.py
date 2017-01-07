@@ -275,8 +275,10 @@ def user_history(request):
 def login_app(request):
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
-    if User.objects.filter(Email=request.POST.get('email')).exists():
-        m = User.objects.get(Email=request.POST.get('email'))
+    get_email = request.POST.get('email')
+    #app login
+    if User.objects.filter(Email=get_email).exists():
+        m = User.objects.get(Email=get_email)
         #login
         if m.Password == request.POST.get('password'):
             request.session['UID'] = m.UID
@@ -287,7 +289,7 @@ def login_app(request):
             'extend_index': 'sentence/background_afterlogin.html'}
             
             return render(request, 'sentence/index_afterlogin.html',context) 
-        #not login
+        #login failed
         else:
             print('Password WRONG')
 
@@ -295,6 +297,37 @@ def login_app(request):
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
 
             return render(request, 'sentence/index.html',context)
+    #social login
+    elif request.GET.get('userId'):
+        if request.method == 'GET':
+            username = request.GET.get('username')
+            userId = request.GET.get('userId')
+            
+            password = '000'
+            print(userId)
+            if User.objects.filter(SocialID = userId).exists():
+                # print('in session')
+                request.session['UID'] = User.objects.get(SocialID = userId).UID
+                # limit userId found to 0 object
+                user = User.objects.filter(SocialID = userId)[0]
+                # user.user_picture = userpicture
+                user.save()
+            else:
+                print('create')
+                new_user_model = User.objects.create(
+                    # UID = userId,
+                    UserName =  username,
+                    Password = password,
+                    SocialID = userId,
+                    Email = get_email,
+                )
+
+            context = {'username': username,'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,
+            'extend_index': 'sentence/background_afterlogin.html'}
+            
+            return render(request, "sentence/index_afterlogin.html",context)
+    #sign up
     else:
         print('NOT USER')
         django_form = AddUser(request.POST)
@@ -335,34 +368,36 @@ def login_app(request):
         return render(request, 'sentence/index.html',context)            
 
 #FB
-def getuserid(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
-    if request.method == 'GET':
-        username = request.GET.get('username')
-        userId = request.GET.get('userId')
-        password = '000'
-        if User.objects.filter(SocialID = userId).exists():
-            # print('in session')
-            request.session['UID'] = User.objects.get(SocialID = userId).UID
-            # limit userId found to 0 object
-            user = User.objects.filter(SocialID = userId)[0]
-            # user.user_picture = userpicture
-            user.save()
-        else:
-            print('create')
-            new_user_model = User.objects.create(
-                # UID = userId,
-                UserName =  username,
-                Password = password,
-                SocialID = userId,
-                # Email = useremail
-            )
-
-        context = {'username': username,'sentence_content': sentencemodel_like_order,
-        'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
+# def getuserid(request):
+#     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
+#     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+#     if request.method == 'GET':
+#         username = request.GET.get('username')
+#         userId = request.GET.get('userId')
+#         useremail = request.GET.get('useremail')
         
-        return render(request, "sentence/index_afterlogin.html",context)
+#         password = '000'
+#         if User.objects.filter(SocialID = userId).exists():
+#             # print('in session')
+#             request.session['UID'] = User.objects.get(SocialID = userId).UID
+#             # limit userId found to 0 object
+#             user = User.objects.filter(SocialID = userId)[0]
+#             # user.user_picture = userpicture
+#             user.save()
+#         else:
+#             print('create')
+#             new_user_model = User.objects.create(
+#                 # UID = userId,
+#                 UserName =  username,
+#                 Password = password,
+#                 SocialID = userId,
+#                 Email = useremail,
+#             )
+
+#         context = {'username': username,'sentence_content': sentencemodel_like_order,
+#         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
+        
+#         return render(request, "sentence/index_afterlogin.html",context)
 
 #logout
 def logout(request):

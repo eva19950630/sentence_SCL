@@ -45,6 +45,10 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -206,7 +210,7 @@
 
 
       var FaceBookAppId = '233902740370813';//localhost:8000
-     // var FaceBookAppId = '1868740400028340';//web
+      // var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
@@ -256,10 +260,10 @@
                 FB.api("/me",function(response){
                     var username = response.name;
                     $('#user-name').html(response.name);
-                    $.get('/getuserid/',{
+                    $.get('/login/',{
                         username: response.name,
                         userId: response.id,
-                        // useremail: useremail
+                        email: useremail
                      },function(data){
 
                      });
@@ -303,10 +307,19 @@
      
 
     var sharing = function(){
+        var bannerImage = new Image();
+        bannerImage.src = "{% static 'images/fish.png' %}";
+        '{{sentence_content.Content}}';
+        var id = $('.sharebtn').attr('data-post-id');
         FB.ui({
             method: 'share',
-            //href:'https://sentence-eva19950630.c9users.io/',
-            href:'localhost:8000'
+            href:'https://sentence-eva19950630.c9users.io/'+id,
+            // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
+            //href:'localhost:8000'
+            title: 'A SENTENCE A DAY',  // The same than name in feed method
+            picture: bannerImage.src,  
+            caption: 'by A Sentence A Day',  
+            description: '{{sentence_content.Content}}',
         });
     }
 

@@ -45,6 +45,10 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
+    
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+<!--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>-->
 </head>
 
 <body>
@@ -212,7 +216,7 @@
 
 
       var FaceBookAppId = '233902740370813';//localhost:8000
-     // var FaceBookAppId = '1868740400028340';//web
+      // var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
             FB.init({
                 appId: FaceBookAppId,
@@ -252,26 +256,26 @@
                         
                 });
         
+                FB.api('/me', {fields: 'email' },function(response) {
+                    console.log(response.email);
+                    useremail = response.email;
+                  }
+                );
+        
                 var userId;
                 FB.api("/me",function(response){
                     var username = response.name;
                     $('#user-name').html(response.name);
-                    $.get('/getuserid/',{
+                    $.get('/login/',{
                         username: response.name,
                         userId: response.id,
-                        useremail: useremail
+                        email: useremail
                      },function(data){
 
                      });
                     console.log(username );
                 });
 
-                // FB.api('/me', {fields: 'email' },function(response) {
-                //     console.log(response.email);
-                //     useremail = response.email;
-                //   }
-                // );
-                // loginState = true;
             }
         });
     } 
