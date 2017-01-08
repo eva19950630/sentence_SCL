@@ -328,31 +328,34 @@ def login_app(request):
         if request.method == 'GET':
             username = request.GET.get('username')
             userId = request.GET.get('userId')
+            useremail = request.GET.get('email')
             
             password = '000'
-            print(userId)
             if User.objects.filter(SocialID = userId).exists():
-                # print('in session')
+                # print('in fb session')
                 request.session['UID'] = User.objects.get(SocialID = userId).UID
                 # limit userId found to 0 object
                 user = User.objects.filter(SocialID = userId)[0]
                 # user.user_picture = userpicture
                 user.save()
             else:
-                print('create')
-                new_user_model = User.objects.create(
-                    # UID = userId,
-                    UserName =  username,
-                    Password = password,
-                    SocialID = userId,
-                    Email = get_email,
-                )
-
+                
+                if useremail:
+                    new_user_model = User.objects.create(
+                        # UID = userId,
+                        UserName =  username,
+                        Password = password,
+                        SocialID = userId,
+                        Email = useremail,
+                    )
+                else:
+                    print('fb email not confirm')
+                
             context = {'username': username,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,
             'extend_index': 'sentence/background.html'}
             
-            return render(request, "sentence/index_afterlogin.html",context)
+            return render(request, 'sentence/index_afterlogin.html',context) 
     #sign up
     else:
         print('NOT USER')
@@ -419,7 +422,6 @@ def login_app(request):
 #                 SocialID = userId,
 #                 Email = useremail,
 #             )
-
 
 #         context = {'username': username,'sentence_content': sentencemodel_like_order,
 #         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
