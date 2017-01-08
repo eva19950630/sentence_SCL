@@ -107,8 +107,8 @@ setInterval(function () {
     }
     
     /*No Picture*/
-    DrawIcons(icons[0].src, passerbyPos.x, passerbyPos.y, "I have a pen.");
-    DrawIcons(icons[1].src, CurPos.x-50, CurPos.y-100, "у меня есть яблоко.");
+    DrawIcons(icons[0].src, passerbyPos.x, passerbyPos.y, "у меня есть яблоко.");
+    DrawIcons(icons[1].src, CurPos.x-50, CurPos.y-100, userSentence);
 }, 30);
 //image
 var DrawIcons = function (isrc, pox, poy, sentence) {

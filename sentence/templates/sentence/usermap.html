@@ -7,18 +7,16 @@
 <div class="FriendsList">
     <div class="row">
         <div class="col-sm-12">
+            
+            {% for friend in friendlist %}
             <div class="row friend-panel">
-                <div class="col-lg-2"> <img class="panel-title" src="{% static 'images/amiba.png' %}"> </div>
+                <div class="col-lg-2"> <img class="panel-title" src="{% static friend.Friend.UserIcon.url %}"> </div>
                 <div class="col-lg-5 friend-name">
-                    <h3>Trump</h3>
+                    <h4>{{ friend.Friend.UserName }}</h4>
                 </div>
             </div>
-            <div class="row friend-panel">
-                <div class="col-lg-2"> <img class="panel-title" src="{% static 'images/seastar.png' %}"> </div>
-                <div class="col-lg-5 friend-name">
-                    <h3>Obama</h3>
-                </div>
-            </div>
+            {% endfor %}
+            
         </div>
     </div>
 </div>
@@ -27,9 +25,9 @@
     <!--Introduction page-->
     <div id="myIntro">
         <div class="row">
-            <div class="col-lg-2 intro-img"> <img src="{% static 'images/fish.png' %}"> </div>
+            <div class="col-lg-2 intro-img"> <img src="{{username.UserIcon.url}}"> </div>
             <div class="col-lg-6 my-profile">
-                <h5>John</h5>
+                <h5>{{username.UserName}}</h5>
                 <h5>LV.10</h5>
                 <h5>Russian,English</h5>
             </div>
