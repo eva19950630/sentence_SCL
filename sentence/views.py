@@ -35,7 +35,7 @@ def index(request):
             usermodel = User.objects.get(UID=request.session['UID'])
 
             context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
 
             return render(request, "sentence/index_afterlogin.html",context)
         
@@ -90,11 +90,11 @@ def sentence_url(request, sid):
 
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
-            'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect,
+            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
             'collect':collectionmodel}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
-            'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect}
+            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect}
 
         return render(request, 'sentence/sentence.html',context)
     else:
@@ -215,7 +215,7 @@ def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
 
-        context = {'username': usermodel,'extend_index': 'sentence/background_afterlogin.html'}
+        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
 
         return render(request, "sentence/usermap.html",context)
     else:
@@ -226,7 +226,7 @@ def user_profile(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
 
-        context = {'username': usermodel,'extend_index': 'sentence/background_afterlogin.html'}
+        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
 
         return render(request, "sentence/user_profile.html",context)
     else:
@@ -250,7 +250,7 @@ def user_account(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
 
-        context = {'username': usermodel,'extend_index': 'sentence/background_afterlogin.html'}
+        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
 
         return render(request, "sentence/user_account.html",context)
     else:
@@ -261,7 +261,7 @@ def user_achievement(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
 
-        context = {'username': usermodel,'extend_index': 'sentence/background_afterlogin.html'}
+        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
 
         return render(request, "sentence/user_achievement.html",context)
     else:
@@ -274,7 +274,7 @@ def user_collection(request):
         collectionmodel = Collection.objects.filter(UID=get_uid)
         usermodel = User.objects.get(UID=get_uid)
 
-        context = {'username': usermodel,'collection_model': collectionmodel,'extend_index': 'sentence/background_afterlogin.html'}
+        context = {'username': usermodel,'collection_model': collectionmodel,'extend_index': 'sentence/background.html'}
 
         return render(request, "sentence/user_collection.html",context)
     else:
@@ -289,7 +289,7 @@ def user_history(request):
         translationmodel = Translation.objects.filter(UID=get_uid)
 
         context = {'sentence_model': sentencemodel,'translation_model': translationmodel,
-        'username': usermodel,'extend_index': 'sentence/background_afterlogin.html'}
+        'username': usermodel,'extend_index': 'sentence/background.html'}
 
         return render(request, "sentence/user_history.html",context)
     else:
@@ -312,7 +312,7 @@ def login_app(request):
 
             context = {'username': m,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,
-            'extend_index': 'sentence/background_afterlogin.html'}
+            'extend_index': 'sentence/background.html'}
             
             return render(request, 'sentence/index_afterlogin.html',context) 
         #login failed
@@ -350,7 +350,7 @@ def login_app(request):
 
             context = {'username': username,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,
-            'extend_index': 'sentence/background_afterlogin.html'}
+            'extend_index': 'sentence/background.html'}
             
             return render(request, "sentence/index_afterlogin.html",context)
     #sign up
@@ -376,7 +376,7 @@ def login_app(request):
             request.session['UID'] = new_user_model.UID
 
             context = {'username': new_user_model,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
             
             return render(request, 'sentence/index_afterlogin.html',context)
             
@@ -422,7 +422,7 @@ def login_app(request):
 
 
 #         context = {'username': username,'sentence_content': sentencemodel_like_order,
-#         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background_afterlogin.html'}
+#         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
         
 #         return render(request, "sentence/index_afterlogin.html",context)
 

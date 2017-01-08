@@ -9,11 +9,6 @@
 	height: 100vh;
 }
 
-.huge {
-    font-size: 50px;
-    line-height: normal;
-}
-
 @media(min-width:768px) {
     #wrapper {
         padding-left: 225px;
@@ -94,6 +89,13 @@
 }
 
 .side-nav.sidebar p:hover {
+    background-color:#777;
+    cursor:pointer;
+    text-indent: 20px;
+    color:#fff;
+}
+
+.side-nav.sidebar .active {
     background-color:#777;
     cursor:pointer;
     text-indent: 20px;

@@ -67,17 +67,17 @@ class Language(models.Model):
  	Language = models.CharField(max_length=20)
 
 
-#USER-LANGUAGE
-#class User_language(models.Model):
-#    Language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
-# 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
-#   
-#FRIENDSHIP
-#class Friendship(models.Model):
-#    AreFriends = models.IntegerField()
-# 	UID1 = models.ForeignKey('User', on_delete=models.CASCADE)
-#    UID2 = models.ForeignKey('User', on_delete=models.CASCADE)
-#    
+# USER-LANGUAGE
+class User_language(models.Model):
+  	Language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+  
+# FRIENDSHIP
+class Friendship(models.Model):
+	AreFriends = models.IntegerField()
+	UID1 = models.ForeignKey('User', on_delete=models.CASCADE)
+  	# UID2 = models.ForeignKey('User', on_delete=models.CASCADE)
+   
 #ACHIEVEMENT
 #class Achievement(models.Model):
 #    Achievement_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
@@ -88,16 +88,17 @@ class Language(models.Model):
 #    Paint_tool_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
 # 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
 #
-#RANK_SENTENCE
-#class Rank_sentence(models.Model):
-# 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
-#    SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
-# 
-#RANK_TRANSLATION
-#class Rank_translation(models.Model):
-# 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
-#    TID = models.ForeignKey('Translation', on_delete=models.CASCADE)
-#    
+
+# RANK_SENTENCE
+class Rank_sentence(models.Model):
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
+
+# RANK_TRANSLATION
+class Rank_translation(models.Model):
+	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+	TID = models.ForeignKey('Translation', on_delete=models.CASCADE)
+   
 #AREA_LANGUAGE
 #class Area_language(models.Model):
 # 	Language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
