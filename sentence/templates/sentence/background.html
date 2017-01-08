@@ -182,9 +182,9 @@
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
                                     <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
                                     <li class="divider"></li>
-                                      <!--class="fb-log-out" written by gim for fb log out-->
-                                    <li><button class="fa fa-sign-out fb-log-out">Logout</button>
-                                    <a href="/logout/"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <!--class="fb-log-out" written by gim for fb log out-->
+                                    <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
+                                    <a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
@@ -263,7 +263,7 @@
 </body>
 
 <!-- facebook Api -->
-     <script type="text/javascript">
+    <script type="text/javascript">
 
       //var FaceBookAppId = '233902740370813';//localhost:8000
       var FaceBookAppId = '1868740400028340';//web
@@ -292,10 +292,10 @@
         }(document, 'script', 'facebook-jssdk'));
      
      
-    var useremail;
-    var userId;
-    var username;
-    window.fbloaded = function(){
+        var useremail;
+        var userId;
+        var username;
+        window.fbloaded = function(){
         
         var userpicture;
 
@@ -331,56 +331,7 @@
             }
         });
     } 
-
-    // var loginCheck = function(){
-    //     FB.getLoginStatus(function(response){
-    //         console.log('button '+response.status);
-    //         if(response.status === 'connected'){
-    //           // console.log("connected");
-    //             FB.logout(function(response){
-    //                 $.get('/logout/');
-    //                 $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
-    //                 $('#user-name').html('USER NAME');
-    //                 console.log("logout");
-    //             });
-    //         }else{
-    //             console.log("login");
-    //             FB.login(function(response){
-                    
-                    
-                    
-    //                 $('.facebook-login-btn').html("facebook Logout");
-    //                 if(username != ''){
-    //                      $.get('/login/',{
-    //                         username: username,
-    //                         userId: userId,
-    //                         email: useremail
-    //                      },function(data){
-                            
-    //                      });
-    //                     location.reload();
-    //                 }
-    //           },{'scope': 'user_friends,email'});
-               
-    //         }
-    //     });
-    // }
      
-
-     $(".facebook-login-btn").click(function(){
-         //loginCheck();
-         FB.getLoginStatus(function(response){
-            console.log('button '+response.status);
-            if(response.status === 'connected'){
-            }else{
-                console.log("login");
-                FB.login(function(response){
-                    $('.facebook-login-btn').html("facebook Logout");
-<<<<<<< HEAD
-                },{scope: 'user_friends,email'});
-            }
-        });
-    }
 // facebook sharing     
     var sharing = function(){
         var bannerImage = new Image();
@@ -398,26 +349,43 @@
             description: '{{sentence_content.Content}}',
         });
     }
+
+
     $('.btn.sharebtn.btn-default.navbar-btn').click(function(){
         console.log('share click');
         sharing();
     });
+
+// facebook login logout
      $(".facebook-login-btn").click(function(){
-        loginCheck();
-=======
+         //loginCheck();
+         FB.getLoginStatus(function(response){
+            console.log('button '+response.status);
+            if(response.status === 'connected'){
+            }else{
+                console.log("login");
+                FB.login(function(response){
+                    $('.facebook-login-btn').html("facebook Logout");
                 },{'scope': 'user_friends,email'});
             }
         });
->>>>>>> e93ab49a461fe8a88ab2d3df862b8ff86c091832
-     });
-     $(".fb-log-out").click(function(){
-<<<<<<< HEAD
-        loginCheck();
-=======
-        //loginCheck();
 
->>>>>>> e93ab49a461fe8a88ab2d3df862b8ff86c091832
-     });     
+     });
+     $(".fb-log-out").focus(function(){
+        //loginCheck();
+        FB.getLoginStatus(function(response){
+            // console.log('button '+response.status);
+            if(response.status === 'connected'){
+               // console.log("connected");
+                FB.logout(function(response){
+                    $.get('/logout/');
+                    // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+                    // $('#user-name').html('USER NAME');
+                    console.log("logout");
+                });
+            }
+            console.log("fb logout");
+        });
      //console.log(loginState);
          //startApp();
     </script>
