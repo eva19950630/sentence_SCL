@@ -30,7 +30,7 @@
                             <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                         </div>
 
-                        <div class="postbox-content">
+                        <div class="postbox-content sentence">
                         
                           <form method = "POST" action="/sentence_post/">
                               {% csrf_token %}
@@ -38,20 +38,20 @@
 
                               <h2>DAILY POST</h2>
 
-                                <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
-                                <input id="input" type='text' name='sentence' placeholder="No more than 50 words" required></input>
+                                <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">SENTENCE</font>
+                                <p><textarea cols="50" rows="5" id="input" type='text' name='sentence' placeholder="No more than 50 words" required></textarea></p>
                                 
-                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">LANGUAGE</font>
                                 <input type="text" name="language" placeholder="Type the language (English only)" required></input>
 
-                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG KEYWORDS</font>
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">HASH TAG KEYWORDS</font>
                                 <input type="text" name="topic" placeholder="#Keywords (Optional)" /></input>
 
-                                <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">RELATIVE LINK</font>
+                                <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">RELATIVE LINK</font>
                                 <input type='text' id="link" name='link' placeholder="Paste Link (Optional)"></input>
                                 <div id="show_link"></div>
 
-                                <input id="post-submit" type="submit" name="post_submit" value="Submit" />
+                                <div><input id="post-submit" type="submit" name="post_submit" value="Submit" /></div>
                               
                           </form>
 
@@ -78,7 +78,7 @@
             <a href="{% url 'sentence_url' sid=surl.SID%}">
                 <div class="card card-1 new">
                   <div class="postcard-time new">
-                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;{{ surl.Translation_count }}</span>
                   </div>
                   <div class="postcard-content new">{{surl.Content}}</div>
                   <div class="postcard-btn new">
@@ -109,7 +109,7 @@
             <a href="{% url 'sentence_url' sid=surl.SID%}">
                 <div class="card card-1 popu">
                   <div class="postcard-time popu">
-                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;{{ surl.Translation_count }}</span>
                   </div>
                   <div class="postcard-content popu">{{surl.Content}}</div>
                   <div class="postcard-btn popu">

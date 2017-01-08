@@ -170,7 +170,7 @@
   word-wrap: break-word; 
   word-break: normal; 
   color: #005454;
-  transform:translateY(30%);
+  transform:translateY(20%);
   /*overflow : hidden;
   text-overflow : ellipsis;
   white-space : nowrap;*/
@@ -209,7 +209,6 @@
 .cardheart:hover {
   opacity: 0.6;
 }
-
 
 /* smartphone 767 */
 @media (max-width: 767px) {

@@ -36,7 +36,7 @@
 .sentenceInfo.translatecount {
   display: inline-block;
   position: relative;
-  left: 43%;
+  left: 42%;
   margin: 10px 0 25px 0;
 }
 
@@ -67,7 +67,7 @@
     /*text-decoration: underline;*/
     text-indent : -3em;
     line-height: 50px;
-    /*letter-spacing: 0.5px;*/
+    letter-spacing: 0.5px;
 
     padding-bottom: 3px;
     border-bottom: 1px dotted #005454;
@@ -104,9 +104,6 @@
   box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
 }
 
-#float-translatecount:hover {
-
-}
 
 .btn.heartbtn {
   font-size: 20px;
@@ -217,16 +214,34 @@
   /*position: absolute;
   left: 10%;*/
   position: relative;
-  margin: 0 0 35px 10px;
+  margin: 0 0 30px 0px;
   padding: 10px;
-  width: 350px;
+  width: 400px;
   background-color: #f0f0f0;
-  text-align: center;
+  /*text-align: center;*/
+  letter-spacing: 0.5px;
   word-wrap: break-word; 
-  word-break: normal; 
+  word-break: normal;
+  border-radius: 3px;
 }
 
 .modalSentence-content {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 17px;
+  margin: 0 0 0 10px;
+}
+
+.modal-language {
+  width: 100px;
+  background-color: #8c8c8c;
+  /*margin: 0 0 5px 0;*/
+  text-align: center;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.modalLanguage-content {
+  /*margin: 0 0 0 5px;*/
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #fff;
 }

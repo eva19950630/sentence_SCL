@@ -32,6 +32,7 @@ class Sentence(models.Model):
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
 	Likes = models.PositiveIntegerField(default=0)
 	Views = models.PositiveIntegerField(default=0)
+	Translation_count = models.PositiveIntegerField(default=0)
 
 	@property
 	def total_like(self):

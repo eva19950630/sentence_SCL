@@ -21,16 +21,17 @@ def index(request):
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
 
+    # translation_count = []
+    # for s in Sentence.objects.filter().count():
+    # # translation_count = [Translation.objects.filter(SID=s.SID).count() for s in sentencemodel_date_order]
+    #     translation_count[s.SID] = Translation.objects.filter(SID=s.SID).count()
+    #     print(s)
+
     uid = request.session.get('UID')
 
     if User.objects.filter(UID = uid).exists():
         if request.session.get('UID'):
             print('login index')
-            # try:
-            #     usermodel = User.objects.get(UID=request.session['UID'])
-            # except User.DoesNotExist:
-            #     usermodel = None
-            # return render(request, "sentence/index.html",{'username': usermodel,'sentence_content': sentencemodel})
             
             usermodel = User.objects.get(UID=request.session['UID'])
 
@@ -127,7 +128,8 @@ def sentence_post(request):
                             Sentence_tag =  new_sentence_tag, 
                             UID = usermodel,
                             TopicID = new_topic_model,
-                        )           
+                        )      
+  
                     else:
                         new_topic_model = Topic.objects.create(
                             Topic_tag = new_sentence_topic,
@@ -139,7 +141,7 @@ def sentence_post(request):
                             Sentence_tag =  new_sentence_tag, 
                             UID = usermodel,
                             TopicID = new_topic_model,
-                        )           
+                        )      
 
                 print("topic sentence  store")
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
@@ -156,6 +158,7 @@ def sentence_post(request):
                         Sentence_tag =  new_sentence_tag, 
                         UID = usermodel,
                     )            
+
                 print("daily sentence  store " + str(new_sentence_model.SID))
                 # return Redirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
@@ -176,7 +179,7 @@ def translation_post(request, get_sid):
                 sentencemodel = Sentence.objects.get(SID = int(get_sid))
                 new_translation = django_form.data.get("translation")
                 new_translation_tag = '#' + django_form.data.get("translation_tag")
-                
+
                 # link
 
                 get_uid = request.session.get('UID')
@@ -191,7 +194,12 @@ def translation_post(request, get_sid):
                         Translation_tag =  new_translation_tag, 
                         UID = usermodel,
                         SID =sentencemodel,
-                    )            
+                    )     
+                    
+                Translation_count = Translation.objects.filter(SID=sentencemodel.SID).count()
+                sentencemodel.Translation_count = Translation_count
+                sentencemodel.save()  
+
                 print("translation store")
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': get_sid}))
                 # return render(request, "sentence/sentence.html",{'translation_model': new_translation_model,'username': usermodel})                    

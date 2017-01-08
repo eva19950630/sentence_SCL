@@ -4,33 +4,33 @@
 {% block pagecontent1 %}
 
 <!-- User History -->
-<div class="container-fluid">
+<div class="container-fluid history">
     <div class="row">
         <div class="col-sm-4">
-        <div class="title1">SENTENCE</div>
-        {% for sentence in sentence_model %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ sentence.Date|timezone:"Asia/Taipei" }}</h3>
+            <div class="profiletitle sentence"><i class="fa fa-pencil"></i>&emsp;SENTENCE</div>
+            {% for sentence in sentence_model %}
+                <div class="panel panel-default sentence">
+                    <div class="panel-heading sentence">
+                        <h3 class="panel-title">{{ sentence.Date|timezone:"Asia/Taipei" }}</h3>
+                    </div>
+                    <div class="panel-body sentence">
+                        {{ sentence.Content }}
+                    </div>
                 </div>
-                <div class="panel-body">
-                    {{ sentence.Content }}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
         <div class="col-sm-4">
-        <div class="title2">TRANSLATION</div>
-        {% for translation in translation_model %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ translation.Date|timezone:"Asia/Taipei" }}</h3>
+            <div class="profiletitle translation"><i class="fa fa-language"></i>&emsp;TRANSLATION</div>
+            {% for translation in translation_model %}
+                <div class="panel panel-default translation">
+                    <div class="panel-heading translation">
+                        <h3 class="panel-title">{{ translation.Date|timezone:"Asia/Taipei" }}</h3>
+                    </div>
+                    <div class="panel-body translation">
+                        {{ translation.Content }}
+                    </div>
                 </div>
-                <div class="panel-body">
-                    {{ translation.Content }}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div> <!-- end row -->
 </div> <!-- end container-fluid -->

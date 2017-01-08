@@ -29,21 +29,26 @@
                             <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                         </div>
 
-                        <div class="postbox-content">
+                        <div class="postbox-content translation">
                             <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID%}">
                                 {% csrf_token %}
                                 {{ form.as_p }}
 
                                 <h2>DAILY TRANSLATION</h2>
 
-                                <div class="modal-sentence">
-                                    <span class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</span>
+                                <div class="modal-language">
+                                    <span class="modalLanguage-content" class="text-center">{{ sentence_content.Sentence_tag }}</span>
                                 </div>
 
-                                <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
-                                <input id="input" type='text' name="translation" placeholder="With another language" required></input>
+                                <div class="modal-sentence">
+                                    <p class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</p>
+                                </div>
+
+                                <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">TRANSLATION</font>
+                                <!-- <input id="input" type='text' name="translation" placeholder="With another language" required></input> -->
+                                <p><textarea cols="50" rows="5" id="input" type='text' name='translation' placeholder="Translate it with another language" required></textarea></p>
                                 
-                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">LANGUAGE</font>
                                 <input type="text" name="translation_tag" placeholder="Type the language (English only)" required></input>
 
                                 <input id="post-submit" type="submit" name="post_submit" value="Submit" />
@@ -74,7 +79,7 @@
         </div>
         <!-- Translate -->
         <div class="sentenceInfo translatecount">
-            <span id="float-translatecount">TRANSLATION :&emsp;0</span>
+            <span id="float-translatecount">TRANSLATION :&emsp;{{ sentence_content.Translation_count }}</span>
         </div>
         <!-- Like / Stae / Share -->
         <div class="sentenceInfo rightbtn">    
