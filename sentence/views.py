@@ -18,8 +18,8 @@ import json
 # Create your views here.
 
 def index(request): 
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
 
     uid = request.session.get('UID')
 
@@ -30,14 +30,14 @@ def index(request):
             #     usermodel = User.objects.get(UID=request.session['UID'])
             # except User.DoesNotExist:
             #     usermodel = None
-            # return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
+            # return render(request, "sentence/index.html",{'username': usermodel,'sentence_content': sentencemodel})
             
             usermodel = User.objects.get(UID=request.session['UID'])
 
             context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
 
-            return render(request, "sentence/index_afterlogin.html",context)
+            return render(request, "sentence/index.html",context)
         
         else:
             print('logout index')
@@ -299,8 +299,8 @@ def user_history(request):
 
 
 def login_app(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
     get_email = request.POST.get('email')
     #app login
     if User.objects.filter(Email=get_email).exists():
@@ -314,7 +314,7 @@ def login_app(request):
             'sentence_content_date': sentencemodel_date_order,
             'extend_index': 'sentence/background.html'}
             
-            return render(request, 'sentence/index_afterlogin.html',context) 
+            return render(request, 'sentence/index.html',context) 
         #login failed
         else:
             print('Password WRONG')
@@ -355,7 +355,7 @@ def login_app(request):
             'sentence_content_date': sentencemodel_date_order,
             'extend_index': 'sentence/background.html'}
             
-            return render(request, 'sentence/index_afterlogin.html',context) 
+            return render(request, 'sentence/index.html',context) 
     #sign up
     else:
         print('NOT USER')
@@ -381,7 +381,7 @@ def login_app(request):
             context = {'username': new_user_model,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
             
-            return render(request, 'sentence/index_afterlogin.html',context)
+            return render(request, 'sentence/index.html',context)
             
         else:
             print('wrong form')
@@ -398,8 +398,8 @@ def login_app(request):
 
 #FB
 # def getuserid(request):
-#     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-#     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+#     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+#     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
 #     if request.method == 'GET':
 #         username = request.GET.get('username')
 #         userId = request.GET.get('userId')
@@ -426,12 +426,12 @@ def login_app(request):
 #         context = {'username': username,'sentence_content': sentencemodel_like_order,
 #         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
         
-#         return render(request, "sentence/index_afterlogin.html",context)
+#         return render(request, "sentence/index.html",context)
 
 #logout
 def logout(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
     print("logout")
     django_logout(request)
     context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order

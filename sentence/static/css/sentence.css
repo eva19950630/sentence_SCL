@@ -16,30 +16,28 @@
 }
 
 
-/*.sentenceInfo {
-  background-color: #f0f0f0;
-}*/
+/*sentenceInfo*/
 
-/*.sentenceInfo.language {
-  margin-left:10%;
-  margin-right:25%;
-  float:left;
-}*/
-
-
-/*title*/
-/*.sentenceInfo.sentence {
-  margin-left:20%;
-  margin-right:10%;
-  float:left;
-}*/
-
-.sentenceInfo.language {
-  margin: 0 0 15px 0;
+.sentenceInfo.posttime {
+  margin: 0 0 20px 250px;
+  position: relative;
 }
 
 .sentenceInfo.sentence {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px 300px;
+  position: relative;
+  width: 1000px;
+}
+
+.sentenceInfo.language {
+  margin: 0 0 35px 300px;
+}
+
+.sentenceInfo.translatecount {
+  display: inline-block;
+  position: relative;
+  left: 43%;
+  margin: 10px 0 25px 0;
 }
 
 .sentenceInfo.rightbtn {
@@ -52,20 +50,30 @@
   padding: 5px;
 }
 
+#float-posttime {
+  font-size: 20px;
+  color: #909090;
+}
 
 #float-sentence {
-    width: auto;
-    height: auto;
+    /*width: auto;
+    height: auto;*/
     position: relative;
     z-index: 11;
     
-    background-color: rgba(0, 204, 204, 0.8);
-    
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: bold;
     color: #005454;
+    /*text-decoration: underline;*/
+    text-indent : -3em;
+    line-height: 50px;
+    /*letter-spacing: 0.5px;*/
 
+    padding-bottom: 3px;
+    border-bottom: 1px dotted #005454;
+    /*background-color: rgba(0, 204, 204, 0.8);
     border-radius: 6px;
-    padding: 15px 80px;
+    padding: 15px 80px;*/
 }
 
 #float-language {
@@ -74,11 +82,30 @@
     position: relative;
     z-index: 11;
 
-    font-size: 16px;
+    font-size: 20px;
+    color: #909090;
     
-    background-color:salmon;
+    background-color:#f0f0f0;
+    padding: 3px 10px;
+
+    /*background-color:salmon;
     border-radius: 3px;
-    padding: 3px 15px;
+    padding: 3px 15px;*/
+}
+
+#float-translatecount {
+  background-color: #FFB77D;
+  padding: 8px 15px;
+  border-radius: 3px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+}
+
+#float-translatecount:hover {
+
 }
 
 .btn.heartbtn {

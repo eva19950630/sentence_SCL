@@ -559,7 +559,7 @@ input[type=search-mobile]:focus {
 
 /*Search bar*/
 .search {
-  width: 70%;
+  width: 80%;
   position: relative;
   margin-top: 10px;
 }

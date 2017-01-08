@@ -66,14 +66,14 @@
             <div class="navbar header-1">
                 <div class="container">
                     <!-- Logo -->
-                    <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="col-md-4 col-sm-6 col-xs-6">
                         <div class="header-logo">
                             <a href="/"> <img class="logo img-valign img-responsive" src="{% static 'images/logo2.png' %}"> </a>
                         </div>
                     </div>
 
                     <!-- Search bar -->
-                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="col-md-5 col-sm-6 col-xs-6">
                         <form class="search">
                             <input class="searchTerm" placeholder="Enter sentence or tag keywords" />
                             <input class="searchButton" name="search_submit" type="submit" />
@@ -82,6 +82,7 @@
 
                     <!-- Right: LogIn SignUp / profile notification -->
                     <div class="col-md-3 col-sm-6 col-xs-6 header-mobile-sm">
+                        <!-- LOG IN -->
                         {% if not username %}
 
                         <div class="header-sm">
@@ -165,6 +166,7 @@
                             </div> 
                             <!-- end Sign up Modal -->
 
+                        <!-- LOG OUT -->
                         {% else %}
 
                         <div class="header-sm user">
@@ -238,6 +240,8 @@
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
+    <!-- Postcard js -->
+    <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
     <!-- Painting js -->

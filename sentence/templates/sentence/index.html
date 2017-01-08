@@ -1,9 +1,134 @@
-
 {% extends 'sentence/background.html' %}
 {% load staticfiles %}
 {% load tz %}
 
 {% block content1 %}
+
+{% if username %}
+
+<!-- LOG IN -->
+<!-- Inputfield and Post modal -->
+<div class="inputfield-container">
+    <section>
+        <div class="row">
+           
+            <div class="col-md-12 fields" id="post-btn" data-toggle="modal">
+                <label for="input">What do you want to say today?</label>
+                <input id="input" type='text'></input>
+            </div>
+
+        </div>
+            
+    </section>
+</div> <!-- end inputfield-container -->
+
+            <!-- Post Modal -->
+            <div class="modal fade" id="post-modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="post-box sentence">
+                        <div class="top" style="padding: 15px;">
+                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                        </div>
+
+                        <div class="postbox-content">
+                        
+                          <form method = "POST" action="/sentence_post/">
+                              {% csrf_token %}
+                              {{ form.as_p }}
+
+                              <h2>DAILY POST</h2>
+
+                                <i class="fa fa-pencil" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">SENTENCE</font>
+                                <input id="input" type='text' name='sentence' placeholder="No more than 50 words" required></input>
+                                
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
+                                <input type="text" name="language" placeholder="Type the language (English only)" required></input>
+
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">HASH TAG KEYWORDS</font>
+                                <input type="text" name="topic" placeholder="#Keywords (Optional)" /></input>
+
+                                <i class="fa fa-external-link" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">RELATIVE LINK</font>
+                                <input type='text' id="link" name='link' placeholder="Paste Link (Optional)"></input>
+                                <div id="show_link"></div>
+
+                                <input id="post-submit" type="submit" name="post_submit" value="Submit" />
+                              
+                          </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- end Post Modal -->  
+
+<div class="index-wrapper" style="position: absolute; margin-top: 150px;">
+
+<!-- New Sentence -->
+      <div class="index-title newtitle">
+        <div class="index-title-word">New</div>
+        <div class="index-title-word">Sentence</div>
+      </div>
+
+      <div class="index-content">
+        <!-- Post list -->
+        <div class="postcard-container">
+        {% for surl in sentence_content_date %}
+            <a href="{% url 'sentence_url' sid=surl.SID%}">
+                <div class="card card-1 new">
+                  <div class="postcard-time new">
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                  </div>
+                  <div class="postcard-content new">{{surl.Content}}</div>
+                  <div class="postcard-btn new">
+                    <span class="posttime">{{surl.Date|timezone:"Asia/Taipei"}}</span>
+                    <span>|</span>
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{ surl.Views }}</span>
+                    &ensp;
+                    <a><button class="cardheart" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a>
+                  </div>
+                </div>
+            </a>
+          {% endfor %}
+        </div> <!-- end postcard-container -->
+      </div> <!-- end index-content -->
+
+
+
+<!-- Popular Sentence -->
+      <div class="index-title poputitle">
+        <div class="index-title-word">Popular</div>
+        <div class="index-title-word">Sentence</div>
+      </div>
+
+      <div class="index-content">
+        <!-- Post list -->
+        <div class="postcard-container">
+        {% for surl in sentence_content %}
+            <a href="{% url 'sentence_url' sid=surl.SID%}">
+                <div class="card card-1 popu">
+                  <div class="postcard-time popu">
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                  </div>
+                  <div class="postcard-content popu">{{surl.Content}}</div>
+                  <div class="postcard-btn popu">
+                    <span class="posttime">{{surl.Date|timezone:"Asia/Taipei"}}</span>
+                    <span>|</span>
+                    <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{ surl.Views }}</span>
+                    &ensp;
+                    <a><button class="cardheart" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a>
+                  </div>
+                </div>
+            </a>
+        {% endfor %}
+        </div> <!-- end postcard-container -->
+      </div> <!-- end index-content -->
+    
+</div> <!-- end index-wrapper -->
+
+<!-- LOG OUT -->
+{% else %}
 
 <div class="index-wrapper">
 
@@ -19,12 +144,15 @@
           {% for surl in sentence_content_date %}
             <a href="{% url 'sentence_url' sid=surl.SID%}">
                 <div class="card card-1 new">
+                  <div class="postcard-time new">
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                  </div>
                   <div class="postcard-content new">{{surl.Content}}</div>
                   <div class="postcard-btn new">
                     <span class="posttime">{{surl.Date|timezone:"Asia/Taipei"}}</span>
-                    &emsp;
+                    <span>|</span>
                     <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{surl.Views}}</span>
-                    &emsp;
+                    &ensp;
                     <a href="/"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart">{{surl.Likes}}</span></a>
                   </div>
                 </div>
@@ -47,12 +175,15 @@
         {% for surl in sentence_content %}
             <a href="{% url 'sentence_url' sid=surl.SID%}">
                 <div class="card card-1 popu">
+                  <div class="postcard-time popu">
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                  </div>
                   <div class="postcard-content popu">{{surl.Content}}</div>
                   <div class="postcard-btn popu">
                     <span class="posttime">{{surl.Date|timezone:"Asia/Taipei"}}</span>
-                    &emsp;
+                    <span>|</span>
                     <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{surl.Views}}</span>
-                    &emsp;
+                    &ensp;
                     <i class="fa fa-heart"></i>&ensp;<span class="postcount heart">{{surl.Likes}}</span>
                   </div>
                 </div>
@@ -62,5 +193,8 @@
       </div> <!-- end index-content -->
     
 </div> <!-- end index-wrapper -->
-                      
+
+
+{% endif %}
+
 {% endblock content1 %}

@@ -1,5 +1,6 @@
 {% extends 'sentence/userSidebar.html' %}
 {% load staticfiles %}
+{% load tz %}
 {% block pagecontent1 %}
 
 <!-- User History -->
@@ -10,7 +11,7 @@
         {% for sentence in sentence_model %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ sentence.Date }}</h3>
+                    <h3 class="panel-title">{{ sentence.Date|timezone:"Asia/Taipei" }}</h3>
                 </div>
                 <div class="panel-body">
                     {{ sentence.Content }}
@@ -23,7 +24,7 @@
         {% for translation in translation_model %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ translation.Date }}</h3>
+                    <h3 class="panel-title">{{ translation.Date|timezone:"Asia/Taipei" }}</h3>
                 </div>
                 <div class="panel-body">
                     {{ translation.Content }}
