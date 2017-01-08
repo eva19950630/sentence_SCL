@@ -109,9 +109,9 @@
                                               {% csrf_token %}
                                               {{ form.as_p }}
                                               
-                                                <input type="text" name="email" placeholder="E-mail" />
-                                                <input type="password" name="password" placeholder="Password" />
-                                                <input type="submit" class="loginButton" name="login_submit" value="Log in" /> 
+                                                <input type="text" name="email" placeholder="E-mail" required>
+                                                <input type="password" name="password" placeholder="Password" required>
+                                                <input type="submit" class="loginButton" name="login_submit" value="Log in"> 
 
                                             </form>                                       
                                         </div>
@@ -141,10 +141,10 @@
                                               {% csrf_token %}
                                               {{ form.as_p }}
                                               
-                                              <input type="text" name="name" placeholder="Username" />
-                                              <input type="text" name="email" placeholder="E-mail" />
-                                              <input type="password" name="password" placeholder="Password" />
-                                              <input type="password" name="password" placeholder="Retype password" />
+                                              <input type="text" name="name" placeholder="Username" required>
+                                              <input type="text" name="email" placeholder="E-mail" required>
+                                              <input type="password" name="password" placeholder="Password" required>
+                                              <input type="password" name="password" placeholder="Retype password" required>
                                               <!--<a href="/login"></a>-->
                                               <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
                                             </form>
@@ -184,7 +184,7 @@
                                     <li class="divider"></li>
                                     <!--class="fb-log-out" written by gim for fb log out-->
                                     <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
-                                    <a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <li><a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
