@@ -1,7 +1,7 @@
 from django.shortcuts import render
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
-from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -214,8 +214,14 @@ def translation_post(request, get_sid):
 def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
-
-        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+        sentencemodel = None
+        if Sentence.objects.filter(UID=request.session.get('UID')).exists():
+            sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
+        
+        context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
+            ,'sentence':sentencemodel
+        }
 
         return render(request, "sentence/usermap.html",context)
     else:
@@ -329,6 +335,10 @@ def login_app(request):
             username = request.GET.get('username')
             userId = request.GET.get('userId')
             useremail = request.GET.get('email')
+            userpucture = request.GET.get('userpucture')
+            print(userpucture)
+            
+            userfriend = request.GET.getlist('friends[]')
             
             password = '000'
             if User.objects.filter(SocialID = userId).exists():
@@ -338,6 +348,20 @@ def login_app(request):
                 user = User.objects.filter(SocialID = userId)[0]
                 # user.user_picture = userpicture
                 user.save()
+                
+                #save friends
+                if userfriend:
+                    for f in userfriend:
+                        if User.objects.filter(SocialID=f).exists():
+                            userfriend_UID = User.objects.filter(SocialID=f)[0]
+                        
+                            if not Friendship.objects.filter(UID=user.UID,Friend=userfriend_UID).exists():
+                                friendshipmodel = Friendship.objects.create(
+                                    AreFriends = 1,
+                                    UID = user,
+                                    Friend = userfriend_UID,
+                                )
+                
             else:
                 
                 if useremail:
@@ -347,7 +371,22 @@ def login_app(request):
                         Password = password,
                         SocialID = userId,
                         Email = useremail,
+                        UserIcon = userpucture,
+                        # UserIcon = "http://graph.facebook.com/"+userId+"/picture?type=square",
                     )
+                    
+                    #save friends
+                if userfriend:
+                    for f in userfriend:
+                        if User.objects.filter(SocialID=f).exists():
+                            userfriend_UID = User.objects.filter(SocialID=f)[0]
+                        
+                            if not Friendship.objects.filter(UID=new_user_model.UID,Friend=userfriend_UID).exists():
+                                friendshipmodel = Friendship.objects.create(
+                                    AreFriends = 1,
+                                    UID = new_user_model,
+                                    Friend = userfriend_UID,
+                                )
                 else:
                     print('fb email not confirm')
                 
@@ -395,39 +434,7 @@ def login_app(request):
         ,'extend_index': 'sentence/background.html'}
         
         return render(request, 'sentence/index.html',context)            
-
-#FB
-# def getuserid(request):
-#     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-#     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
-#     if request.method == 'GET':
-#         username = request.GET.get('username')
-#         userId = request.GET.get('userId')
-#         useremail = request.GET.get('useremail')
         
-#         password = '000'
-#         if User.objects.filter(SocialID = userId).exists():
-#             # print('in session')
-#             request.session['UID'] = User.objects.get(SocialID = userId).UID
-#             # limit userId found to 0 object
-#             user = User.objects.filter(SocialID = userId)[0]
-#             # user.user_picture = userpicture
-#             user.save()
-#         else:
-#             print('create')
-#             new_user_model = User.objects.create(
-#                 # UID = userId,
-#                 UserName =  username,
-#                 Password = password,
-#                 SocialID = userId,
-#                 Email = useremail,
-#             )
-
-#         context = {'username': username,'sentence_content': sentencemodel_like_order,
-#         'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
-        
-#         return render(request, "sentence/index_afterlogin.html",context)
-
 #logout
 def logout(request):
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
@@ -445,6 +452,9 @@ def likes_count(request):
     if request.method == 'GET':
         sentence_id = request.GET.get('sentence_id')
         sentence = Sentence.objects.get(SID=sentence_id)
+        userid = request.session.get('UID')
+        usermodel = User.objects.get(UID=userid)
+        
         likes = sentence.Likes
         if request.session.get('has_liked_'+str(sentence_id),liked):
             print("unlike")
@@ -456,6 +466,9 @@ def likes_count(request):
                     print('session del ' + str(request.session['has_liked_'+sentence_id]))
                 except KeyError:
                     print("keyerror")
+                    
+                if Rank_sentence.objects.filter(UID=userid,SID=sentence_id).exists():
+                    Rank_sentence.objects.filter(UID=userid,SID=sentence_id).delete()
                 sentence.Likes = likes
                 sentence.save()
         else:
@@ -463,6 +476,11 @@ def likes_count(request):
             print("like")
             request.session['has_liked_'+sentence_id] = True
             likes = likes + 1
+            if not Rank_sentence.objects.filter(UID=userid,SID=sentence_id).exists():
+                Rank_sentence.objects.create(
+                    UID=usermodel,
+                    SID=sentence,
+                )
             sentence.Likes = likes
             sentence.save()   
         data = {'data':likes,'state':state} 
@@ -501,6 +519,10 @@ def collection(request):
                 SID = sentencemodel,
             )
         return HttpResponse(isCollect)
+        
+
+    
+    
 
 #google+
 # def signup_google(request):
