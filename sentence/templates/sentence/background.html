@@ -177,8 +177,8 @@
                                         </div>      
                                         
                                         <div class="signup-right">
-                                            <button class="signupBtn social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                            <button class="signupBtn social-signin google" id="customBtn-signup">Log in with Google</button>
+                                            <button class="signupBtn social-signin facebook facebook-login-btn">Sign up with facebook</button>
+                                            <button class="signupBtn social-signin google" id="customBtn-signup">Sign up with Google</button>
                                         </div>
 
                                         <div class="signup-or">OR</div>
@@ -305,29 +305,22 @@
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
-
     <!-- Sentence js -->
     <!-- <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script> -->
-    
-   
-        
-    
-    
-
     <!-- Postcard js -->
     <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Imagefile js -->
     <script>
         //user profile
         var userPicture = new Image();
-        userPicture.src = "{% static username.UserIcon.url %}";
+        userPicture.src = "{% static username.UserIcon %}";
         //user map
         var icon1 = "{% static 'images/whale.png' %}";
         var icons = new Array();
         icons[0] = new Image();
         icons[0].src = "{% static 'images/whale.png' %}";
         icons[1] = new Image();
-        icons[1].src = "{{username.UserIcon.url}}"
+        icons[1].src = "{{username.UserIcon}}"
         userSentence = '{{sentence.Content}}';
     </script> 
     <!-- Usermap js -->

@@ -3,10 +3,10 @@ var ctx = c.getContext("2d");
 ctx.font = "18px Georgia";
 // Create gradient
 var xEnd  = 0;
-var yEnd = 200;
+var yEnd = 400;
 var grd = ctx.createLinearGradient(0, 0, xEnd, yEnd);
 grd.addColorStop(0, "white");
-grd.addColorStop(1, "#004B97");
+grd.addColorStop(1, "#05a3d6");
 // Fill with gradient
 ctx.fillStyle = grd;
 ctx.fillRect(0, 0, 2000, 1000);
@@ -99,7 +99,7 @@ document.addEventListener('mousedown', function (e) {
 setInterval(function () {
     if ((Math.abs(CurPos.x - mousePos.x) >= 0.1) && (Math.abs(CurPos.y - mousePos.y) >= 0.1)) {
         grd.addColorStop(0, "white");
-        grd.addColorStop(1, "#004B97");
+        grd.addColorStop(1, "#05a3d6");
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, 2000, 1000);
         CurPos.x += moveDir.x * 0.1;
@@ -196,6 +196,6 @@ $('body').each(function (i) {
     });
 });
 
-$(function() {
-        $(c ).draggable();
-    });
+// $(function() {
+//     $(c ).draggable();
+// });
