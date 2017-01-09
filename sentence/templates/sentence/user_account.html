@@ -8,21 +8,30 @@
         <div class="col-lg-4">
             <div class="profiletitle account"><i class="fa fa-cog"></i>&emsp;ACCOUNT</div>
             <form role="form" class="profilecontent account">
-                <div class="title account">NAME : </div>
+                <div class="title account"><i class="fa fa-user"></i>&emsp;NAME : </div>
+                <div class="modify profile">
+                    <a data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a>
+                </div>
                 <div class="form-group input-group account">
-                    <input type="text" class="form-control" value="{{username.UserName}}" disabled>
-                    <span class="input-group-addon" style="padding:0 0 0 0;">
-                        <a data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a>
+                    <!-- <input type="text" class="form-control" value="{{username.UserName}}" disabled> -->
+                    <span class="input-group-addon">
+                        {{username.UserName}}
                     </span>
                 </div>
-                <div class="title account">EMAIL : </div>
+                
+                <div class="title account"><i class="fa fa-envelope"></i>&emsp;EMAIL : </div>
                 <div class="form-group input-group account">
-                    <span class="input-group-addon"><i class="fa fa-mail"></i>{{username.Email}}</span>
+                    <span class="input-group-addon">{{username.Email}}</span>
                 </div>
-                <div class="title account">PASSWORD : </div>
+                <div class="title account"><i class="fa fa-unlock-alt"></i>&emsp;PASSWORD : </div>
+                <div class="modify profile">
+                    <a data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a>
+                </div>
                 <div class="form-group input-group account">
-                    <input type="text" class="form-control" value="*********" disabled>
-                    <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#pswDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
+                    <!-- <input type="text" class="form-control" value="*********" disabled> -->
+                    <span class="input-group-addon">
+                        *********
+                    </span>
                 </div>
             </form>
         </div>
