@@ -1,4 +1,3 @@
-
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
@@ -177,8 +176,8 @@
                                         </div>      
                                         
                                         <div class="signup-right">
-                                            <button class="signupBtn social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                            <button class="signupBtn social-signin google" id="customBtn-signup">Log in with Google</button>
+                                            <button class="signupBtn social-signin facebook facebook-login-btn">Sign up with facebook</button>
+                                            <button class="signupBtn social-signin google" id="customBtn-signup">Sign up with Google</button>
                                         </div>
 
                                         <div class="signup-or">OR</div>
@@ -305,15 +304,8 @@
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
-
     <!-- Sentence js -->
     <!-- <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script> -->
-    
-   
-        
-    
-    
-
     <!-- Postcard js -->
     <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Imagefile js -->
@@ -362,52 +354,78 @@
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
-    <script type="text/javascript">
+    
+    <!-- Map change color-->
+    <script type="text/javascript"> 
+        function stringhandle(region_code) {
+            var new_region_code = new Array();
+            var final_region_code = new Array();
+            console.log("ha");
+            
+            var e = 0;
+            console.log(region_code + "ha");
+            for (var i = 0; i < region_code.length; i++) {
+                //        new_region_code[i]=region_code.match('[a-z]');     
+                //        console.log(new_region_code[i]);
+                if (region_code[i] != '[' && region_code[i] != '\"' && region_code[i] != ',' && region_code[i] != ' ' && region_code[i] != ']' && region_code[i] != '\\') {
+                    new_region_code[e] = region_code[i];
+                    console.log(new_region_code[e]);
+                    e++;
+                }
+            }
+            //        console.log(new_region_code.length);
+            for (var i = 0; i < new_region_code.length; i++) {
+                var c;
+                if (i % 2 == 1) {
+                    var a = new_region_code[i - 1];
+                    var b = new_region_code[i];
+                    c = a + b;
+                    var d = Math.ceil(i / 2);
+                    //            console.log(d);
+                    final_region_code[d] = c;
+                    
+                }
+                //        console.log(c);
+            }
+            
+            return  final_region_code;
+        }
         // map change color
         var region_code = "{{ region_code|escapejs}}";
-        var new_region_code = new Array();
-        var final_region_code = new Array();
-        
-        console.log("ha");
         var rc = {};
-        var key;
-        var e = 0;
-        console.log(region_code + "ha");
-        for (var i = 0; i < region_code.length; i++) {
-            //        new_region_code[i]=region_code.match('[a-z]');     
-            //        console.log(new_region_code[i]);
-            if (region_code[i] != '[' && region_code[i] != '\"' && region_code[i] != ',' && region_code[i] != ' ' && region_code[i] != ']') {
-                new_region_code[e] = region_code[i];
-                console.log(new_region_code[e]);
-                e++;
-            }
-        }
-        //        console.log(new_region_code.length);
-        for (var i = 0; i < new_region_code.length; i++) {
-            var c;
-            if (i % 2 == 1) {
-                var a = new_region_code[i - 1];
-                var b = new_region_code[i];
-                c = a + b;
-                var d = Math.ceil(i / 2);
-                //            console.log(d);
-                final_region_code[d] = c;
-                console.log(final_region_code[d]);
-            }
-            //        console.log(c);
-        }
-        console.log(final_region_code);
-        for (var i = 0; i < final_region_code.length; i++) {
-            key = final_region_code[Object.keys(final_region_code)[i]];
+            var key;
+        var sentence_region_code = stringhandle(region_code);
+        
+        for (var i = 0; i < sentence_region_code.length; i++) {
+            console.log("vector" + i);
+            key = sentence_region_code[Object.keys(sentence_region_code)[i]];
             console.log(key);
             rc[key] = "#000";
         }
-            $('#vmap_choose').vectorMap({
+        
+        $('#vmap_choose').vectorMap({
+            
             map: 'world_en'
             , onRegionClick: function (element, code, region) {}
         });
+        
         jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
-
+        if ('{{trans_region_code}}') {
+            var trans_region_code = '{{trans_region_code|escapejs}}'
+            var rc = {};
+            var key;
+            
+            var last_region_code = stringhandle(trans_region_code) ;
+            
+            for (var i = 0; i < last_region_code.length; i++) {
+            console.log("vector" + i);
+            key = last_region_code[Object.keys(last_region_code)[i]];
+            console.log(key);
+            rc[key] = "#FFB77D";
+            }
+            jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
+            
+        }
     </script>
 
     <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
@@ -547,13 +565,10 @@
             description: '{{sentence_content.Content}}',
         });
     }
-
-
     $('.btn.sharebtn.btn-default.navbar-btn').click(function(){
         console.log('share click');
         sharing();
     });
-
 // facebook login logout
      $(".facebook-login-btn").click(function(){
          getfbuser();
@@ -561,7 +576,6 @@
          
      });
      
-
      $(".fb-log-out").focus(function(){
         getfbuser();
     });
