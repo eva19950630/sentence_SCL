@@ -670,7 +670,7 @@ input[type=search-mobile]:focus {
     position: relative;
     margin: 5% auto;
     width: 600px;
-    height: 450px;
+    height: 400px;
     background: #FFF;
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -774,7 +774,7 @@ textarea[type="text"]:focus {
     transition: 0.1s ease;
 }
 
-.label.language {
+/*.label.language {
     color: #AAA;
     font-size: 15px;
     margin: 0 0 0 -5px;
@@ -787,7 +787,7 @@ textarea[type="text"]:focus {
 .form-control.language:focus, .form-control.language:active {
     border: 2px solid #00CCCC;
 }
-
+*/
 
 .signup-or {
     position: absolute;

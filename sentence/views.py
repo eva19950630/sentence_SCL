@@ -413,7 +413,7 @@ def login_app(request):
             new_member_name = django_form.data.get("name")
             new_member_email = django_form.data.get("email")
             new_member_password = django_form.data.get('password')
-            new_member_language = django_form.data.get('language')
+            # new_member_language = django_form.data.get('language')
             # new_uid = str(len(User.objects.all()) + 1)
            
             """ This is how your model connects to database and create a new member """
@@ -422,7 +422,7 @@ def login_app(request):
                 UserName =  new_member_name, 
                 Email = new_member_email,
                 Password = new_member_password,
-                NativeLanguage = new_member_language,
+                # NativeLanguage = new_member_language,
             )
                 
             request.session['UID'] = new_user_model.UID
