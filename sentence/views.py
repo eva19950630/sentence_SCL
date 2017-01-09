@@ -61,6 +61,11 @@ def sentence_url(request, sid):
     # print('sentence_url called')
     sentencemodel = Sentence.objects.get(SID = int(sid))
 
+    language_id = Language.objects.get(Language=sentencemodel.Sentence_tag).Language_ID
+
+    new_region_code =  getCountryByLanguage(language_id)
+
+
     #views count
     views = sentencemodel.Views
     viewed = False
@@ -92,9 +97,7 @@ def sentence_url(request, sid):
 
         isCollect = 'Collect'
         if Collection.objects.filter(UID=usermodel.UID,SID=sid).exists():
-            isCollect = 'UnCollected'
-
-        new_region_code =  request.session.get('region_code')    
+            isCollect = 'UnCollected'          
         
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
@@ -104,10 +107,9 @@ def sentence_url(request, sid):
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code}
 
-
         return render(request, 'sentence/sentence.html',context)
     else:
-        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html'}
+        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code}
         return render(request, 'sentence/sentence.html',context)
 
 def sentence_post(request):
@@ -122,8 +124,8 @@ def sentence_post(request):
         if django_form.is_valid():
             if django_form.data.get("topic"):
                 new_sentence = django_form.data.get("sentence")
-                new_sentence_tag ='#' + django_form.data.get("language")
-                new_sentence_topic ='#' + django_form.data.get("topic")
+                new_sentence_tag = django_form.data.get("language")
+                new_sentence_topic = django_form.data.get("topic")
                 new_sentence_link = django_form.data.get("link")
                 
                 region_code = []
@@ -162,11 +164,9 @@ def sentence_post(request):
             else:       
                 """ daily sentence """
                 new_sentence = django_form.data.get("sentence")
-                new_sentence_tag = '#' + django_form.data.get("language")
+                new_sentence_tag = django_form.data.get("language")
 
-                region_code = []
-                language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
-                request.session['region_code']=getCountryByLanguage(language_id)
+                
                 
                  
                 if User.objects.filter(UID = get_uid).exists():
