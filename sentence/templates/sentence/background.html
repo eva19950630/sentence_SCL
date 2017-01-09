@@ -116,7 +116,9 @@
                                             </form>                                       
                                         </div>
                                         <div class="login-right"> 
-                                            <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                        <!--<form method="GET" action="/login/">-->
+                                            <button  class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                        <!--</form>-->
                                             <button class="social-signin google" id="customBtn-login">Log in with Google</button>
                                         </div>
                                         <div class="login-or">OR</div>
@@ -294,7 +296,6 @@
 
 <!-- facebook Api -->
     <script type="text/javascript">
-
       //var FaceBookAppId = '233902740370813';//localhost:8000
       var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
@@ -358,6 +359,7 @@
                     username = response.name;
                     useremail = response.email;
                     userId = response.id;
+                
                     
                     $.get('/login/',{
                         username: username,
@@ -366,13 +368,14 @@
                         friends: friends,
                         userpucture: userpicture
                      },function(data){
-                        
+
                      });
+
                      $('#user-name').html(username);
                     console.log('before ' +username );
                     console.log(useremail);
                 });
-
+                
             }
         });
     } 
@@ -413,8 +416,9 @@
                 },{'scope': 'user_friends,email'});
             }
         });
-
      });
+     
+
      $(".fb-log-out").focus(function(){
         FB.getLoginStatus(function(response){
             // console.log('button '+response.status);
