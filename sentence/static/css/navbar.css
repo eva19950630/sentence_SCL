@@ -654,7 +654,7 @@ input[type=search-mobile]:focus {
 
 
 
-/*login,signupbox*/
+/*login,signupbox,asklanguagebox*/
 
 #login-box {
     position: relative;
@@ -670,11 +670,25 @@ input[type=search-mobile]:focus {
     position: relative;
     margin: 5% auto;
     width: 600px;
+    height: 450px;
+    background: #FFF;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/*#asklanguage-box {
+    position: relative;
+    margin: 5% auto;
+    width: 600px;
     height: 400px;
     background: #FFF;
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
+
+.asklanguagebox-content {
+    margin: 20px;
+}*/
 
 .top > button > i {
     font-size: 30px;
@@ -759,6 +773,21 @@ textarea[type="text"]:focus {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     transition: 0.1s ease;
 }
+
+.label.language {
+    color: #AAA;
+    font-size: 15px;
+    margin: 0 0 0 -5px;
+}
+
+.form-control.language {
+    margin: 3px 0 10px 0;
+}
+
+.form-control.language:focus, .form-control.language:active {
+    border: 2px solid #00CCCC;
+}
+
 
 .signup-or {
     position: absolute;

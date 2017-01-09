@@ -5,7 +5,7 @@ class AddUser(forms.Form):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password','UserIcon',)
+        fields = ('username', 'email', 'password','UserIcon','language')
 
 class PostSentence(forms.Form):
 	"""docstring for ClassName"""

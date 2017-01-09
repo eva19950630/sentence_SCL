@@ -15,6 +15,7 @@ class User(models.Model):
 	SocialID = models.BigIntegerField(null=True,unique = True)
  	# UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
  	UserIcon = models.ImageField(upload_to='UserIcon_folder',default='/static/images/fish.png')
+	NativeLanguage = models.CharField(max_length=50, null=False)
 	#IconPosition = models.
 	# EXP = models.IntegerField()
 	# Money = models.DecimalField(max_digits=20,decimal_places=0)

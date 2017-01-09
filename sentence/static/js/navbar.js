@@ -45,9 +45,11 @@ $(document).ready(function(){
 	$('#login-btn').click(function() {
 		$('#login-modal').appendTo("body").modal('show');
 	});
+
 	$('#signup-btn').click(function() {
 		$('#signup-modal').appendTo("body").modal('show');
 	});
+  
 });
 
 $('.nav li a').click(function(e) {
