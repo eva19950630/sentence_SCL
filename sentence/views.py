@@ -316,29 +316,9 @@ def login_app(request):
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
     get_email = request.POST.get('email')
-    #app login
-    if User.objects.filter(Email=get_email).exists():
-        m = User.objects.get(Email=get_email)
-        #login
-        if m.Password == request.POST.get('password'):
-            request.session['UID'] = m.UID
-            print(m.UserName)
 
-            context = {'username': m,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,
-            'extend_index': 'sentence/background.html'}
-            
-            return render(request, 'sentence/index.html',context) 
-        #login failed
-        else:
-            print('Password WRONG')
-
-            context = {'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
-
-            return render(request, 'sentence/index.html',context)
     #social login
-    elif request.GET.get('userId'):
+    if request.GET.get('userId'):
         if request.method == 'GET':
             username = request.GET.get('username')
             userId = request.GET.get('userId')
@@ -404,7 +384,7 @@ def login_app(request):
             
             return render(request, 'sentence/index.html',context) 
     #sign up
-    else:
+    elif request.POST.get('name') and not User.objects.filter(Email=get_email).exists():
         print('NOT USER')
         django_form = AddUser(request.POST)
         if django_form.is_valid():
@@ -443,7 +423,32 @@ def login_app(request):
         context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
         ,'extend_index': 'sentence/background.html'}
         
-        return render(request, 'sentence/index.html',context)            
+        return render(request, 'sentence/index.html',context)    
+    #app login
+    elif User.objects.filter(Email=get_email).exists():
+        m = User.objects.get(Email=get_email)
+        #login
+        if m.Password == request.POST.get('password'):
+            request.session['UID'] = m.UID
+            print(m.UserName)
+
+            context = {'username': m,'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,
+            'extend_index': 'sentence/background.html'}
+            
+            return render(request, 'sentence/index.html',context) 
+        #login failed
+        else:
+            print('Password WRONG')
+
+            context = {'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+
+            return render(request, 'sentence/index.html',context)  
+    else:
+        context = {'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+        return render(request, 'sentence/index.html',context)      
 
 #logout
 def logout(request):
