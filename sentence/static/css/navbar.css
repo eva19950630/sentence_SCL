@@ -910,6 +910,13 @@ button.social-signin.google {
     white-space: nowrap;
 }
 
+#user-pic {
+    border-radius: 60%;
+}
+
+#user-name {
+    letter-spacing: 1px;
+}
 
 
 /* smartphone 767 */
