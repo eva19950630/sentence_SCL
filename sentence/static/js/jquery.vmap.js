@@ -349,7 +349,7 @@ JQVMap.maps = {};
       color: '#909090',
       hoverColor: '#3d9e9e',
       hoverColors: {},
-      selectedColor: '#005454',
+      selectedColor: '#00CCCC',
       scaleColors: ['#b6d6ff', '#005ace'],
       normalizeFunction: 'linear',
       enableZoom: true,

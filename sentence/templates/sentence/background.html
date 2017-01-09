@@ -400,14 +400,52 @@
             console.log("vector" + i);
             key = sentence_region_code[Object.keys(sentence_region_code)[i]];
             console.log(key);
-            rc[key] = "#000";
+            rc[key] = "#005454";
         }
         
         $('#vmap_choose').vectorMap({
             
             map: 'world_en'
-            , onRegionClick: function (element, code, region) {}
+            , onRegionClick: function (element, code, region) {
+                $('#postshow-modal').appendTo("body").modal('show');  
+            }
         });
+
+
+// function button_fix(){
+//     $('#postPK').click(function(ev){
+//         ev.preventDefault();
+//         var textInput = $('#comment-textarea').val();
+//         var emoInput = $('input[name=emotion]:checked').val();
+//         $.ajax({
+//             type: 'POST',
+//             url: '/post/' + $('#postPK').attr('value') + '/comment/',
+//             data: {
+//                 'csrfmiddlewaretoken'  : token,
+//                 'textData'             : textInput,
+//                 'emoData'             : emoInput,
+//             },
+//             success: function(data){
+//                 var reloadResults = $(data).find('#translation_card');
+//                 var reloadComments = $(data).find('#__comments__');
+//                 $('#translation_card').html(reloadResults);
+//                 $('#__comments__').html(reloadComments);
+//                 // $('#comment-textarea').val("");
+//             //     $('.post-likes').click(function() {
+    //             //     var id;
+    //             //     id = $(this).attr('data-post-id');
+    //             //     $.get('/like-blog/', {
+    //             //         post_id: id
+    //             //     }, function(data) {
+    //             //         $('#test' + id).html(data);
+//             //     });
+//             // });
+//             // }
+//         });
+//     });
+
+// }
+
         
         jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
         if ('{{trans_region_code}}') {

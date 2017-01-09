@@ -34,7 +34,7 @@
                                 <h2>DAILY TRANSLATION</h2>
 
                                 <div class="modal-language">
-                                    <span class="modalLanguage-content" class="text-center">{{ sentence_content.Sentence_tag }}</span>
+                                    <span class="modalLanguage-content" class="text-center">#{{ sentence_content.Sentence_tag }}</span>
                                 </div>
 
                                 <div class="modal-sentence">
@@ -86,9 +86,9 @@
         </div>
         <!-- Like / Stae / Share -->
         <div class="sentenceInfo rightbtn">    
-            <span>
+            <!-- <span>
                 <button type="button" class="btn btn-default navbar-btn" id="country-btn"><span>click</span></button>
-            </span>
+            </span> -->
 
             {% if liked %}
             <span>
@@ -184,106 +184,19 @@
                 
                 <div class="row">
                     <div class ="col-md-12 col-xs-12">
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
+
+                    {% for t in translation %}
+                        <div class="card card-1 postshow" id="translation_card">
+                            <div class="tran postshowcard-content">{{t.Content}}</div>
                             <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
+                              <span class="posttime">{{ t.Date|timezone:"Asia/Taipei" }}</span>
                               <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{t.Views}}</span>
                               &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
+                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">{{t.Likes}}</span></button></a>
                             </div>
                         </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
-                        <div class="card card-1 postshow">
-                            <div class="postshowcard-content">123</div>
-                            <div class="postcard-btn show">
-                              <span class="posttime">2017/01/01 00:00</span>
-                              <span>|</span>
-                              <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
-                              &ensp;
-                              <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">0</span></button></a>
-                            </div>
-                        </div>
+                      {% endfor %}
                     </div>
                 </div>
                 

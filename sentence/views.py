@@ -12,6 +12,8 @@ from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http import HttpResponse
 import json
+
+
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
@@ -53,8 +55,10 @@ def index(request):
         context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
         ,'extend_index': 'sentence/background.html'}
         return render(request, "sentence/index.html",context)
+    context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
+        ,'extend_index': 'sentence/background.html'}
+    return render(request, "sentence/index.html",context)
 
-# def show_link(request, obj):
 
 def sentence_url(request, sid):
     json_trans_code = ''
@@ -63,6 +67,9 @@ def sentence_url(request, sid):
     sentencemodel = Sentence.objects.get(SID = int(sid))
     trans_model = Translation.objects.filter(SID = int(sid))
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
+
+
+
     
     for i in trans_model:
         trans_code_list.append(getCountryByLanguage(i.Translation_tag))
@@ -105,14 +112,16 @@ def sentence_url(request, sid):
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
-            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code}
+            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':trans_model}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
-            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,'trans_region_code':json_trans_code}
+            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,
+            'trans_region_code':json_trans_code,'translation':trans_model}
         del json_trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
-        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code,'trans_region_code':json_trans_code}
+        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code
+        ,'trans_region_code':json_trans_code,'translation':trans_model}
         del json_trans_code
         return render(request, 'sentence/sentence.html',context)
 

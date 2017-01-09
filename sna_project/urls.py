@@ -34,6 +34,7 @@ urlpatterns = [
     # url(r'^login/', views.signup_app),
     url(r'^login/', views.login_app),
     url(r'^sentence/translation/(?P<get_sid>\d+)/$', views.translation_post, name = 'translation_post'),
+    # url(r'^click/translation/(?P<sid>\d+)/$', views.get_translation, name = 'click_translation'),
     url(r'^sentence_post/', views.sentence_post,name = 'sentence_post'),
     url(r'^sentence/(?P<sid>\d+)/$', views.sentence_url, name="sentence_url"),
     url(r'^user/profileIcon/', views.get_new_user_icon, name="get_new_user_icon"),

@@ -300,14 +300,14 @@
 .postshowbox-showlink {
   position: relative;
   /*left: 50%;*/
-  width: 50%;
+  width: 60%;
   height: 200px;
-  margin: 30px 0 10px 175px;
+  margin: 30px 0 10px 145px;
   border: 1px solid #f0f0f0;
 }
 
 .postcard-btn.show {
-  margin: 40px 0 0 250px;
+  margin: 40px 0 0 230px;
 }
 
 .postcard-btn.show i, .postcard-btn.show span, .postcard-time.show span {
