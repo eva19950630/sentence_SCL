@@ -61,8 +61,8 @@
 }
 
 
-/*postbox*/
-.post-box {
+/*postbox postshow-box*/
+.post-box, .postshow-box {
   position: relative;
   margin: 5% auto;
   width: 550px;

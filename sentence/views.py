@@ -127,9 +127,9 @@ def sentence_post(request):
                 new_sentence_topic = django_form.data.get("topic")
                 new_sentence_link = django_form.data.get("link")
                 
-                region_code = []
-                language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
-                request.session['region_code']=getCountryByLanguage(language_id)
+                # region_code = []
+                # language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
+                # request.session['region_code']=getCountryByLanguage(language_id)
                 
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
@@ -164,10 +164,7 @@ def sentence_post(request):
                 """ daily sentence """
                 new_sentence = django_form.data.get("sentence")
                 new_sentence_tag = django_form.data.get("language")
-
-                
-                
-                 
+   
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
                     new_sentence_model = Sentence.objects.create(
