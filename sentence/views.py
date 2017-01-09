@@ -57,13 +57,18 @@ def index(request):
 # def show_link(request, obj):
 
 def sentence_url(request, sid):
-    trans_code = ""
+    json_trans_code = ''
+    trans_code_list = []
     # print('sentence_url called')
     sentencemodel = Sentence.objects.get(SID = int(sid))
+    trans_model = Translation.objects.filter(SID = int(sid))
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
-    if request.session.get('json_trans_country'): 
-        trans_code = request.session.get('json_trans_country')
-        del request.session['json_trans_country']
+    
+    for i in trans_model:
+        trans_code_list.append(getCountryByLanguage(i.Translation_tag))
+        json_trans_code = json.dumps(trans_code_list)
+    del trans_code_list    
+   
     #views count
     views = sentencemodel.Views
     viewed = False
@@ -100,15 +105,15 @@ def sentence_url(request, sid):
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
-            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':trans_code}
+            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
-            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,'trans_region_code':trans_code}
-        del trans_code    
+            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,'trans_region_code':json_trans_code}
+        del json_trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
-        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code,'trans_region_code':trans_code}
-        del trans_code
+        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code,'trans_region_code':json_trans_code}
+        del json_trans_code
         return render(request, 'sentence/sentence.html',context)
 
 def sentence_post(request):
@@ -211,28 +216,8 @@ def translation_post(request, get_sid):
                         SID =sentencemodel,
                     )     
                     
-                Translation_model =  Translation.objects.filter(SID=sentencemodel.SID)   
+                Translation_model = Translation.objects.filter(SID = sentencemodel.SID)  
                 Translation_count = Translation_model.count()
-                Translation_country = []
-                for t_model in Translation_model:
-                    if  getCountryByLanguage(t_model.Translation_tag) in         Translation_country:
-                        """do nothing"""
-                    else:
-                        Translation_country.append(getCountryByLanguage(t_model.Translation_tag))
-                        
-                json_translation_country = json.dumps(Translation_country)
-                del Translation_country
-                
-                try:
-                    del request.session['json_trans_country']
-                    print('session del ' + str(request.session['json_trans_country']))
-                except KeyError:
-                    print("keyerror")
-               
-                request.session['json_trans_country'] = json_translation_country
-                
-                print(json_translation_country)
-                
                 sentencemodel.Translation_count = Translation_count
                 sentencemodel.save()  
 
@@ -580,7 +565,7 @@ def getCountry(request):
     
     
 def getCountryByLanguage(language_model):
-        language_id = Language.objects.get(Language=language_model).Language_ID
+        language_id = Language.objects.get(Language__iexact=language_model).Language_ID
         country = Country_language.objects.filter(Language_ID=language_id)
         region_code = []
         for i in country:
