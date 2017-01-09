@@ -145,7 +145,7 @@
             <a href="{% url 'sentence_url' sid=surl.SID%}">
                 <div class="card card-1 new">
                   <div class="postcard-time new">
-                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;{{ surl.Translation_count }}</span>
                   </div>
                   <div class="postcard-content new">{{surl.Content}}</div>
                   <div class="postcard-btn new">
@@ -176,7 +176,7 @@
             <a href="{% url 'sentence_url' sid=surl.SID%}">
                 <div class="card card-1 popu">
                   <div class="postcard-time popu">
-                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+                    <span class="postcount translate"><i class="fa fa-language"></i>&emsp;{{ surl.Translation_count }}</span>
                   </div>
                   <div class="postcard-content popu">{{surl.Content}}</div>
                   <div class="postcard-btn popu">

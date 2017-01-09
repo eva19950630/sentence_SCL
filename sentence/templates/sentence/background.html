@@ -319,8 +319,8 @@
         icons[0] = new Image();
         icons[0].src = "{% static 'images/whale.png' %}";
         icons[1] = new Image();
-        icons[1].src = "{{username.UserIcon}}"
-        userSentence = '{{sentence.Content}}';
+        icons[1].src = "{% static 'images/fish.png' %}";
+        var userSentence = '{{sentence.Content}}';
     </script> 
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>

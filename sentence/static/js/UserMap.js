@@ -107,28 +107,35 @@ setInterval(function () {
     }
     
     /*No Picture*/
+    
     DrawIcons(icons[0].src, passerbyPos.x, passerbyPos.y, "у меня есть яблоко.");
     DrawIcons(icons[1].src, CurPos.x-50, CurPos.y-100, userSentence);
+    
+    
 }, 30);
+console.log('icon '+icons[1].src);
 //image
 var DrawIcons = function (isrc, pox, poy, sentence) {
     var ic = new Image();
     ic.src = isrc;
-    var sentLenght = sentence.length * 10;
-    ctx.beginPath();
-    ctx.moveTo(pox + 100, poy - 5);
-    ctx.lineTo(pox + 100, poy - 40);
-    ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
-    ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
-    ctx.lineTo(pox + 110, poy - 10);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fill();
-    ctx.closePath();
-    // ic.onload=function(){
-    ctx.drawImage(ic, pox, poy, 100, 100);
-    ctx.fillStyle = "black";
-    ctx.fillText(sentence, pox + 110, poy - 18);
-    // }
+   // ic.onload=function(){
+        // console.log();
+        var sentLenght = sentence.length * 10;
+        ctx.beginPath();
+        ctx.moveTo(pox + 100, poy - 5);
+        ctx.lineTo(pox + 100, poy - 40);
+        ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
+        ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
+        ctx.lineTo(pox + 110, poy - 10);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        ctx.closePath();
+        // ic.onload=function(){
+        ctx.drawImage(ic, pox, poy, 100, 100);
+        ctx.fillStyle = "black";
+        ctx.fillText(sentence, pox + 110, poy - 18);
+        // }
+   // };
 };
 //message
 /*catch before create*/
