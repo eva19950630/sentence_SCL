@@ -5,6 +5,18 @@
 	color: #00CCCC;
 }
 
+.title {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #005454;
+}
+
+.sidebar-icon {
+	width: 150px;
+	height: 150px;
+
+}
+
 /*History*/
 .profiletitle.sentence {
 	color: #005454;
@@ -56,6 +68,7 @@
 	/*color: #fff;*/
 }
 
+
 /*Achievement*/
 .profiletitle.achievement {
 	margin: 0 0 20px 15px;
@@ -73,20 +86,42 @@
 	color: #FFB77D;
 }
 
-/*Accounts*/
-.title {
-	margin: 0 0 10px 0;
-	font-size: 16px;
-	color: #005454;
-}
 
+/*Accounts*/
 .input-group.account {
-	margin: 0 0 15px 0px;
+	margin: 0 0 15px 30px;
 }
 
 .profilecontent.account {
 	/*margin: 0 0 0 45px;*/
 }
+
+.modify.profile {
+	float: left;
+	/*padding: 3px;*/
+}
+
+.modify.profile a {
+	padding: 7px 10px;
+	position: relative;
+	margin: 0 0 0 30px;
+	background-color: #005454;
+}
+
+.modify.profile a:hover {
+	opacity: 0.9;
+}
+
+.input-group.account span {
+	
+	padding: 8px;
+	border: 1px solid #005454;
+	color: #005454;
+	font-size: 18px;
+	letter-spacing: 1px;
+	border-radius: 3px;
+}
+
 
 /*Profile*/
 .profile-content {
@@ -95,4 +130,8 @@
 
 .progress-bar.exp {
 	background-color: #00CCCC;
+}
+
+.page-header.profile {
+	color: #777777;
 }
