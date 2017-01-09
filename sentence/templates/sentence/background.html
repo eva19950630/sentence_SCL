@@ -1,8 +1,5 @@
-
-{% load staticfiles %}
 <!DOCTYPE html>
 <html>
-
 
 <head>
     <meta charset="utf-8">
@@ -38,7 +35,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/sb-admin.css' %}">
     <!-- Morris Charts CSS -->
-    <link rel="stylesheet" href="{% static 'css/morris.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/morris.css' %}">
     <!-- google+-->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="17252888188-om3sbh9djgv8gk720e7gl5tcrjj2r6hn.apps.googleusercontent.com">
@@ -47,17 +44,14 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
-    
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
 </head>
 
 <body>
-    
     <div id=”fb-root”></div>
-        <!--facebook login block-->
-        <script src="http://connect.facebook.net/en_US/all.js"></script>
-  
+    <!--facebook login block-->
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
     <div class="header">
         <!-- Navigation -->
         <nav class="navbar-fixed-top" role="navigation">
@@ -70,88 +64,61 @@
                             <a href="/"> <img class="logo img-valign img-responsive" src="{% static 'images/logo2.png' %}"> </a>
                         </div>
                     </div>
-
                     <!-- Search bar -->
                     <div class="col-md-5 col-sm-6 col-xs-6">
                         <form class="search">
                             <input class="searchTerm" placeholder="Enter sentence or tag keywords" />
-                            <input class="searchButton" name="search_submit" type="submit" />
-                        </form>
+                            <input class="searchButton" name="search_submit" type="submit" /> </form>
                     </div>
-
                     <!-- Right: LogIn SignUp / profile notification -->
                     <div class="col-md-3 col-sm-6 col-xs-6 header-mobile-sm">
-                        <!-- LOG IN -->
-                        {% if not username %}
-
+                        <!-- LOG IN -->{% if not username %}
                         <div class="header-sm">
-                            <!-- Log in / Sign up -->
-                            <span class="before-login">
+                            <!-- Log in / Sign up --><span class="before-login">
                                 <button type="button" class="btn1 btn-default navbar-btn" id="login-btn" data-toggle="modal">Log In</button>
-                            </span>
-                            <span class="before-login">
+                            </span> <span class="before-login">
                                 <button type="button" class="btn1 btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
-                            </span>
-                        </div>
-
-                            <!-- Log in Modal -->
-                            <div class="modal fade" id="login-modal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div id="login-box">
-
-                                        <div class="top" style="padding: 15px;">
-                                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                        </div>
-                                        <div class="left">
-                                            <h1>Welcome back!</h1>
-                                            <form method = "POST" action = "/login/">
-                                              
-                                              {% csrf_token %}
-                                              {{ form.as_p }}
-                                              
-                                                <input type="text" name="email" placeholder="E-mail" required>
-                                                <input type="password" name="password" placeholder="Password" required>
-                                                <input type="submit" class="loginButton" name="login_submit" value="Log in"> 
-
-                                            </form>                                       
-                                        </div>
-                                        <div class="login-right"> 
-                                            <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                            <button class="social-signin google" id="customBtn-login">Log in with Google</button>
-                                        </div>
-
-                                        <div class="login-or">OR</div>
-
-                                        <!-- Responsive fb / google -->
-                                        <div class="mobile-login-right">
-                                            <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span>
-                                            <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span>
-                                        </div>
+                            </span> </div>
+                        <!-- Log in Modal -->
+                        <div class="modal fade" id="login-modal" role="dialog">
+                            <div class="modal-dialog">
+                                <div id="login-box">
+                                    <div class="top" style="padding: 15px;">
+                                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                                     </div>
+                                    <div class="left">
+                                        <h1>Welcome back!</h1>
+                                        <form method="POST" action="/login/"> {% csrf_token %} {{ form.as_p }}
+                                            <input type="text" name="email" placeholder="E-mail" required>
+                                            <input type="password" name="password" placeholder="Password" required>
+                                            <input type="submit" class="loginButton" name="login_submit" value="Log in"> </form>
+                                    </div>
+                                    <div class="login-right">
+                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                        <button class="social-signin google" id="customBtn-login">Log in with Google</button>
+                                    </div>
+                                    <div class="login-or">OR</div>
+                                    <!-- Responsive fb / google -->
+                                    <div class="mobile-login-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
                                 </div>
                             </div>
-                            <!-- end Log in Modal -->
-
-                            <!-- Sign up Modal -->
-                            <div class="modal fade" id="signup-modal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div id="signup-box">
-                                        <div class="top" style="padding: 15px;">
-                                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                        </div>
-                                        <div class="left">
-                                            <h1>Create an account</h1>
-
-                                            <form name="signupform" method="POST" action="/login/">
-                                                {% csrf_token %}
-                                                {{ form.as_p }}
-                                                
-                                                <input type="text" name="name" placeholder="Username" required>
-                                                <input type="text" name="email" placeholder="E-mail" required>
-                                                <input type="password" name="password" placeholder="Password" required>
-                                                <input type="password" name="password" placeholder="Retype password" required>
-                                                
-                                                <!-- <div>
+                        </div>
+                        <!-- end Log in Modal -->
+                        <!-- Sign up Modal -->
+                        <div class="modal fade" id="signup-modal" role="dialog">
+                            <div class="modal-dialog">
+                                <div id="signup-box">
+                                    <div class="top" style="padding: 15px;">
+                                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                                    </div>
+                                    <div class="left">
+                                        <h1>Create an account</h1>
+                                        <form name="signupform" method="POST" action="/login/"> {% csrf_token %} {{ form.as_p }}
+                                            <input type="text" name="name" placeholder="Username" required>
+                                            <input type="text" name="email" placeholder="E-mail" required>
+                                            <input type="password" name="password" placeholder="Password" required>
+                                            <input type="password" name="password" placeholder="Retype password" required>
+                                            <!-- <div>
                                                     <label class="label language">Choose your native language</label>
                                                     <select class="form-control language" name="language">
                                                         <option>Chinese</option>
@@ -169,129 +136,95 @@
                                                         <option>Russian</option>
                                                     </select>
                                                 </div> -->
-                                                <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
-                                            </form>
-
-                                        </div>      
-                                        
-                                        <div class="signup-right">
-                                            <button class="signupBtn social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                            <button class="signupBtn social-signin google" id="customBtn-signup">Log in with Google</button>
-                                        </div>
-
-                                        <div class="signup-or">OR</div>
-
-                                        <!-- Responsive fb / google -->
-                                        <div class="mobile-signup-right">
-                                            <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span>
-                                            <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span>
-                                        </div>
-
+                                            <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" /> </form>
                                     </div>
+                                    <div class="signup-right">
+                                        <button class="signupBtn social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                        <button class="signupBtn social-signin google" id="customBtn-signup">Log in with Google</button>
+                                    </div>
+                                    <div class="signup-or">OR</div>
+                                    <!-- Responsive fb / google -->
+                                    <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
                                 </div>
-                            </div> 
-                            <!-- end Sign up Modal -->
-
-                                    <!-- Ask language Modal -->
-                                    <div class="modal fade" id="asklanguage-modal" role="dialog">
-                                        <div class="modal-dialog">
-                                            <div id="asklanguage-box">
-                                                <div class="top" style="padding: 15px;">
-                                                    <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                                </div>
-                                                <div class="asklanguagebox-content">
-                                                    <h2>About you ...</h2>
-                                                      
-                                                    <div class="form-group input-group">
-                                                          <label>Choose your native language</label>
-                                                          <select class="form-control" id="user_language">
-                                                                <option>Chinese</option>
-                                                                <option>Japanese</option>
-                                                                <option>Korean</option>
-                                                                <option>Hindi</option>
-                                                                <option>Thai</option>
-                                                                <option>English</option>
-                                                                <option>French</option>
-                                                                <option>Spanish</option>
-                                                                <option>Portuguese</option>
-                                                                <option>German</option>
-                                                                <option>Italian</option>
-                                                                <option>Swedish</option>
-                                                                <option>Russian</option>
-                                                            </select>
-                                                      </div>
-                                                      <input type="submit" class="confirmRegisterBtn" name="signup_submit" value="Sign me up" />
-                                                    
-                                                </div>
-
-                                            </div>
-                                        </div>
+                            </div>
+                        </div>
+                        <!-- end Sign up Modal -->
+                        <!-- Ask language Modal -->
+                        <div class="modal fade" id="asklanguage-modal" role="dialog">
+                            <div class="modal-dialog">
+                                <div id="asklanguage-box">
+                                    <div class="top" style="padding: 15px;">
+                                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                                     </div>
-                                    <!-- end Ask language Modal -->
-
-                        <!-- LOG OUT -->
-                        {% else %}
-
+                                    <div class="asklanguagebox-content">
+                                        <h2>About you ...</h2>
+                                        <div class="form-group input-group">
+                                            <label>Choose your native language</label>
+                                            <select class="form-control" id="user_language">
+                                                <option>Chinese</option>
+                                                <option>Japanese</option>
+                                                <option>Korean</option>
+                                                <option>Hindi</option>
+                                                <option>Thai</option>
+                                                <option>English</option>
+                                                <option>French</option>
+                                                <option>Spanish</option>
+                                                <option>Portuguese</option>
+                                                <option>German</option>
+                                                <option>Italian</option>
+                                                <option>Swedish</option>
+                                                <option>Russian</option>
+                                            </select>
+                                        </div>
+                                        <input type="submit" class="confirmRegisterBtn" name="signup_submit" value="Sign me up" /> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Ask language Modal -->
+                        <!-- LOG OUT -->{% else %}
                         <div class="header-sm user">
-                            <!-- User Profile -->
-                            <span class="after-login">
+                            <!-- User Profile --><span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {% if username %}
                                     <img src="{{ username.UserIcon }}" height="40" width="40" id="user-pic">
-                                    <span id="user-name"><font color=#fff>{{username.UserName}}</font></span>
-                                  {% else %}
-                                    <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
-                                  {% endif %}
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
-                                    <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
-                                    <li class="divider"></li>
-                                    <!--class="fb-log-out" written by gim for fb log out-->
-                                    <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
-                                    <li><a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
-                                  </ul>
+                                    <span id="user-name"><font color=#fff>{{username.UserName}}</font></span> {% else %} <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i> {% endif %} </a>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
+                                <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
+                                <li class="divider"></li>
+                                <!--class="fb-log-out" written by gim for fb log out-->
+                                <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
+                                <li><a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                            </ul>
                             </span>
-                        </div>
-
-                        <span style="color:#22949b; font-size: 26px;">|&ensp;</span>
-
+                        </div> <span style="color:#22949b; font-size: 26px;">|&ensp;</span>
                         <div class="header-sm favorite">
-                            <!-- Favorite -->
-                            <span class="after-login">
+                            <!-- Favorite --><span class="after-login">
                                   <a href="/user/collection" class="dropdown-toggle" role="button" aria-expanded="false">
                                     <i class="fa fa-star" style="font-size: 30px; color:#fff;"></i>
                                   </a>
-                            </span>
-                        </div>
-
+                            </span> </div>
                         <div class="header-sm notification">
-                            <!-- Notification -->
-                            <span class="after-login">
+                            <!-- Notification --><span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-bell" style="font-size: 30px; color:#fff;"></i>
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <div><font color=white>&emsp;Notifications</font></div>
                                   </ul>
-                            </span>
-                        </div>
-
-                        {% endif %}
-
-                    </div> <!-- end Right side button -->
-                </div> <!-- end Container -->
-            </div> <!-- end nav header1 -->
-        </nav> <!-- end navbar-fixed-top -->
-    </div> <!-- end header -->
-    
-   
+                            </span> </div> {% endif %} </div>
+                    <!-- end Right side button -->
+                </div>
+                <!-- end Container -->
+            </div>
+            <!-- end nav header1 -->
+        </nav>
+        <!-- end navbar-fixed-top -->
+    </div>
+    <!-- end header -->
     <div class="body"> {% block content1 %} {% endblock content1 %} </div>
     <div class="body-2"> {% block content2 %} {% endblock content2 %} </div>
-    
     <div class="footer"> </div>
-    
-
     <!-- ##### JAVASCRIPTS ##### -->
     <!-- jQuery Library -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -303,15 +236,8 @@
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
-
     <!-- Sentence js -->
     <!-- <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script> -->
-    
-   
-        
-    
-    
-
     <!-- Postcard js -->
     <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Imagefile js -->
@@ -327,28 +253,26 @@
         icons[1] = new Image();
         icons[1].src = "{{username.UserIcon.url}}"
         userSentence = '{{sentence.Content}}';
-    </script> 
+    </script>
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
     <script type="text/javascript">
-      var saveButton = document.getElementById('save');
-        saveButton.addEventListener('click', function(event){
-          var user_icon_img;
-          // canvas.toBlob(function(blob) {
-          //     user_icon_img = URL.createObjectURL(blob);
-          // });
-          // canvas.toBlob(function(blob){
-          //   user_icon_img = URL.createObjectURL(blob);
-          //   console.log(user_icon_img);
-            
-          // }, "image/png", 1);
-          user_icon_img = canvas.toDataURL("image/png");
-          
-            $.get('/get_new_user_icon/',{
+        var saveButton = document.getElementById('save');
+        saveButton.addEventListener('click', function (event) {
+            var user_icon_img;
+            // canvas.toBlob(function(blob) {
+            //     user_icon_img = URL.createObjectURL(blob);
+            // });
+            // canvas.toBlob(function(blob){
+            //   user_icon_img = URL.createObjectURL(blob);
+            //   console.log(user_icon_img);
+            // }, "image/png", 1);
+            user_icon_img = canvas.toDataURL("image/png");
+            $.get('/get_new_user_icon/', {
                 userPicture: user_icon_img
-              });
+            });
             // $.get('/get_new_user_icon/',{
             //     userPicture: user_icon_img
             //   },function(data){
@@ -356,7 +280,6 @@
             window.location = user_icon_img;
         }, false);
     </script>>
-
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
@@ -365,185 +288,165 @@
         var region_code = "{{ region_code|escapejs}}";
         var new_region_code = new Array();
         var final_region_code = new Array();
-        
         console.log("ha");
-var rc = {};
-var key;
-var e = 0;
-console.log(region_code + "ha");
-for (var i = 0; i < region_code.length; i++) {
-    //        new_region_code[i]=region_code.match('[a-z]');     
-    //        console.log(new_region_code[i]);
-    if (region_code[i] != '[' && region_code[i] != '\"' && region_code[i] != ',' && region_code[i] != ' ' && region_code[i] != ']') {
-        new_region_code[e] = region_code[i];
-        console.log(new_region_code[e]);
-        e++;
-    }
-}
-//        console.log(new_region_code.length);
-for (var i = 0; i < new_region_code.length; i++) {
-    var c;
-    if (i % 2 == 1) {
-        var a = new_region_code[i - 1];
-        var b = new_region_code[i];
-        c = a + b;
-        var d = Math.ceil(i / 2);
-        //            console.log(d);
-        final_region_code[d] = c;
-        console.log(final_region_code[d]);
-    }
-    //        console.log(c);
-}
-console.log(final_region_code);
-for (var i = 0; i < final_region_code.length; i++) {
-    key = final_region_code[Object.keys(final_region_code)[i]];
-    console.log(key);
-    rc[key] = "#000";
-}
-    $('#vmap_choose').vectorMap({
-    map: 'world_en'
-    , onRegionClick: function (element, code, region) {}
-});
-jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
-
+        var rc = {};
+        var key;
+        var e = 0;
+        console.log(region_code + "ha");
+        for (var i = 0; i < region_code.length; i++) {
+            //        new_region_code[i]=region_code.match('[a-z]');     
+            //        console.log(new_region_code[i]);
+            if (region_code[i] != '[' && region_code[i] != '\"' && region_code[i] != ',' && region_code[i] != ' ' && region_code[i] != ']') {
+                new_region_code[e] = region_code[i];
+                console.log(new_region_code[e]);
+                e++;
+            }
+        }
+        //        console.log(new_region_code.length);
+        for (var i = 0; i < new_region_code.length; i++) {
+            var c;
+            if (i % 2 == 1) {
+                var a = new_region_code[i - 1];
+                var b = new_region_code[i];
+                c = a + b;
+                var d = Math.ceil(i / 2);
+                //            console.log(d);
+                final_region_code[d] = c;
+                console.log(final_region_code[d]);
+            }
+            //        console.log(c);
+        }
+        console.log(final_region_code);
+        for (var i = 0; i < final_region_code.length; i++) {
+            key = final_region_code[Object.keys(final_region_code)[i]];
+            console.log(key);
+            rc[key] = "#000";
+        }
+        $('#vmap_choose').vectorMap({
+            map: 'world_en'
+            , onRegionClick: function (element, code, region) {}
+        });
+        jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
     </script>
     <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
     <!-- Morris Charts JavaScript -->
     <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
-
 </body>
-
 <!-- facebook Api -->
-    <script type="text/javascript">
-
-      //var FaceBookAppId = '233902740370813';//localhost:8000
-      var FaceBookAppId = '1868740400028340';//web
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: FaceBookAppId,
-                status: true,
-                cookie: true
-                , xfbml: true
-                , version: 'v2.8'
-            });
-            window.fbloaded();
-            //FB.AppEvents.logPageView();
-        };
-        
-        
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-     
-     
-        var useremail;
-        var userId;
-        var username;
-        window.fbloaded = function(){
-        
-        var userpicture;
-
-        //fb status connected not_authorized unknown
-        FB.Event.subscribe('auth.statusChange', function(response){
-            // console.log(response.status);
-            if(response.status === 'connected'){
-                FB.api("/me/picture?widrh=30" , function(response){
-                    userpicture = response.data.url;
-                    console.log(userpicture);
-                    $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
-                        
-                });
-                
-                
-                var len;
-                var friends = new Array();
-                FB.api("/me/friends",function(response){
-                    len = Object.keys(response.data).length;
-                    for (var i = 0; i < len; i++) {
-                        friends[i] = response.data[i].id;
-                        // iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
-                    }
-                    for (var i = 0; i < len; i++) {
-                        console.log(friends[i]);
-                    }
-                });
-                
-                FB.api("/me",{'fields': 'name,email'},function(response){
-                    username = response.name;
-                    useremail = response.email;
-                    userId = response.id;
-                    
-                    $.get('/login/',{
-                        username: username,
-                        userId: userId,
-                        email: useremail,
-                        friends: friends,
-                        userpucture: userpicture
-                     },function(data){
-                        
-                     });
-                     $('#user-name').html(username);
-                    console.log('before ' +username );
-                    console.log(useremail);
-                });
-
-            }
+<script type="text/javascript">
+    //var FaceBookAppId = '233902740370813';//localhost:8000
+    var FaceBookAppId = '1868740400028340'; //web
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: FaceBookAppId
+            , status: true
+            , cookie: true
+            , xfbml: true
+            , version: 'v2.8'
         });
-    } 
-     
-// facebook sharing     
-    var sharing = function(){
+        window.fbloaded();
+        //FB.AppEvents.logPageView();
+    };
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    var useremail;
+    var userId;
+    var username;
+    window.fbloaded = function () {
+            var userpicture;
+            //fb status connected not_authorized unknown
+            FB.Event.subscribe('auth.statusChange', function (response) {
+                // console.log(response.status);
+                if (response.status === 'connected') {
+                    FB.api("/me/picture?widrh=30", function (response) {
+                        userpicture = response.data.url;
+                        console.log(userpicture);
+                        $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
+                    });
+                    var len;
+                    var friends = new Array();
+                    FB.api("/me/friends", function (response) {
+                        len = Object.keys(response.data).length;
+                        for (var i = 0; i < len; i++) {
+                            friends[i] = response.data[i].id;
+                            // iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
+                        }
+                        for (var i = 0; i < len; i++) {
+                            console.log(friends[i]);
+                        }
+                    });
+                    FB.api("/me", {
+                        'fields': 'name,email'
+                    }, function (response) {
+                        username = response.name;
+                        useremail = response.email;
+                        userId = response.id;
+                        $.get('/login/', {
+                            username: username
+                            , userId: userId
+                            , email: useremail
+                            , friends: friends
+                            , userpucture: userpicture
+                        }, function (data) {});
+                        $('#user-name').html(username);
+                        console.log('before ' + username);
+                        console.log(useremail);
+                    });
+                }
+            });
+        }
+        // facebook sharing     
+    var sharing = function () {
         var bannerImage = new Image();
         bannerImage.src = "{% static 'images/fish.png' %}";
         '{{sentence_content.Content}}';
         var id = $('.sharebtn').attr('data-post-id');
         FB.ui({
-            method: 'share',
-            href:'https://sentence-eva19950630.c9users.io/'+id,
-            // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
+            method: 'share'
+            , href: 'https://sentence-eva19950630.c9users.io/' + id
+            , // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
             //href:'localhost:8000'
-            title: 'A SENTENCE A DAY',  // The same than name in feed method
-            picture: bannerImage.src,  
-            caption: 'by A Sentence A Day',  
-            description: '{{sentence_content.Content}}',
-        });
+            title: 'A SENTENCE A DAY', // The same than name in feed method
+            picture: bannerImage.src
+            , caption: 'by A Sentence A Day'
+            , description: '{{sentence_content.Content}}'
+        , });
     }
-
-
-    $('.btn.sharebtn.btn-default.navbar-btn').click(function(){
+    $('.btn.sharebtn.btn-default.navbar-btn').click(function () {
         console.log('share click');
         sharing();
     });
-
-// facebook login logout
-     $(".facebook-login-btn").click(function(){
-         FB.getLoginStatus(function(response){
-            console.log('button '+response.status);
-            if(response.status === 'connected'){
-            }else{
+    // facebook login logout
+    $(".facebook-login-btn").click(function () {
+        FB.getLoginStatus(function (response) {
+            console.log('button ' + response.status);
+            if (response.status === 'connected') {}
+            else {
                 console.log("login");
-                FB.login(function(response){
+                FB.login(function (response) {
                     $('.facebook-login-btn').html("facebook Logout");
-                },{'scope': 'user_friends,email'});
+                }, {
+                    'scope': 'user_friends,email'
+                });
             }
         });
-
-     });
-     $(".fb-log-out").focus(function(){
-        FB.getLoginStatus(function(response){
+    });
+    $(".fb-log-out").focus(function () {
+        FB.getLoginStatus(function (response) {
             // console.log('button '+response.status);
-            if(response.status === 'connected'){
-               // console.log("connected");
-                FB.logout(function(response){
+            if (response.status === 'connected') {
+                // console.log("connected");
+                FB.logout(function (response) {
                     $.get('/logout/');
                     // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
                     // $('#user-name').html('USER NAME');
@@ -553,88 +456,87 @@ jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
             console.log("fb logout");
         });
     });
-     //console.log(loginState);
-         //startApp();
-    </script>
-
+    //console.log(loginState);
+    //startApp();
+</script>
 <!-- show paste link -->
-    <script type="text/javascript">
-      var isPost = false;
-      $('#link').focusin(function(){
+<script type="text/javascript">
+    var isPost = false;
+    $('#link').focusin(function () {
         isPost = true;
-        console.log('in');  
-      });
-      $('#link').blur(function(){
+        console.log('in');
+    });
+    $('#link').blur(function () {
         isPost = false;
-      });
-      var link;
-      setInterval(function(){
-          if(isPost === true){
-            var newLink =  $('#link').val();
-            if(link != newLink){
-              $('#show_link').replaceWith('<iframe id="show_link" src="'+ newLink +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');  
-              link = newLink   
+    });
+    var link;
+    setInterval(function () {
+        if (isPost === true) {
+            var newLink = $('#link').val();
+            if (link != newLink) {
+                $('#show_link').replaceWith('<iframe id="show_link" src="' + newLink + '"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+                link = newLink
             }
-          }
-      },1000);
-    </script>
-
+        }
+    }, 1000);
+</script>
 <!-- like / collect -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            //likes
-            $('.btn.heartbtn').click(function() {
-                var id;
-                id = $(this).attr('data-post-id');
-                console.log(id);
-                $.get('/likes/', {
-                    sentence_id: id
-                }, function(data) {
-                    json_like = JSON.parse(data);
-                    console.log(json_like.data + ' ' +json_like.state);
-                    if (json_like.state) {
-                        console.log("like");
-                        $('.btn.heartbtn').addClass('active');
-                    } else {
-                        console.log("unlike");
-                        $('.btn.heartbtn').removeClass('active');
-                    }
-                    $('.like_'+id).html(' '+json_like.data);
-                });
-            });
-            $('.cardheart').click(function() {
-                var id;
-                id = $(this).attr('data-post-id');
-                console.log(id);
-                $.get('/likes/', {
-                    sentence_id: id
-                }, function(data) {
-                    json_like = JSON.parse(data);
-                    console.log(json_like.data + ' ' +json_like.state);
-                    $('.like_'+id).html(' '+json_like.data);
-                });
-            });
-            //collection
-            $('.btn.starbtn').click(function() {
-                var id;
-                id = $(this).attr('data-post-id');
-                console.log(id);
-                $.get('/collect/', {
-                    sentence_id: id
-                }, function(data) {
-                    console.log(data);
-                    if (data === "True") {
-                        console.log("collect");
-                        $('.btn.starbtn').addClass('active');
-                    } else {
-                        console.log("uncollect");
-                        $('.btn.starbtn').removeClass('active');
-                    }
-                    
-                    // $('.collect_'+id).html(data);
-                });
+<script type="text/javascript">
+    $(document).ready(function () {
+        //likes
+        $('.btn.heartbtn').click(function () {
+            var id;
+            id = $(this).attr('data-post-id');
+            console.log(id);
+            $.get('/likes/', {
+                sentence_id: id
+            }, function (data) {
+                json_like = JSON.parse(data);
+                console.log(json_like.data + ' ' + json_like.state);
+                if (json_like.state) {
+                    console.log("like");
+                    $('.btn.heartbtn').addClass('active');
+                }
+                else {
+                    console.log("unlike");
+                    $('.btn.heartbtn').removeClass('active');
+                }
+                $('.like_' + id).html(' ' + json_like.data);
             });
         });
-    </script>
+        $('.cardheart').click(function () {
+            var id;
+            id = $(this).attr('data-post-id');
+            console.log(id);
+            $.get('/likes/', {
+                sentence_id: id
+            }, function (data) {
+                json_like = JSON.parse(data);
+                console.log(json_like.data + ' ' + json_like.state);
+                $('.like_' + id).html(' ' + json_like.data);
+            });
+        });
+        //collection
+        $('.btn.starbtn').click(function () {
+            var id;
+            id = $(this).attr('data-post-id');
+            console.log(id);
+            $.get('/collect/', {
+                sentence_id: id
+            }, function (data) {
+                console.log(data);
+                if (data === "True") {
+                    console.log("collect");
+                    $('.btn.starbtn').addClass('active');
+                }
+                else {
+                    console.log("uncollect");
+                    $('.btn.starbtn').removeClass('active');
+                }
+                // $('.collect_'+id).html(data);
+            });
+        });
+    });
+</script>
 
 </html>
