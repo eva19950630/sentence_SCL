@@ -1,7 +1,7 @@
 from django.shortcuts import render
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
-from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -18,26 +18,27 @@ import json
 # Create your views here.
 
 def index(request): 
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+
+    # translation_count = []
+    # for s in Sentence.objects.filter().count():
+    # # translation_count = [Translation.objects.filter(SID=s.SID).count() for s in sentencemodel_date_order]
+    #     translation_count[s.SID] = Translation.objects.filter(SID=s.SID).count()
+    #     print(s)
 
     uid = request.session.get('UID')
 
     if User.objects.filter(UID = uid).exists():
         if request.session.get('UID'):
             print('login index')
-            # try:
-            #     usermodel = User.objects.get(UID=request.session['UID'])
-            # except User.DoesNotExist:
-            #     usermodel = None
-            # return render(request, "sentence/index_afterlogin.html",{'username': usermodel,'sentence_content': sentencemodel})
             
             usermodel = User.objects.get(UID=request.session['UID'])
 
             context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
 
-            return render(request, "sentence/index_afterlogin.html",context)
+            return render(request, "sentence/index.html",context)
         
         else:
             print('logout index')
@@ -127,7 +128,8 @@ def sentence_post(request):
                             Sentence_tag =  new_sentence_tag, 
                             UID = usermodel,
                             TopicID = new_topic_model,
-                        )           
+                        )      
+  
                     else:
                         new_topic_model = Topic.objects.create(
                             Topic_tag = new_sentence_topic,
@@ -139,7 +141,7 @@ def sentence_post(request):
                             Sentence_tag =  new_sentence_tag, 
                             UID = usermodel,
                             TopicID = new_topic_model,
-                        )           
+                        )      
 
                 print("topic sentence  store")
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
@@ -156,6 +158,7 @@ def sentence_post(request):
                         Sentence_tag =  new_sentence_tag, 
                         UID = usermodel,
                     )            
+
                 print("daily sentence  store " + str(new_sentence_model.SID))
                 # return Redirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
@@ -176,7 +179,7 @@ def translation_post(request, get_sid):
                 sentencemodel = Sentence.objects.get(SID = int(get_sid))
                 new_translation = django_form.data.get("translation")
                 new_translation_tag = '#' + django_form.data.get("translation_tag")
-                
+
                 # link
 
                 get_uid = request.session.get('UID')
@@ -191,7 +194,12 @@ def translation_post(request, get_sid):
                         Translation_tag =  new_translation_tag, 
                         UID = usermodel,
                         SID =sentencemodel,
-                    )            
+                    )     
+                    
+                Translation_count = Translation.objects.filter(SID=sentencemodel.SID).count()
+                sentencemodel.Translation_count = Translation_count
+                sentencemodel.save()  
+
                 print("translation store")
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': get_sid}))
                 # return render(request, "sentence/sentence.html",{'translation_model': new_translation_model,'username': usermodel})                    
@@ -214,8 +222,14 @@ def translation_post(request, get_sid):
 def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
-
-        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+        sentencemodel = None
+        if Sentence.objects.filter(UID=request.session.get('UID')).exists():
+            sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
+        
+        context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
+            ,'sentence':sentencemodel
+        }
 
         return render(request, "sentence/usermap.html",context)
     else:
@@ -299,36 +313,20 @@ def user_history(request):
 
 
 def login_app(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
     get_email = request.POST.get('email')
-    #app login
-    if User.objects.filter(Email=get_email).exists():
-        m = User.objects.get(Email=get_email)
-        #login
-        if m.Password == request.POST.get('password'):
-            request.session['UID'] = m.UID
-            print(m.UserName)
 
-            context = {'username': m,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,
-            'extend_index': 'sentence/background.html'}
-            
-            return render(request, 'sentence/index_afterlogin.html',context) 
-        #login failed
-        else:
-            print('Password WRONG')
-
-            context = {'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
-
-            return render(request, 'sentence/index.html',context)
     #social login
-    elif request.GET.get('userId'):
+    if request.GET.get('userId'):
         if request.method == 'GET':
             username = request.GET.get('username')
             userId = request.GET.get('userId')
             useremail = request.GET.get('email')
+            userpucture = request.GET.get('userpucture')
+            print(userpucture)
+            
+            userfriend = request.GET.getlist('friends[]')
             
             password = '000'
             if User.objects.filter(SocialID = userId).exists():
@@ -338,6 +336,20 @@ def login_app(request):
                 user = User.objects.filter(SocialID = userId)[0]
                 # user.user_picture = userpicture
                 user.save()
+                
+                #save friends
+                if userfriend:
+                    for f in userfriend:
+                        if User.objects.filter(SocialID=f).exists():
+                            userfriend_UID = User.objects.filter(SocialID=f)[0]
+                        
+                            if not Friendship.objects.filter(UID=user.UID,Friend=userfriend_UID).exists():
+                                friendshipmodel = Friendship.objects.create(
+                                    AreFriends = 1,
+                                    UID = user,
+                                    Friend = userfriend_UID,
+                                )
+                
             else:
                 
                 if useremail:
@@ -347,7 +359,22 @@ def login_app(request):
                         Password = password,
                         SocialID = userId,
                         Email = useremail,
+                        UserIcon = userpucture,
+                        # UserIcon = "http://graph.facebook.com/"+userId+"/picture?type=square",
                     )
+                    
+                    #save friends
+                if userfriend:
+                    for f in userfriend:
+                        if User.objects.filter(SocialID=f).exists():
+                            userfriend_UID = User.objects.filter(SocialID=f)[0]
+                        
+                            if not Friendship.objects.filter(UID=new_user_model.UID,Friend=userfriend_UID).exists():
+                                friendshipmodel = Friendship.objects.create(
+                                    AreFriends = 1,
+                                    UID = new_user_model,
+                                    Friend = userfriend_UID,
+                                )
                 else:
                     print('fb email not confirm')
                 
@@ -355,9 +382,9 @@ def login_app(request):
             'sentence_content_date': sentencemodel_date_order,
             'extend_index': 'sentence/background.html'}
             
-            return render(request, 'sentence/index_afterlogin.html',context) 
+            return render(request, 'sentence/index.html',context) 
     #sign up
-    else:
+    elif request.POST.get('name') and not User.objects.filter(Email=get_email).exists():
         print('NOT USER')
         django_form = AddUser(request.POST)
         if django_form.is_valid():
@@ -381,7 +408,7 @@ def login_app(request):
             context = {'username': new_user_model,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
             
-            return render(request, 'sentence/index_afterlogin.html',context)
+            return render(request, 'sentence/index.html',context)
             
         else:
             print('wrong form')
@@ -394,12 +421,37 @@ def login_app(request):
         context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
         ,'extend_index': 'sentence/background.html'}
         
-        return render(request, 'sentence/index.html',context)            
+        return render(request, 'sentence/index.html',context)    
+    #app login
+    elif User.objects.filter(Email=get_email).exists():
+        m = User.objects.get(Email=get_email)
+        #login
+        if m.Password == request.POST.get('password'):
+            request.session['UID'] = m.UID
+            print(m.UserName)
+
+            context = {'username': m,'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,
+            'extend_index': 'sentence/background.html'}
+            
+            return render(request, 'sentence/index.html',context) 
+        #login failed
+        else:
+            print('Password WRONG')
+
+            context = {'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+
+            return render(request, 'sentence/index.html',context)  
+    else:
+        context = {'sentence_content': sentencemodel_like_order,
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+        return render(request, 'sentence/index.html',context)      
 
 #logout
 def logout(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
+    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
     print("logout")
     django_logout(request)
     context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
@@ -413,6 +465,9 @@ def likes_count(request):
     if request.method == 'GET':
         sentence_id = request.GET.get('sentence_id')
         sentence = Sentence.objects.get(SID=sentence_id)
+        userid = request.session.get('UID')
+        usermodel = User.objects.get(UID=userid)
+        
         likes = sentence.Likes
         if request.session.get('has_liked_'+str(sentence_id),liked):
             print("unlike")
@@ -424,6 +479,9 @@ def likes_count(request):
                     print('session del ' + str(request.session['has_liked_'+sentence_id]))
                 except KeyError:
                     print("keyerror")
+                    
+                if Rank_sentence.objects.filter(UID=userid,SID=sentence_id).exists():
+                    Rank_sentence.objects.filter(UID=userid,SID=sentence_id).delete()
                 sentence.Likes = likes
                 sentence.save()
         else:
@@ -431,6 +489,11 @@ def likes_count(request):
             print("like")
             request.session['has_liked_'+sentence_id] = True
             likes = likes + 1
+            if not Rank_sentence.objects.filter(UID=userid,SID=sentence_id).exists():
+                Rank_sentence.objects.create(
+                    UID=usermodel,
+                    SID=sentence,
+                )
             sentence.Likes = likes
             sentence.save()   
         data = {'data':likes,'state':state} 
@@ -469,6 +532,10 @@ def collection(request):
                 SID = sentencemodel,
             )
         return HttpResponse(isCollect)
+        
+
+    
+    
 
 #google+
 # def signup_google(request):

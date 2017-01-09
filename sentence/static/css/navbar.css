@@ -559,7 +559,7 @@ input[type=search-mobile]:focus {
 
 /*Search bar*/
 .search {
-  width: 70%;
+  width: 80%;
   position: relative;
   margin-top: 10px;
 }
@@ -715,12 +715,23 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="password"]:focus {
     border-bottom: 2px solid #00CCCC;
-    color: #16a085;
+    color: #262826;
+    transition: 0.2s ease;
+}
+
+textarea[type="text"] {
+    border: 1px solid #AAA;
+}
+
+textarea[type="text"]:focus {
+    outline: 0;
+    border: 2px solid #00CCCC;
+    color: #262826;
     transition: 0.2s ease;
 }
 
 .left input[type="submit"], .postbox-content input[type="submit"] {
-    margin-top: 28px;
+    margin-top: 20px;
     width: 120px;
     height: 32px;
     background: #00CCCC;

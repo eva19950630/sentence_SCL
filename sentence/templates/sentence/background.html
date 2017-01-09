@@ -65,14 +65,14 @@
             <div class="navbar header-1">
                 <div class="container">
                     <!-- Logo -->
-                    <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="col-md-4 col-sm-6 col-xs-6">
                         <div class="header-logo">
                             <a href="/"> <img class="logo img-valign img-responsive" src="{% static 'images/logo2.png' %}"> </a>
                         </div>
                     </div>
 
                     <!-- Search bar -->
-                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="col-md-5 col-sm-6 col-xs-6">
                         <form class="search">
                             <input class="searchTerm" placeholder="Enter sentence or tag keywords" />
                             <input class="searchButton" name="search_submit" type="submit" />
@@ -81,6 +81,7 @@
 
                     <!-- Right: LogIn SignUp / profile notification -->
                     <div class="col-md-3 col-sm-6 col-xs-6 header-mobile-sm">
+                        <!-- LOG IN -->
                         {% if not username %}
 
                         <div class="header-sm">
@@ -108,9 +109,9 @@
                                               {% csrf_token %}
                                               {{ form.as_p }}
                                               
-                                                <input type="text" name="email" placeholder="E-mail" />
-                                                <input type="password" name="password" placeholder="Password" />
-                                                <input type="submit" class="loginButton" name="login_submit" value="Log in" /> 
+                                                <input type="text" name="email" placeholder="E-mail" required>
+                                                <input type="password" name="password" placeholder="Password" required>
+                                                <input type="submit" class="loginButton" name="login_submit" value="Log in"> 
 
                                             </form>                                       
                                         </div>
@@ -140,10 +141,10 @@
                                               {% csrf_token %}
                                               {{ form.as_p }}
                                               
-                                              <input type="text" name="name" placeholder="Username" />
-                                              <input type="text" name="email" placeholder="E-mail" />
-                                              <input type="password" name="password" placeholder="Password" />
-                                              <input type="password" name="password" placeholder="Retype password" />
+                                              <input type="text" name="name" placeholder="Username" required>
+                                              <input type="text" name="email" placeholder="E-mail" required>
+                                              <input type="password" name="password" placeholder="Password" required>
+                                              <input type="password" name="password" placeholder="Retype password" required>
                                               <!--<a href="/login"></a>-->
                                               <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
                                             </form>
@@ -164,6 +165,7 @@
                             </div> 
                             <!-- end Sign up Modal -->
 
+                        <!-- LOG OUT -->
                         {% else %}
 
                         <div class="header-sm user">
@@ -171,7 +173,7 @@
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {% if username %}
-                                    <img src="{% static username.UserIcon.url %}" height="40" width="40" id="user-pic">
+                                    <img src="{{ username.UserIcon }}" height="40" width="40" id="user-pic">
                                     <span id="user-name"><font color=#fff>{{username.UserName}}</font></span>
                                   {% else %}
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
@@ -183,7 +185,7 @@
                                     <li class="divider"></li>
                                     <!--class="fb-log-out" written by gim for fb log out-->
                                     <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
-                                    <a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <li><a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
@@ -237,27 +239,58 @@
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
-    <!-- Usermap js -->
-    <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
-    <!-- Painting js -->
-    <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
-    <!-- WorldMAP js -->
-    <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
-     <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
-    <!-- Morris Charts JavaScript -->
-    <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
+    <!-- Postcard js -->
+    <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Imagefile js -->
     <script>
+        //user profile
+        var userPicture = new Image();
+        userPicture.src = "{% static username.UserIcon.url %}";
+        //user map
         var icon1 = "{% static 'images/whale.png' %}";
         var icons = new Array();
         icons[0] = new Image();
         icons[0].src = "{% static 'images/whale.png' %}";
         icons[1] = new Image();
-        icons[1].src = "{% static 'images/fish.png' %}"
-    </script>  
+        icons[1].src = "{{username.UserIcon.url}}"
+        userSentence = '{{sentence.Content}}';
+    </script> 
+    <!-- Usermap js -->
+    <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
+    <!-- Painting js -->
+    <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
+    <script type="text/javascript">
+      var saveButton = document.getElementById('save');
+        saveButton.addEventListener('click', function(event){
+          var user_icon_img;
+          // canvas.toBlob(function(blob) {
+          //     user_icon_img = URL.createObjectURL(blob);
+          // });
+          // canvas.toBlob(function(blob){
+          //   user_icon_img = URL.createObjectURL(blob);
+          //   console.log(user_icon_img);
+            
+          // }, "image/png", 1);
+          user_icon_img = canvas.toDataURL("image/png");
+          
+            $.get('/get_new_user_icon/',{
+                userPicture: user_icon_img
+              });
+            // $.get('/get_new_user_icon/',{
+            //     userPicture: user_icon_img
+            //   },function(data){
+            // });
+            window.location = user_icon_img;
+        }, false);
+    </script>>
+    <!-- WorldMAP js -->
+    <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
+    <!-- Morris Charts JavaScript -->
+    <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
 
 </body>
 
@@ -304,10 +337,24 @@
             if(response.status === 'connected'){
                 FB.api("/me/picture?widrh=30" , function(response){
                     userpicture = response.data.url;
+                    console.log(userpicture);
                     $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
                         
                 });
                 
+                
+                var len;
+                var friends = new Array();
+                FB.api("/me/friends",function(response){
+                    len = Object.keys(response.data).length;
+                    for (var i = 0; i < len; i++) {
+                        friends[i] = response.data[i].id;
+                        // iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
+                    }
+                    for (var i = 0; i < len; i++) {
+                        console.log(friends[i]);
+                    }
+                });
                 
                 FB.api("/me",{'fields': 'name,email'},function(response){
                     username = response.name;
@@ -317,14 +364,15 @@
                     $.get('/login/',{
                         username: username,
                         userId: userId,
-                        email: useremail
+                        email: useremail,
+                        friends: friends,
+                        userpucture: userpicture
                      },function(data){
                         
                      });
                      $('#user-name').html(username);
                     console.log('before ' +username );
                     console.log(useremail);
-                    console.log(userId);
                 });
 
             }
@@ -357,7 +405,6 @@
 
 // facebook login logout
      $(".facebook-login-btn").click(function(){
-         //loginCheck();
          FB.getLoginStatus(function(response){
             console.log('button '+response.status);
             if(response.status === 'connected'){
@@ -371,7 +418,6 @@
 
      });
      $(".fb-log-out").focus(function(){
-        //loginCheck();
         FB.getLoginStatus(function(response){
             // console.log('button '+response.status);
             if(response.status === 'connected'){
@@ -385,6 +431,7 @@
             }
             console.log("fb logout");
         });
+    });
      //console.log(loginState);
          //startApp();
     </script>

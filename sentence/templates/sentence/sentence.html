@@ -6,8 +6,8 @@
 
 {% if username %}
 
+<!-- LOG IN -->
 <!-- Inputfield and Post modal -->
-{% if username %}
 <div class="inputfield-container">
     <section>
         <div class="row">
@@ -21,7 +21,6 @@
         </div>
     </section>
 </div> <!-- end inputfield-container -->
-{% endif %}
             <!-- Post Modal -->
             <div class="modal fade" id="post-modal" role="dialog">
                 <div class="modal-dialog">
@@ -30,22 +29,27 @@
                             <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                         </div>
 
-                        <div class="postbox-content">
+                        <div class="postbox-content translation">
                             <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID%}">
                                 {% csrf_token %}
                                 {{ form.as_p }}
 
                                 <h2>DAILY TRANSLATION</h2>
 
-                                <div class="modal-sentence">
-                                    <span class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</span>
+                                <div class="modal-language">
+                                    <span class="modalLanguage-content" class="text-center">{{ sentence_content.Sentence_tag }}</span>
                                 </div>
 
-                                <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
-                                <input id="input" type='text' name="translation" placeholder="With another language"></input>
+                                <div class="modal-sentence">
+                                    <p class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</p>
+                                </div>
+
+                                <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">TRANSLATION</font>
+                                <!-- <input id="input" type='text' name="translation" placeholder="With another language" required></input> -->
+                                <p><textarea cols="50" rows="5" id="input" type='text' name='translation' placeholder="Translate it with another language" required></textarea></p>
                                 
-                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
-                                <input type="text" name="translation_tag" placeholder="Type the language (English only)"/>
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">LANGUAGE</font>
+                                <input type="text" name="translation_tag" placeholder="Type the language (English only)" required></input>
 
                                 <input id="post-submit" type="submit" name="post_submit" value="Submit" />
 
@@ -59,17 +63,26 @@
             </div>
 
 <!-- Sentence posts in one country -->
-<div class="map-container-fluid map-content" style="position: absolute; margin-top: 150px;">
+<div class="map-container-fluid map-content" style="position: absolute; margin-top: 160px;">
     <div class="map-block">    
+        <!-- Posttime -->
+        <div class="sentenceInfo posttime">
+            <span id="float-posttime" class="text-center"><i class="fa fa-clock-o"></i>&ensp;{{ sentence_content.Date|timezone:"Asia/Taipei" }}</span>
+        </div>
+        <!-- Sentence -->
+        <div class="sentenceInfo sentence">
+            <span id="float-sentence" class="text-center"><i class="fa fa-pencil"></i>{{ sentence_content.Content }}</span>
+        </div>
+        <!-- Language -->
         <div class="sentenceInfo language">
             <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
         </div>
-        <div class="sentenceInfo sentence">
-            <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
+        <!-- Translate -->
+        <div class="sentenceInfo translatecount">
+            <span id="float-translatecount">TRANSLATION :&emsp;{{ sentence_content.Translation_count }}</span>
         </div>
-        <div class="sentenceInfo rightbtn">
-            
-            <!-- Like / Stae / Share -->
+        <!-- Like / Stae / Share -->
+        <div class="sentenceInfo rightbtn">    
             {% if liked %}
             <span>
                 <button type="button" class="btn heartbtn active btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;{{ sentence_content.Likes }}</span></button>
@@ -103,21 +116,31 @@
 
 {% else %}
 
+<!-- LOG OUT -->
 <!-- Sentence posts in one country -->
 <div class="map-container-fluid map-content">
-    <div class="map-block">    
+    <div class="map-block">
+        <!-- Posttime -->
+        <div class="sentenceInfo posttime">
+            <span id="float-posttime" class="text-center"><i class="fa fa-clock-o"></i>&ensp;{{ sentence_content.Date|timezone:"Asia/Taipei" }}</span>
+        </div>
+        <!-- Sentence -->    
+        <div class="sentenceInfo sentence">
+            <span id="float-sentence" class="text-center"><i class="fa fa-pencil"></i>{{ sentence_content.Content }}</span>
+        </div>
+        <!-- Language -->
         <div class="sentenceInfo language">
             <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
         </div>
-        <div class="sentenceInfo sentence">
-            <span id="float-sentence" class="text-center">{{ sentence_content.Content }}</span>
+        <!-- Translate -->
+        <div class="sentenceInfo translatecount">
+            <span id="float-translatecount">TRANSLATION :&emsp;0</span>
         </div>
+        <!-- Like -->
         <div class="sentenceInfo rightbtn">
-            <!-- Like -->
             <div class="heart-show">
                <i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;Like&ensp;{{ sentence_content.Likes }}</span>
             </div>
-
         </div>
 
         <div id="vmap" style="width: 100vw; height: 100vh;">
@@ -130,3 +153,8 @@
 
 {% endblock content1 %}
 
+{% block content2 %}
+
+<div style="margin-top: -200px;"></div>
+
+{% endblock content2 %}
