@@ -2,6 +2,7 @@
 	font-size: 24px;
 	margin-bottom: 20px;
 	letter-spacing: 0.5px;
+	color: #00CCCC;
 }
 
 /*History*/
@@ -53,4 +54,45 @@
 	font-size: 16px;
 	letter-spacing: 1px;
 	/*color: #fff;*/
+}
+
+/*Achievement*/
+.profiletitle.achievement {
+	margin: 0 0 20px 15px;
+}
+
+.achievement-content {
+	font-size: 16px;
+}
+
+.achievement-content.sentence {
+	color: #005454;
+}
+
+.achievement-content.translation {
+	color: #FFB77D;
+}
+
+/*Accounts*/
+.title {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #005454;
+}
+
+.input-group.account {
+	margin: 0 0 15px 0px;
+}
+
+.profilecontent.account {
+	/*margin: 0 0 0 45px;*/
+}
+
+/*Profile*/
+.profile-content {
+	/*margin: 0 0 0 30px;*/
+}
+
+.progress-bar.exp {
+	background-color: #00CCCC;
 }
