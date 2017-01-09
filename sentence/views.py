@@ -293,8 +293,12 @@ def user_account(request):
 def user_achievement(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
-
-        context = {'username': usermodel,'extend_index': 'sentence/background.html'}
+        sentencemodel = Sentence.objects.filter(UID=usermodel.UID).count()
+        translationmodel = Translation.objects.filter(UID=usermodel.UID).count()
+        
+        context = {'username': usermodel,'sentencemodel':sentencemodel,'extend_index': 'sentence/background.html'
+            ,'translationmodel':translationmodel
+        }
 
         return render(request, "sentence/user_achievement.html",context)
     else:

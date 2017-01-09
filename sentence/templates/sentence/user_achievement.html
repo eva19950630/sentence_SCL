@@ -7,16 +7,33 @@
     <div class="row">
         <div class="profiletitle achievement"><i class="fa fa-trophy"></i>&emsp;ACHIEVEMENT</div>
         <div class="col-sm-4">
-            <div class="panel panel-default sentence">
-                <div class="panel-body sentence achievement">
-                    <font class="achievement-content sentence"><i class="fa fa-pencil"></i>&emsp;0 Sentences</font>
+            {% if sentencemodel %}
+                <div class="panel panel-default sentence">
+                    <div class="panel-body sentence achievement">
+                        <font class="achievement-content sentence"><i class="fa fa-pencil"></i>&emsp;{{sentencemodel}}&emsp;Sentences</font>
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-default translation">
-                <div class="panel-body translation achievement">
-                    <font class="achievement-content translation"><i class="fa fa-language"></i>&emsp;0 Translations</font>
+            {% else %}
+                <div class="panel panel-default sentence">
+                    <div class="panel-body sentence achievement">
+                        <font class="achievement-content sentence"><i class="fa fa-pencil"></i>&emsp;0&emsp;Sentences</font>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+
+            {% if translationmodel %}
+                <div class="panel panel-default translation">
+                    <div class="panel-body translation achievement">
+                        <font class="achievement-content translation"><i class="fa fa-language"></i>&emsp;{{translationmodel}}&emsp;Translations</font>
+                    </div>
+                </div>
+            {% else %}
+                <div class="panel panel-default translation">
+                    <div class="panel-body translation achievement">
+                        <font class="achievement-content translation"><i class="fa fa-language"></i>&emsp;0&emsp;Translations</font>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="col-sm-4">
                 

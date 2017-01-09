@@ -116,7 +116,9 @@
                                             </form>                                       
                                         </div>
                                         <div class="login-right"> 
-                                            <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                        <!--<form method="GET" action="/login/">-->
+                                            <button  class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                        <!--</form>-->
                                             <button class="social-signin google" id="customBtn-login">Log in with Google</button>
                                         </div>
 
@@ -355,7 +357,7 @@
             // });
             window.location = user_icon_img;
         }, false);
-    </script>>
+    </script>
 
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
@@ -418,7 +420,6 @@
 
 <!-- facebook Api -->
     <script type="text/javascript">
-
       //var FaceBookAppId = '233902740370813';//localhost:8000
       var FaceBookAppId = '1868740400028340';//web
         window.fbAsyncInit = function () {
@@ -449,57 +450,85 @@
         var useremail;
         var userId;
         var username;
-        window.fbloaded = function(){
+        var fb_login=function(){
+                // window.fbloaded = function(){
+                
+            var userpicture;
+            console.log("in fb login");
+                //fb status connected not_authorized unknown
+                FB.Event.subscribe('auth.statusChange', function(response){
+                    // console.log(response.status);
+                    if(response.status === 'connected'){
+                        console.log("login connected");
+                        FB.api("/me/picture?widrh=30" , function(response){
+                            userpicture = response.data.url;
+                            //console.log(userpicture);
+                            $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
+                                
+                        });
+                        
+                        
+                        var len;
+                        var friends = new Array();
+                        FB.api("/me/friends",function(response){
+                            len = Object.keys(response.data).length;
+                            for (var i = 0; i < len; i++) {
+                                friends[i] = response.data[i].id;
+                                // iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
+                            }
+                            // for (var i = 0; i < len; i++) {
+                            //     console.log(friends[i]);
+                            // }
+                        });
+                        
+                        FB.api("/me",{'fields': 'name,email'},function(response){
+                            username = response.name;
+                            useremail = response.email;
+                            userId = response.id;
+                        
+                            
+                            $.get('/login/',{
+                                username: username,
+                                userId: userId,
+                                email: useremail,
+                                friends: friends,
+                                userpucture: userpicture
+                             },function(data){
         
-        var userpicture;
-
-        //fb status connected not_authorized unknown
-        FB.Event.subscribe('auth.statusChange', function(response){
-            // console.log(response.status);
-            if(response.status === 'connected'){
-                FB.api("/me/picture?widrh=30" , function(response){
-                    userpicture = response.data.url;
-                    console.log(userpicture);
-                    $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
+                             });
+        
+                             $('#user-name').html(username);
+                            console.log('before ' +username );
+                            console.log(useremail);
+                        });
                         
-                });
-                
-                
-                var len;
-                var friends = new Array();
-                FB.api("/me/friends",function(response){
-                    len = Object.keys(response.data).length;
-                    for (var i = 0; i < len; i++) {
-                        friends[i] = response.data[i].id;
-                        // iDiv.src = "http://graph.facebook.com/"+response.data[i].id+"/picture?type=square";
-                    }
-                    for (var i = 0; i < len; i++) {
-                        console.log(friends[i]);
                     }
                 });
-                
-                FB.api("/me",{'fields': 'name,email'},function(response){
-                    username = response.name;
-                    useremail = response.email;
-                    userId = response.id;
+            // } 
+        }
+     
+     
+        var getfbuser=function(){
+            FB.getLoginStatus(function(response){
+                // console.log('button '+response.status);
+                if(response.status === 'connected'){
+                   // console.log("connected");
+                    FB.logout(function(response){
+                        $.get('/logout/');
+                        // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+                        // $('#user-name').html('USER NAME');
+                        console.log("logout");
+                    });
+                }else{
                     
-                    $.get('/login/',{
-                        username: username,
-                        userId: userId,
-                        email: useremail,
-                        friends: friends,
-                        userpucture: userpicture
-                     },function(data){
+                    console.log("login");
+                    FB.login(function(response){
+                        $('.facebook-login-btn').html("facebook Logout");
                         
-                     });
-                     $('#user-name').html(username);
-                    console.log('before ' +username );
-                    console.log(useremail);
-                });
-
-            }
-        });
-    } 
+                    },{'scope': 'user_friends,email'});
+                }
+            });
+        }
      
 // facebook sharing     
     var sharing = function(){
@@ -527,32 +556,14 @@
 
 // facebook login logout
      $(".facebook-login-btn").click(function(){
-         FB.getLoginStatus(function(response){
-            console.log('button '+response.status);
-            if(response.status === 'connected'){
-            }else{
-                console.log("login");
-                FB.login(function(response){
-                    $('.facebook-login-btn').html("facebook Logout");
-                },{'scope': 'user_friends,email'});
-            }
-        });
-
+         getfbuser();
+         fb_login();
+         
      });
+     
+
      $(".fb-log-out").focus(function(){
-        FB.getLoginStatus(function(response){
-            // console.log('button '+response.status);
-            if(response.status === 'connected'){
-               // console.log("connected");
-                FB.logout(function(response){
-                    $.get('/logout/');
-                    // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
-                    // $('#user-name').html('USER NAME');
-                    console.log("logout");
-                });
-            }
-            console.log("fb logout");
-        });
+        getfbuser();
     });
      //console.log(loginState);
          //startApp();
