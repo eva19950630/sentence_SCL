@@ -3,10 +3,10 @@ var ctx = c.getContext("2d");
 ctx.font = "18px Georgia";
 // Create gradient
 var xEnd  = 0;
-var yEnd = 200;
+var yEnd = 400;
 var grd = ctx.createLinearGradient(0, 0, xEnd, yEnd);
 grd.addColorStop(0, "white");
-grd.addColorStop(1, "#004B97");
+grd.addColorStop(1, "#05a3d6");
 // Fill with gradient
 ctx.fillStyle = grd;
 ctx.fillRect(0, 0, 2000, 1000);
@@ -99,7 +99,7 @@ document.addEventListener('mousedown', function (e) {
 setInterval(function () {
     if ((Math.abs(CurPos.x - mousePos.x) >= 0.1) && (Math.abs(CurPos.y - mousePos.y) >= 0.1)) {
         grd.addColorStop(0, "white");
-        grd.addColorStop(1, "#004B97");
+        grd.addColorStop(1, "#05a3d6");
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, 2000, 1000);
         CurPos.x += moveDir.x * 0.1;
@@ -107,28 +107,35 @@ setInterval(function () {
     }
     
     /*No Picture*/
+    
     DrawIcons(icons[0].src, passerbyPos.x, passerbyPos.y, "у меня есть яблоко.");
     DrawIcons(icons[1].src, CurPos.x-50, CurPos.y-100, userSentence);
+    
+    
 }, 30);
+console.log('icon '+icons[1].src);
 //image
 var DrawIcons = function (isrc, pox, poy, sentence) {
     var ic = new Image();
     ic.src = isrc;
-    var sentLenght = sentence.length * 10;
-    ctx.beginPath();
-    ctx.moveTo(pox + 100, poy - 5);
-    ctx.lineTo(pox + 100, poy - 40);
-    ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
-    ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
-    ctx.lineTo(pox + 110, poy - 10);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fill();
-    ctx.closePath();
-    // ic.onload=function(){
-    ctx.drawImage(ic, pox, poy, 100, 100);
-    ctx.fillStyle = "black";
-    ctx.fillText(sentence, pox + 110, poy - 18);
-    // }
+   // ic.onload=function(){
+        // console.log();
+        var sentLenght = sentence.length * 10;
+        ctx.beginPath();
+        ctx.moveTo(pox + 100, poy - 5);
+        ctx.lineTo(pox + 100, poy - 40);
+        ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
+        ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
+        ctx.lineTo(pox + 110, poy - 10);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        ctx.closePath();
+        // ic.onload=function(){
+        ctx.drawImage(ic, pox, poy, 100, 100);
+        ctx.fillStyle = "black";
+        ctx.fillText(sentence, pox + 110, poy - 18);
+        // }
+   // };
 };
 //message
 /*catch before create*/
@@ -196,6 +203,6 @@ $('body').each(function (i) {
     });
 });
 
-$(function() {
-        $(c ).draggable();
-    });
+// $(function() {
+//     $(c ).draggable();
+// });

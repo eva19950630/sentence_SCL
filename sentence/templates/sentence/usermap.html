@@ -3,36 +3,36 @@
 {% block content1 %}
 
 <!-- User map and let user find friends to contact -->
-<canvas id="UserMap" width="2000" height="1000" style="margin:0 0 0 0;">Your browser does not support canvas element.</canvas>
+<!--Introduction page-->
+<div id="myIntro">
+    <div class="row map-intro">
+        <div class="col-lg-2 intro-img"> <img src="{{username.UserIcon}}"> </div>
+        <div class="col-lg-6 my-profile">
+            <h5>{{username.UserName}}</h5>
+            <h5>LV. 0</h5>
+            <h5>English</h5>
+        </div>
+    </div>
+</div>
+
+<canvas id="UserMap" width="2000" height="1000">Your browser does not support canvas element.</canvas>
 <div class="FriendsList">
     <div class="row">
         <div class="col-sm-12">
-            
+            <font class="title friend">FRIEND LIST</font>
             {% for friend in friendlist %}
             <div class="row friend-panel">
-                <div class="col-lg-2"> <img class="panel-title" src="{% static friend.Friend.UserIcon %}"> </div>
+                <div class="col-lg-2"> <img class="panel-title" src="{{ friend.Friend.UserIcon }}"> </div>
                 <div class="col-lg-5 friend-name">
                     <h4>{{ friend.Friend.UserName }}</h4>
                 </div>
             </div>
             {% endfor %}
-            
         </div>
     </div>
 </div>
 <!--intro-->
 <div class="intro" style="display: block;">
-    <!--Introduction page-->
-    <div id="myIntro">
-        <div class="row">
-            <div class="col-lg-2 intro-img"> <img src="{{username.UserIcon.url}}"> </div>
-            <div class="col-lg-6 my-profile">
-                <h5>{{username.UserName}}</h5>
-                <h5>LV.10</h5>
-                <h5>Russian,English</h5>
-            </div>
-        </div>
-    </div>
     <!--./passerby intro page-->
     <div role="dialog" class="modal fade" id="passerIntro">
         <div class="modal-dialog">
@@ -67,3 +67,9 @@
 <!--./message-->
 
 {% endblock content1 %}
+
+{% block content2 %}
+
+<div style="margin-top: -500px;"></div>
+
+{% endblock content2 %}
