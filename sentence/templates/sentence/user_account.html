@@ -1,54 +1,39 @@
-{% extends extend_index %}
+{% extends 'sentence/userSidebar.html' %}
 {% load staticfiles %}
-{% block content1 %}
+{% block pagecontent1 %}
 
 <!-- User Account -->
-<div id="wrapper">
-
-    <ul class="nav navbar-nav side-nav">
-        <div class="sidebar-menu">
-            <a href="/user/profile"><button type="button" class="btn btn-default navbar-btn">User Profile</button></a>
-            <a href="/user/account"><button type="button" class="btn btn-default navbar-btn">Accounts</button></a>
-            <a href="/user/achievement"><button type="button" class="btn btn-default navbar-btn">Achievement</button></a>
-            <a href="/user/history"><button type="button" class="btn btn-default navbar-btn">History</button></a>
-        </div>
-    </ul>
-
-
-    <div id="page-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-4">
-                    <form role="form">
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" value="{{username.UserName}}" disabled>
-                            <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
-                        </div>
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-mail"></i>EMAIL: dsddf3432@gmail.com</span>
-                        </div>
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" value="*********" disabled>
-                            <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#pswDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
-                        </div>
-                        <div class="form-group input-group">
-                            <label>Language</label>
-                            <select class="form-control">
-											<option>English</option>
-											<option>Spanish</option>
-											<option>Chinese(Taiwan)</option>
-											<option>French</option>
-											<option>German</option>
-										</select>
-                        </div>
-
-                    </form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4">
+            <form role="form">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" value="{{username.UserName}}" disabled>
+                    <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
                 </div>
-            </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="fa fa-mail"></i>EMAIL: dsddf3432@gmail.com</span>
+                </div>
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" value="*********" disabled>
+                    <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#pswDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
+                </div>
+                <div class="form-group input-group">
+                    <label>Language</label>
+                    <select class="form-control">
+									<option>English</option>
+									<option>Spanish</option>
+									<option>Chinese(Taiwan)</option>
+									<option>French</option>
+									<option>German</option>
+								</select>
+                </div>
+
+            </form>
         </div>
-    </div>
-</div>
-<!-- /#wrapper -->
+    </div> <!-- end row -->
+</div> <!-- end container-fluid -->
+
 
 <!--Modify nickname-->
 <div role="dialog" class="modal fade" id="nameDialog">
@@ -94,4 +79,4 @@
 </div>
 <!--./Modify password-->
 
-{% endblock content1 %}
+{% endblock pagecontent1 %}

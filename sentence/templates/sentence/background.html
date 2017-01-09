@@ -31,19 +31,21 @@
     <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
     <!-- Usermap CSS -->
     <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
+    <!-- Userprofile CSS -->
+    <link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
     <!-- WorldMAP CSS -->
     <link href="{% static 'css/jqvmap.css' %}" media="screen" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/sb-admin.css' %}">
     <!-- Morris Charts CSS -->
     <link rel="stylesheet" href="{% static 'css/morris.css' %}"> 
-<!--    google+-->
+    <!-- google+-->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="17252888188-om3sbh9djgv8gk720e7gl5tcrjj2r6hn.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <!--    google+-->
+    <!-- google+-->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-  <script src="https://apis.google.com/js/api:client.js"></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
     <script type="text/javascript" src="{% static 'js/GooglePlusLogin.js' %}"></script>
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
@@ -79,6 +81,8 @@
 
                     <!-- Right: LogIn SignUp / profile notification -->
                     <div class="col-md-3 col-sm-6 col-xs-6 header-mobile-sm">
+                        {% if not username %}
+
                         <div class="header-sm">
                             <!-- Log in / Sign up -->
                             <span class="before-login">
@@ -88,78 +92,126 @@
                                 <button type="button" class="btn1 btn-default navbar-btn" id="signup-btn" data-toggle="modal">Sign Up</button>
                             </span>
                         </div>
-                        
-                        
-                        <!-- Log in Modal -->
-                        <div class="modal fade" id="login-modal" role="dialog">
-                            <div class="modal-dialog">
-                                <div id="login-box">
 
-                                    <div class="top" style="padding: 15px;">
-                                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                    </div>
-                                    <div class="left">
-                                        <h1>Welcome back!</h1>
-                                        <form method = "POST" action = "/login/">
-                                          
-                                          {% csrf_token %}
-                                          {{ form.as_p }}
-                                          
-                                            <input type="text" name="email" placeholder="E-mail" />
-                                            <input type="password" name="password" placeholder="Password" />
-                                            <input type="submit" class="loginButton" name="login_submit" value="Log in" /> 
+                            <!-- Log in Modal -->
+                            <div class="modal fade" id="login-modal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div id="login-box">
 
-                                        </form>                                       
+                                        <div class="top" style="padding: 15px;">
+                                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                                        </div>
+                                        <div class="left">
+                                            <h1>Welcome back!</h1>
+                                            <form method = "POST" action = "/login/">
+                                              
+                                              {% csrf_token %}
+                                              {{ form.as_p }}
+                                              
+                                                <input type="text" name="email" placeholder="E-mail" />
+                                                <input type="password" name="password" placeholder="Password" />
+                                                <input type="submit" class="loginButton" name="login_submit" value="Log in" /> 
+
+                                            </form>                                       
+                                        </div>
+                                        <div class="login-right"> 
+                                            <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                            <button class="social-signin google" id="customBtn-login">Log in with Google</button>
+                                        </div>
+                                        <div class="login-or">OR</div>
+                                        <div class="mobile-login-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
                                     </div>
-                                    <div class="login-right"> 
-                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                        <button class="social-signin google" id="customBtn-login">Log in with Google</button>
-                                    </div>
-                                    <div class="login-or">OR</div>
-                                    <div class="mobile-login-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
                                 </div>
                             </div>
+                            <!-- end Log in Modal -->
+
+                            <!-- Sign up Modal -->
+                            <div class="modal fade" id="signup-modal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div id="signup-box">
+                                        <div class="top" style="padding: 15px;">
+                                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                                        </div>
+                                        <div class="left">
+                                            <h1>Create an account</h1>
+                                            
+                                            <form method = "POST" action = "/login/">
+                                              
+                                              {% csrf_token %}
+                                              {{ form.as_p }}
+                                              
+                                              <input type="text" name="name" placeholder="Username" />
+                                              <input type="text" name="email" placeholder="E-mail" />
+                                              <input type="password" name="password" placeholder="Password" />
+                                              <input type="password" name="password" placeholder="Retype password" />
+                                              <!--<a href="/login"></a>-->
+                                              <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
+                                            </form>
+                                            
+                                        </div>      
+                                        
+                                        <div class="signup-right">
+                                            <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
+                                            <button class="social-signin google" id="customBtn-signup">Log in with Google</button>
+                                        </div>
+                                         
+
+                                        <div class="signup-or">OR</div>
+                                        <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
+
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- end Sign up Modal -->
+
+                        {% else %}
+
+                        <div class="header-sm user">
+                            <!-- User Profile -->
+                            <span class="after-login">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  {% if username %}
+                                    <img src="{% static username.UserIcon.url %}" height="40" width="40" id="user-pic">
+                                    <span id="user-name"><font color=#fff>{{username.UserName}}</font></span>
+                                  {% else %}
+                                    <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
+                                  {% endif %}
+                                  </a>
+                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
+                                    <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
+                                    <li class="divider"></li>
+                                    <!--class="fb-log-out" written by gim for fb log out-->
+                                    <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
+                                    <a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                  </ul>
+                            </span>
                         </div>
-                        <!-- end Log in Modal -->
-                        
-                        <!-- Sign up Modal -->
-                        <div class="modal fade" id="signup-modal" role="dialog">
-                            <div class="modal-dialog">
-                                <div id="signup-box">
-                                    <div class="top" style="padding: 15px;">
-                                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                    </div>
-                                    <div class="left">
-                                        <h1>Create an account</h1>
-                                        
-                                        <form method = "POST" action = "/login/">
-                                          
-                                          {% csrf_token %}
-                                          {{ form.as_p }}
-                                          
-                                          <input type="text" name="name" placeholder="Username" />
-                                          <input type="text" name="email" placeholder="E-mail" />
-                                          <input type="password" name="password" placeholder="Password" />
-                                          <input type="password" name="password" placeholder="Retype password" />
-                                          <!--<a href="/login"></a>-->
-                                          <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
-                                        </form>
-                                        
-                                    </div>      
-                                    
-                                    <div class="signup-right">
-                                        <button class="social-signin facebook facebook-login-btn">Log in with facebook</button>
-                                        <button class="social-signin google" id="customBtn-signup">Log in with Google</button>
-                                    </div>
-                                     
-   
-                                    <div class="signup-or">OR</div>
-                                    <div class="mobile-signup-right"> <span><a href="" class="sm sm-anim1 sm-facebook icon-ao-facebook" target="_blank"></a></span> <span><a href="" class="sm sm-anim1 sm-googleplus icon-ao-google" target="_blank"></a></span> </div>
 
-                                </div>
-                            </div>
-                        </div> 
-                        <!-- end Sign up Modal -->
+                        <span style="color:#22949b; font-size: 26px;">|&ensp;</span>
+
+                        <div class="header-sm favorite">
+                            <!-- Favorite -->
+                            <span class="after-login">
+                                  <a href="/user/collection" class="dropdown-toggle" role="button" aria-expanded="false">
+                                    <i class="fa fa-star" style="font-size: 30px; color:#fff;"></i>
+                                  </a>
+                            </span>
+                        </div>
+
+                        <div class="header-sm notification">
+                            <!-- Notification -->
+                            <span class="after-login">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-bell" style="font-size: 30px; color:#fff;"></i>
+                                  </a>
+                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <div><font color=white>&emsp;Notifications</font></div>
+                                  </ul>
+                            </span>
+                        </div>
+
+                        {% endif %}
 
                     </div> <!-- end Right side button -->
                 </div> <!-- end Container -->
@@ -185,8 +237,6 @@
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <!-- Textfield js -->
     <script type="text/javascript" src="{% static 'js/textfield.js' %}"></script>
-    <!-- Sentence js -->
-    <!-- <script type="text/javascript" src="{% static 'js/sentence.js' %}"></script> -->
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
     <!-- Painting js -->
@@ -210,10 +260,9 @@
     </script>  
 
 </body>
-<!--    facebookApi-->
-     <script type="text/javascript">
 
-
+<!-- facebook Api -->
+    <script type="text/javascript">
 
       //var FaceBookAppId = '233902740370813';//localhost:8000
       var FaceBookAppId = '1868740400028340';//web
@@ -241,10 +290,13 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
      
-    window.fbloaded = function(){
+     
+        var useremail;
+        var userId;
+        var username;
+        window.fbloaded = function(){
         
         var userpicture;
-        var useremail;
 
         //fb status connected not_authorized unknown
         FB.Event.subscribe('auth.statusChange', function(response){
@@ -255,61 +307,166 @@
                     $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
                         
                 });
-        
-                FB.api('/me', {fields: 'email' },function(response) {
-                    console.log(response.email);
+                
+                
+                FB.api("/me",{'fields': 'name,email'},function(response){
+                    username = response.name;
                     useremail = response.email;
-                  }
-                );
-        
-                var userId;
-                FB.api("/me",function(response){
-                    var username = response.name;
-                    $('#user-name').html(response.name);
+                    userId = response.id;
+                    
                     $.get('/login/',{
-                        username: response.name,
-                        userId: response.id,
+                        username: username,
+                        userId: userId,
                         email: useremail
                      },function(data){
-
+                        
                      });
-                    console.log(username );
+                     $('#user-name').html(username);
+                    console.log('before ' +username );
+                    console.log(useremail);
+                    console.log(userId);
                 });
 
             }
         });
     } 
+     
+// facebook sharing     
+    var sharing = function(){
+        var bannerImage = new Image();
+        bannerImage.src = "{% static 'images/fish.png' %}";
+        '{{sentence_content.Content}}';
+        var id = $('.sharebtn').attr('data-post-id');
+        FB.ui({
+            method: 'share',
+            href:'https://sentence-eva19950630.c9users.io/'+id,
+            // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
+            //href:'localhost:8000'
+            title: 'A SENTENCE A DAY',  // The same than name in feed method
+            picture: bannerImage.src,  
+            caption: 'by A Sentence A Day',  
+            description: '{{sentence_content.Content}}',
+        });
+    }
 
-    var loginCheck = function(){
-        FB.getLoginStatus(function(response){
+
+    $('.btn.sharebtn.btn-default.navbar-btn').click(function(){
+        console.log('share click');
+        sharing();
+    });
+
+// facebook login logout
+     $(".facebook-login-btn").click(function(){
+         //loginCheck();
+         FB.getLoginStatus(function(response){
             console.log('button '+response.status);
             if(response.status === 'connected'){
-               // console.log("connected");
-                FB.logout(function(response){
-                    $.get('/logout/');
-                    $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
-                    $('#user-name').html('USER NAME');
-                    console.log("logout");
-                });
             }else{
                 console.log("login");
                 FB.login(function(response){
                     $('.facebook-login-btn').html("facebook Logout");
-                });
+                },{'scope': 'user_friends,email'});
             }
         });
-    }
-     
 
-     $(".facebook-login-btn").click(function(){
-         loginCheck();
      });
-
-     $(".fb-log-out").click(function(){
-        loginCheck();
-
-     });     
+     $(".fb-log-out").focus(function(){
+        //loginCheck();
+        FB.getLoginStatus(function(response){
+            // console.log('button '+response.status);
+            if(response.status === 'connected'){
+               // console.log("connected");
+                FB.logout(function(response){
+                    $.get('/logout/');
+                    // $("#user-pic").replaceWith('<i class="fa fa-user-circle" style="font-size: 25px; color:#000" id="user-pic"></i >');
+                    // $('#user-name').html('USER NAME');
+                    console.log("logout");
+                });
+            }
+            console.log("fb logout");
+        });
+     //console.log(loginState);
          //startApp();
+    </script>
+
+<!-- show link -->
+    <script type="text/javascript">
+      var isPost = false;
+      $('#link').focusin(function(){
+        isPost = true;
+        console.log('in');  
+      });
+      $('#link').blur(function(){
+        isPost = false;
+      });
+      var link;
+      setInterval(function(){
+          if(isPost === true){
+            var newLink =  $('#link').val();
+            if(link != newLink){
+              $('#show_link').replaceWith('<iframe id="show_link" src="'+ newLink +'"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');  
+              link = newLink   
+            }
+          }
+      },1000);
+    </script>
+
+<!-- like / collect -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //likes
+            $('.btn.heartbtn').click(function() {
+                var id;
+                id = $(this).attr('data-post-id');
+                console.log(id);
+                $.get('/likes/', {
+                    sentence_id: id
+                }, function(data) {
+                    json_like = JSON.parse(data);
+                    console.log(json_like.data + ' ' +json_like.state);
+                    if (json_like.state) {
+                        console.log("like");
+                        $('.btn.heartbtn').addClass('active');
+                    } else {
+                        console.log("unlike");
+                        $('.btn.heartbtn').removeClass('active');
+                    }
+                    $('.like_'+id).html(' '+json_like.data);
+                });
+            });
+            $('.cardheart').click(function() {
+                var id;
+                id = $(this).attr('data-post-id');
+                console.log(id);
+                $.get('/likes/', {
+                    sentence_id: id
+                }, function(data) {
+                    json_like = JSON.parse(data);
+                    console.log(json_like.data + ' ' +json_like.state);
+                    $('.like_'+id).html(' '+json_like.data);
+                });
+            });
+            //collection
+            $('.btn.starbtn').click(function() {
+                var id;
+                id = $(this).attr('data-post-id');
+                console.log(id);
+                $.get('/collect/', {
+                    sentence_id: id
+                }, function(data) {
+                    console.log(data);
+                    if (data === "True") {
+                        console.log("collect");
+                        $('.btn.starbtn').addClass('active');
+                    } else {
+                        console.log("uncollect");
+                        $('.btn.starbtn').removeClass('active');
+                    }
+                    
+                    // $('.collect_'+id).html(data);
+                });
+            });
+        });
     </script>
 
 </html>
