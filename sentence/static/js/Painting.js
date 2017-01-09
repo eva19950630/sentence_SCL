@@ -50,7 +50,7 @@ function initializeDocument(){
     paintList[0].classList.add("selected");
     paintButton.classList.add("selected");
 
-    context.drawImage(userPicture, 100, 100, 400, 400);
+    context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
 }
 
 function get_mouse_position(canvas, event) {
@@ -81,7 +81,7 @@ function resetCanvas(){
 
 function clearCanvas(context){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.drawImage(userPicture, 100, 100, 400, 400);
+    context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
 }
 
 function redraw(context){
@@ -157,11 +157,11 @@ clearButton.addEventListener('click', function(event){
 }, false);
 
 
-// var saveButton = document.getElementById('save');
-// saveButton.addEventListener('click', function(event){
-//     var img = canvas.toDataURL("image/png");
-//     // window.location = img;
-// }, false);
+var saveButton = document.getElementById('save');
+saveButton.addEventListener('click', function(event){
+    var img = canvas.toDataURL("image/png");
+    window.location = img;
+}, false);
 
 for (var i = 0; i < paintList.length; i++) {
     paintList[i].addEventListener('click', function(event){

@@ -1,0 +1,24 @@
+{% extends 'sentence/userSidebar.html' %}
+{% load staticfiles %}
+{% block pagecontent1 %}
+
+<!-- User History -->
+<div class="container-fluid collection">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="profiletitle collection"><i class="fa fa-star"></i>&emsp;COLLECTION</div>
+            {% for collection in collection_model %}
+                <div class="panel panel-default collection">
+                    <!-- <div class="panel-heading">
+                        <h3 class="panel-title">{{ sentence.Date }}</h3>
+                    </div> -->
+                    <div class="panel-body collection">
+                        {{ collection.SID.Content }}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+    </div> <!-- end row -->
+</div> <!-- end container-fluid -->
+
+{% endblock pagecontent1 %}

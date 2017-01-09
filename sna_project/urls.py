@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^user/profile/', views.user_profile),
     url(r'^user/account/', views.user_account),
     url(r'^user/achievement/', views.user_achievement),
+    url(r'^user/collection/', views.user_collection),
     url(r'^user/history/', views.user_history),
     
     # url(r'^login/', views.signup_app),
@@ -41,7 +42,7 @@ urlpatterns = [
     # url(r'^sentence_post/(?P<sid>\d+)/$', views.sentence_post,name = 'sentence_post'),
     url(r'^logout/', views.logout,name = "logout"),
     #fb
-    url(r'^getuserid/', views.getuserid, name = 'getuserid'),
+    # url(r'^getuserid/', views.getuserid, name = 'getuserid'),
     url(r'^getcountry/', views.getCountry, name = 'getcountry'),
     url(r'^getregion/', views.getregion, name = 'getregion'),
     #google+

@@ -1,8 +1,12 @@
 {% extends extend_index %}
 {% load staticfiles %}
 {% load tz %}
+
 {% block content1 %}
 
+{% if username %}
+
+<!-- LOG IN -->
 <!-- Inputfield and Post modal -->
 <div class="inputfield-container">
     <section>
@@ -15,29 +19,41 @@
             {{ sentence_content.TopicID.Topic_tag }}
           {% endif %}
         </div>
+    </section>
 </div> <!-- end inputfield-container -->
-
             <!-- Post Modal -->
             <div class="modal fade" id="post-modal" role="dialog">
                 <div class="modal-dialog">
                     <div class="post-box translation">
                         <div class="top" style="padding: 15px;">
-                            <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                            <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                         </div>
 
-                        <div class="postbox-content">
-                            {% csrf_token %}
-                            {{ form.as_p }}
+                        <div class="postbox-content translation">
+                            <form method = "POST" action="{% url 'translation_post' get_sid=sentence_content.SID%}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
 
-                            <h2>DALIY TRANSLATION</h2>
+                                <h2>DAILY TRANSLATION</h2>
 
-                            <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">TRANSLATION</font>
-                            <input id="input" type='text' name="translation" placeholder="Translate this sentence with another language"></input>
-                            
-                            <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font color="#00CCCC">LANGUAGE</font>
-                            <input type="text" name="translation_tag" placeholder="Type the language (English only)"/>
+                                <div class="modal-language">
+                                    <span class="modalLanguage-content" class="text-center">{{ sentence_content.Sentence_tag }}</span>
+                                </div>
 
-                            <input type="submit" name="post_submit" value="Submit" />
+                                <div class="modal-sentence">
+                                    <p class="modalSentence-content" class="text-center">{{ sentence_content.Content }}</p>
+                                </div>
+
+                                <i class="fa fa-language" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">TRANSLATION</font>
+                                <!-- <input id="input" type='text' name="translation" placeholder="With another language" required></input> -->
+                                <p><textarea cols="50" rows="5" id="input" type='text' name='translation' placeholder="Translate it with another language" required></textarea></p>
+                                
+                                <i class="fa fa-tag" style="color:#00CCCC;"></i>&emsp;<font class="postbox-inputtitle">LANGUAGE</font>
+                                <input type="text" name="translation_tag" placeholder="Type the language (English only)" required></input>
+
+                                <input id="post-submit" type="submit" name="post_submit" value="Submit" />
+
+                            </form>
                             
                         </div>
 
@@ -46,72 +62,100 @@
                 </div>
             </div>
 
+<!-- Sentence posts in one country -->
+<div class="map-container-fluid map-content" style="position: absolute; margin-top: 160px;">
+    <div class="map-block">    
+        <!-- Posttime -->
+        <div class="sentenceInfo posttime">
+            <span id="float-posttime" class="text-center"><i class="fa fa-clock-o"></i>&ensp;{{ sentence_content.Date|timezone:"Asia/Taipei" }}</span>
+        </div>
+        <!-- Sentence -->
+        <div class="sentenceInfo sentence">
+            <span id="float-sentence" class="text-center"><i class="fa fa-pencil"></i>{{ sentence_content.Content }}</span>
+        </div>
+        <!-- Language -->
+        <div class="sentenceInfo language">
+            <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
+        </div>
+        <!-- Translate -->
+        <div class="sentenceInfo translatecount">
+            <span id="float-translatecount">TRANSLATION :&emsp;{{ sentence_content.Translation_count }}</span>
+        </div>
+        <!-- Like / Stae / Share -->
+        <div class="sentenceInfo rightbtn">    
+            {% if liked %}
+            <span>
+                <button type="button" class="btn heartbtn active btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;{{ sentence_content.Likes }}</span></button>
+            </span>
+            {% else %}
+            <span>
+                <button type="button" class="btn heartbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;{{ sentence_content.Likes }}</span></button>
+            </span>
+            {% endif %}
+
+            {% if collect %}
+            <span>
+                <button type="button" class="btn starbtn active btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star</span></button>
+            </span>
+            {% else %}
+            <span>
+                <button type="button" class="btn starbtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-star"></i><span class="collect_{{ sentence_content.SID }}">&ensp;Star</span></button>
+            </span>
+            {% endif %}
+            <span>
+                <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+            </span>
+
+        </div>
+
+        <div id="vmap" style="width: 100vw; height: 100vh;">
+        </div> <!-- end vmap -->
+
+    </div> <!-- end map-block -->
+</div> <!-- end map-container-fluid map-content -->
+
+{% else %}
+
+<!-- LOG OUT -->
+<!-- Sentence posts in one country -->
+<div class="map-container-fluid map-content">
+    <div class="map-block">
+        <!-- Posttime -->
+        <div class="sentenceInfo posttime">
+            <span id="float-posttime" class="text-center"><i class="fa fa-clock-o"></i>&ensp;{{ sentence_content.Date|timezone:"Asia/Taipei" }}</span>
+        </div>
+        <!-- Sentence -->    
+        <div class="sentenceInfo sentence">
+            <span id="float-sentence" class="text-center"><i class="fa fa-pencil"></i>{{ sentence_content.Content }}</span>
+        </div>
+        <!-- Language -->
+        <div class="sentenceInfo language">
+            <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
+        </div>
+        <!-- Translate -->
+        <div class="sentenceInfo translatecount">
+            <span id="float-translatecount">TRANSLATION :&emsp;0</span>
+        </div>
+        <!-- Like -->
+        <div class="sentenceInfo rightbtn">
+            <div class="heart-show">
+               <i class="fa fa-heart"></i><span class="postcount heart like_{{ sentence_content.SID }}">&ensp;Like&ensp;{{ sentence_content.Likes }}</span>
+            </div>
+        </div>
+
+
+        <div id="vmap_choose" style="width: 100vw; height: 100vh;">  
+        </div> <!-- end vmap -->
+
+    </div> <!-- end map-block -->
+</div> <!-- end map-container-fluid map-content -->
+
+{% endif %}
+
 {% endblock content1 %}
 
 {% block content2 %}
 
-<!-- Overworld sentence posts and let user select country -->
-<!-- <div class="map-container-fluid">
-    <div class="row map-block ">
-        <div id="vmap" style="width: 100vw; height: 100vh;">
-            <div id="float-sentence" class="col-lg-6 col-lg-offset-5 text-center ">{{ sentence_content.Content }}</div>
-
-        </div>
-    </div>
-</div> -->
-<!-- Sentence posts in one country -->
-<div class="map-container-fluid map-content">
-    <div class="map-block">
-        <div id="row">
-        {% if username %}
-          <button class="like" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ sentence_content.SID }}">{{ sentence_content.Likes }}</span></button>
-          <button class="collect" data-post-id="{{ sentence_content.SID }}"><span class="collect_{{ sentence_content.SID }}">{{ collected }}</span></button>
-        {% endif %}
-
-          <span id="float-language" class="">{{ sentence_content.Sentence_tag }}</span>
-          <span id="float-sentence" class="text-center" style="left:35vw; top:2vh;">{{ sentence_content.Content }}</span>
-        </div>
-
-        <div id="vmap_choose" style="width: 100vw; height: 100vh;">
-
-            <!-- <div style="position:absolute;">
-                <div class="cards-block float row">
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">A Basic Panel</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">A Basic Panel</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">A Basic Panel</div>
-                    </div>
-                </div>
-                <div class="cards-block float row">
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Pen Pineapple Apple Pen </div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Syuan is Pig</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">An apple a day, keeps the doctor away</div>
-                    </div>
-                </div>
-                <div class="cards-block float row">
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Pen Pineapple Apple Pen </div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">Syuan is Pig</div>
-                    </div>
-                    <div class="panel panel-default card-size col-lg-4">
-                        <div class="panel-body">An apple a day, keeps the doctor away</div>
-                    </div>
-                </div>
-            </div> -->
-
-        </div> <!-- end vmap -->
-    </div> <!-- end map-block -->
-</div> <!-- end map-container-fluid map-content -->
+<div style="margin-top: -200px;"></div>
 
 {% endblock content2 %}

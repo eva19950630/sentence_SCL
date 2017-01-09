@@ -559,7 +559,7 @@ input[type=search-mobile]:focus {
 
 /*Search bar*/
 .search {
-  width: 70%;
+  width: 80%;
   position: relative;
   margin-top: 10px;
 }
@@ -654,7 +654,7 @@ input[type=search-mobile]:focus {
 
 
 
-/*login,signupbox*/
+/*login,signupbox,asklanguagebox*/
 
 #login-box {
     position: relative;
@@ -675,6 +675,20 @@ input[type=search-mobile]:focus {
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
+
+/*#asklanguage-box {
+    position: relative;
+    margin: 5% auto;
+    width: 600px;
+    height: 400px;
+    background: #FFF;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.asklanguagebox-content {
+    margin: 20px;
+}*/
 
 .top > button > i {
     font-size: 30px;
@@ -715,12 +729,23 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="password"]:focus {
     border-bottom: 2px solid #00CCCC;
-    color: #16a085;
+    color: #262826;
+    transition: 0.2s ease;
+}
+
+textarea[type="text"] {
+    border: 1px solid #AAA;
+}
+
+textarea[type="text"]:focus {
+    outline: 0;
+    border: 2px solid #00CCCC;
+    color: #262826;
     transition: 0.2s ease;
 }
 
 .left input[type="submit"], .postbox-content input[type="submit"] {
-    margin-top: 28px;
+    margin-top: 20px;
     width: 120px;
     height: 32px;
     background: #00CCCC;
@@ -748,6 +773,21 @@ input[type="password"]:focus {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     transition: 0.1s ease;
 }
+
+/*.label.language {
+    color: #AAA;
+    font-size: 15px;
+    margin: 0 0 0 -5px;
+}
+
+.form-control.language {
+    margin: 3px 0 10px 0;
+}
+
+.form-control.language:focus, .form-control.language:active {
+    border: 2px solid #00CCCC;
+}
+*/
 
 .signup-or {
     position: absolute;

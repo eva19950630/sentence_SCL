@@ -345,11 +345,11 @@ JQVMap.maps = {};
 
     var defaultParams = {
       map: 'world_en',
-      backgroundColor: '#a5bfdd',
-      color: '#f4f3f0',
-      hoverColor: '#c9dfaf',
+      backgroundColor: '#fff',
+      color: '#909090',
+      hoverColor: '#72C5C5',
       hoverColors: {},
-      selectedColor: '#c9dfaf',
+      selectedColor: '#bbecec',
       scaleColors: ['#b6d6ff', '#005ace'],
       normalizeFunction: 'linear',
       enableZoom: true,
