@@ -22,7 +22,7 @@
             <font class="title friend">FRIEND LIST</font>
             {% for friend in friendlist %}
             <div class="row friend-panel">
-                <div class="col-lg-2"> <img class="panel-title" src="{% static friend.Friend.UserIcon.url %}"> </div>
+                <div class="col-lg-2"> <img class="panel-title" src="{% static friend.Friend.UserIcon %}"> </div>
                 <div class="col-lg-5 friend-name">
                     <h4>{{ friend.Friend.UserName }}</h4>
                 </div>

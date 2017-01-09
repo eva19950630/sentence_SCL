@@ -57,15 +57,13 @@ def index(request):
 # def show_link(request, obj):
 
 def sentence_url(request, sid):
-    
+    trans_code = ""
     # print('sentence_url called')
     sentencemodel = Sentence.objects.get(SID = int(sid))
-
-    language_id = Language.objects.get(Language=sentencemodel.Sentence_tag).Language_ID
-
-    new_region_code =  getCountryByLanguage(language_id)
-
-
+    new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
+    if request.session.get('json_trans_country'): 
+        trans_code = request.session.get('json_trans_country')
+        del request.session['json_trans_country']
     #views count
     views = sentencemodel.Views
     viewed = False
@@ -102,14 +100,15 @@ def sentence_url(request, sid):
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
-            'collect':collectionmodel,'region_code':new_region_code}
+            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':trans_code}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
-            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code}
-
+            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,'trans_region_code':trans_code}
+        del trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
-        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code}
+        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code,'trans_region_code':trans_code}
+        del trans_code
         return render(request, 'sentence/sentence.html',context)
 
 def sentence_post(request):
@@ -197,7 +196,7 @@ def translation_post(request, get_sid):
                 
                 sentencemodel = Sentence.objects.get(SID = int(get_sid))
                 new_translation = django_form.data.get("translation")
-                new_translation_tag = '#' + django_form.data.get("translation_tag")
+                new_translation_tag = django_form.data.get("translation_tag")
 
                 # link
 
@@ -215,11 +214,33 @@ def translation_post(request, get_sid):
                         SID =sentencemodel,
                     )     
                     
-                Translation_count = Translation.objects.filter(SID=sentencemodel.SID).count()
+                Translation_model =  Translation.objects.filter(SID=sentencemodel.SID)   
+                Translation_count = Translation_model.count()
+                Translation_country = []
+                for t_model in Translation_model:
+                    if  getCountryByLanguage(t_model.Translation_tag) in         Translation_country:
+                        """do nothing"""
+                    else:
+                        Translation_country.append(getCountryByLanguage(t_model.Translation_tag))
+                        
+                json_translation_country = json.dumps(Translation_country)
+                del Translation_country
+                
+                try:
+                    del request.session['json_trans_country']
+                    print('session del ' + str(request.session['json_trans_country']))
+                except KeyError:
+                    print("keyerror")
+               
+                request.session['json_trans_country'] = json_translation_country
+                
+                print(json_translation_country)
+                
                 sentencemodel.Translation_count = Translation_count
                 sentencemodel.save()  
 
                 print("translation store")
+                
                 return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': get_sid}))
                 # return render(request, "sentence/sentence.html",{'translation_model': new_translation_model,'username': usermodel})                    
         else:
@@ -350,7 +371,7 @@ def login_app(request):
             print(userpucture)
             
             userfriend = request.GET.getlist('friends[]')
-            
+            print(userfriend)
             password = '000'
             if User.objects.filter(SocialID = userId).exists():
                 # print('in fb session')
@@ -561,12 +582,12 @@ def getCountry(request):
             }))   
     
     
-def getCountryByLanguage(language):
-        country = Country_language.objects.filter(Language_ID=language)
+def getCountryByLanguage(language_model):
+        language_id = Language.objects.get(Language=language_model).Language_ID
+        country = Country_language.objects.filter(Language_ID=language_id)
         region_code = []
         for i in country:
-            region_code.append(i.Country_ID.Country_code)
-            
+            region_code.append(i.Country_ID.Country_code) 
         json_region_code = json.dumps(region_code)
         
         
@@ -585,7 +606,7 @@ def getregion(request):
        
         return HttpResponse({ region_code, })
    
-#google+
+ #google+
 # def signup_google(request):
 #     if request.method == 'POST':
     

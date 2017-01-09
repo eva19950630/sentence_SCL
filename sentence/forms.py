@@ -19,7 +19,7 @@ class AddUser(forms.Form):
 		#     	self._errors["password"] = ["Password do not match"] # Will raise a error message
 		#         del form_data['password']
 		#     return form_data
-
+        
 class PostSentence(forms.Form):
 	"""docstring for ClassName"""
 	class Meta:
