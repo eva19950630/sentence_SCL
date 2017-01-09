@@ -15,3 +15,4 @@ $(document).ready(function(){
 		$('#post-modal').appendTo("body").modal('show');
 	});
 });
+

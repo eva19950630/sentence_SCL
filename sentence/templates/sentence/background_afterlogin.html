@@ -169,32 +169,79 @@
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
     <script type="text/javascript">
-      var saveButton = document.getElementById('save');
-        saveButton.addEventListener('click', function(event){
-          var user_icon_img;
-          // canvas.toBlob(function(blob) {
-          //     user_icon_img = URL.createObjectURL(blob);
-          // });
-          // canvas.toBlob(function(blob){
-          //   user_icon_img = URL.createObjectURL(blob);
-          //   console.log(user_icon_img);
-            
-          // }, "image/png", 1);
-          user_icon_img = canvas.toDataURL("image/png");
+//      var saveButton = document.getElementById('save');
+//        saveButton.addEventListener('click', function(event){
+//          var user_icon_img;
+//          // canvas.toBlob(function(blob) {
+//          //     user_icon_img = URL.createObjectURL(blob);
+//          // });
+//          // canvas.toBlob(function(blob){
+//          //   user_icon_img = URL.createObjectURL(blob);
+//          //   console.log(user_icon_img);
+//            
+//          // }, "image/png", 1);
+//          user_icon_img = canvas.toDataURL("image/png");
+//          
+//            $.get('/get_new_user_icon/',{
+//                userPicture: user_icon_img
+//              });
+//            // $.get('/get_new_user_icon/',{
+//            //     userPicture: user_icon_img
+//            //   },function(data){
+//            // });
+//            window.location = user_icon_img;
+//        }, false);
           
-            $.get('/get_new_user_icon/',{
-                userPicture: user_icon_img
-              });
-            // $.get('/get_new_user_icon/',{
-            //     userPicture: user_icon_img
-            //   },function(data){
-            // });
-            window.location = user_icon_img;
-        }, false);
     </script>>
     <!-- WorldMAP js -->
     <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery.vmap.world.js' %}"></script>
+    <script type="text/javascript">
+        var region_code = "{{ region_code|escapejs}}";
+        var new_region_code = new Array();
+        var final_region_code = new Array();
+        
+        console.log("ha");
+var rc = {};
+var key;
+var e = 0;
+console.log(region_code + "ha");
+for (var i = 0; i < region_code.length; i++) {
+    //        new_region_code[i]=region_code.match('[a-z]');     
+    //        console.log(new_region_code[i]);
+    if (region_code[i] != '[' && region_code[i] != '\"' && region_code[i] != ',' && region_code[i] != ' ' && region_code[i] != ']') {
+        new_region_code[e] = region_code[i];
+        console.log(new_region_code[e]);
+        e++;
+    }
+}
+//        console.log(new_region_code.length);
+for (var i = 0; i < new_region_code.length; i++) {
+    var c;
+    if (i % 2 == 1) {
+        var a = new_region_code[i - 1];
+        var b = new_region_code[i];
+        c = a + b;
+        var d = Math.ceil(i / 2);
+        //            console.log(d);
+        final_region_code[d] = c;
+        console.log(final_region_code[d]);
+    }
+    //        console.log(c);
+}
+console.log(final_region_code);
+for (var i = 0; i < final_region_code.length; i++) {
+    key = final_region_code[Object.keys(final_region_code)[i]];
+    console.log(key);
+    rc[key] = "#000";
+}
+    $('#vmap_choose').vectorMap({
+    map: 'world_en'
+    , onRegionClick: function (element, code, region) {}
+});
+jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
+
+    </script>
     <script type="text/javascript" src="{% static 'js/jvmap.js' %}"></script>
     <!-- Morris Charts JavaScript -->
     <script type="text/javascript" src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
@@ -216,7 +263,7 @@
                 , version: 'v2.8'
             });
             window.fbloaded();
-            FB.AppEvents.logPageView();
+           // FB.AppEvents.logPageView();
         };
         
         

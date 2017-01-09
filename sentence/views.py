@@ -17,6 +17,10 @@ import json
 
 # Create your views here.
 
+
+
+    
+    
 def index(request): 
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:12]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:12]
@@ -38,6 +42,7 @@ def index(request):
 # def show_link(request, obj):
 
 def sentence_url(request, sid):
+    
     # print('sentence_url called')
     sentencemodel = Sentence.objects.get(SID = int(sid))
 
@@ -65,9 +70,10 @@ def sentence_url(request, sid):
         isCollect = 'Collect'
         if Collection.objects.filter(UID=usermodel.UID,SID=sid).exists():
             isCollect = 'UnCollected'
-
+        new_region_code =  request.session.get('region_code')    
+        
         context = {'sentence_content': sentencemodel,'username': usermodel,
-        'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect}
+        'liked': liked,'extend_index': 'sentence/background_afterlogin.html','collected': isCollect,'region_code':new_region_code }
 
         return render(request, 'sentence/sentence.html',context)
     else:
@@ -77,6 +83,7 @@ def sentence_url(request, sid):
 def sentence_post(request):
     # print('sentence_post called')
     # print(sid)
+    global region_code
     if request.method == 'POST':
         django_form = PostSentence(request.POST)
         get_uid = request.session.get('UID')
@@ -88,7 +95,11 @@ def sentence_post(request):
                 new_sentence_tag ='#' + django_form.data.get("language")
                 new_sentence_topic ='#' + django_form.data.get("topic")
                 new_sentence_link = django_form.data.get("link")
-
+                
+                region_code = []
+                language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
+                request.session['region_code']=getCountryByLanguage(language_id)
+                
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
                     #if topic exist
@@ -122,6 +133,11 @@ def sentence_post(request):
                 new_sentence = django_form.data.get("sentence")
                 new_sentence_tag = '#' + django_form.data.get("language")
 
+                region_code = []
+                language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
+                request.session['region_code']=getCountryByLanguage(language_id)
+                
+                 
                 if User.objects.filter(UID = get_uid).exists():
                     """ This is how your model connects to database and create a new member """
                     new_sentence_model = Sentence.objects.create(
@@ -130,8 +146,9 @@ def sentence_post(request):
                         UID = usermodel,
                     )            
                 print("daily sentence  store " + str(new_sentence_model.SID))
-                # return Redirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
-                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
+            
+                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID,
+                }))
                 # return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence})                     
         else:
             return render(request, 'sentence/index.html')
@@ -389,19 +406,6 @@ def likes_count(request):
         return HttpResponse(likes,liked)
     else:
         return HttpResponse()
-#country     
-def getCountry(request):
-   if request.method == "GET":
-        c_code = request.GET.get('country_UpperCode')
-        country = Country.objects.get(Country_code = c_code)
-        language_id = Country_language.objects.filter(Country_ID=country.Country_ID)
-        
-        for i in language_id:
-            print(i.Language_ID.Language)
-            
-        return HttpResponse(json.dumps({
-                "country": country.Country_name,   
-            }))   
 
 #collection
 def collection(request):
@@ -421,6 +425,46 @@ def collection(request):
                 SID = sentencemodel,
             )
         return HttpResponse(isCollect)
+    
+    #country     
+def getCountry(request):
+   if request.method == "GET":
+        c_code = request.GET.get('country_UpperCode')
+        country = Country.objects.get(Country_code = c_code)
+        language_id = Country_language.objects.filter(Country_ID=country.Country_ID)
+        
+        for i in language_id:
+            print(i.Language_ID.Language)
+            
+        return HttpResponse(json.dumps({
+                "country": country.Country_name,   
+            }))   
+    
+    
+def getCountryByLanguage(language):
+        country = Country_language.objects.filter(Language_ID=language)
+        region_code = []
+        for i in country:
+            region_code.append(i.Country_ID.Country_code)
+            
+        json_region_code = json.dumps(region_code)
+        
+        
+        return json_region_code
+        
+        
+def getregion(request):
+    if request.method == "GET":
+        language = request.GET.get('language')
+        language_id = Language.objects.get(Language=language).Language_ID
+        country = Country_language.objects.filter(Language_ID=language_id)
+        region_code = []
+        for i in country:
+                region_code.append(i.Country_ID.Country_code)
+        region_code = json.dumps({"code": region_code})    
+       
+        return HttpResponse({ region_code, })
+   
 
 #google+
 # def signup_google(request):
