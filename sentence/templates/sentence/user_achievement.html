@@ -4,20 +4,30 @@
 
 <!-- User Achievement -->
 <div class="container-fluid">
-    <div class="row achieve-panel">
-        <div class="col-sm-3 achieve-panel">
-            <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
-                <h3 class="col-sm-6 achieve-panel">20 Setences</h3> </div>
+    <div class="row">
+        <div class="profiletitle achievement"><i class="fa fa-trophy"></i>&emsp;ACHIEVEMENT</div>
+        <div class="col-sm-4">
+            
+            {% for s in sentencemodel %}
+            <div class="panel panel-default sentence">
+                <div class="panel-body sentence achievement">
+                    <font class="achievement-content sentence">{{s.Content}} Sentences</font>
+                </div>
+            </div>
+            {% endfor %}
+            {% for t in translationmodel %}
+            <div class="panel panel-default translation">
+                <div class="panel-body translation achievement">
+                    <font class="achievement-content translation">{{t.Content}} Translations</font>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <div class="col-sm-3 achieve-panel">
-            <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
-                <h3 class="col-sm-6 achieve-panel">Level 10</h3> </div>
-        </div>
-        <div class="col-sm-3 achieve-panel">
-            <div class="row panel panel-default"> <img class="col-sm-3 panel-title " src="http://www.clipartkid.com/images/242/can-t-find-the-perfect-clip-art-3udwED-clipart.gif">
-                <h3 class="col-sm-6 achieve-panel">Swim 30 Miles</h3> </div>
+        <div class="col-sm-4">
+                
         </div>
     </div> <!-- end row -->
+    
 </div> <!-- end container-fluid -->
 
 {% endblock pagecontent1 %}

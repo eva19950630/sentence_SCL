@@ -6,29 +6,24 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-4">
-            <form role="form">
-                <div class="form-group input-group">
+            <div class="profiletitle account"><i class="fa fa-cog"></i>&emsp;ACCOUNT</div>
+            <form role="form" class="profilecontent account">
+                <div class="title account">NAME : </div>
+                <div class="form-group input-group account">
                     <input type="text" class="form-control" value="{{username.UserName}}" disabled>
-                    <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
+                    <span class="input-group-addon" style="padding:0 0 0 0;">
+                        <a data-toggle="modal" data-target="#nameDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a>
+                    </span>
                 </div>
-                <div class="form-group input-group">
+                <div class="title account">EMAIL : </div>
+                <div class="form-group input-group account">
                     <span class="input-group-addon"><i class="fa fa-mail"></i>{{username.Email}}</span>
                 </div>
-                <div class="form-group input-group">
+                <div class="title account">PASSWORD : </div>
+                <div class="form-group input-group account">
                     <input type="text" class="form-control" value="*********" disabled>
                     <span class="input-group-addon" style="padding:0 0 0 0;"><a  data-toggle="modal" data-target="#pswDialog" data-ref="dialog" data-role="button" class="btn btn-primary" id="pwd"><i class="fa fa-fw fa-pencil"></i></a></span>
                 </div>
-                <div class="form-group input-group">
-                    <label>Language</label>
-                    <select class="form-control">
-									<option>English</option>
-									<option>Spanish</option>
-									<option>Chinese(Taiwan)</option>
-									<option>French</option>
-									<option>German</option>
-								</select>
-                </div>
-
             </form>
         </div>
     </div> <!-- end row -->
