@@ -350,7 +350,7 @@ def login_app(request):
             print(userpucture)
             
             userfriend = request.GET.getlist('friends[]')
-            
+            print(userfriend)
             password = '000'
             if User.objects.filter(SocialID = userId).exists():
                 # print('in fb session')
