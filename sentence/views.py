@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render#, render_to_response
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
 from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence
@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http import HttpResponse
 import json
+# from django.template import RequestContext
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
@@ -54,7 +55,40 @@ def index(request):
         ,'extend_index': 'sentence/background.html'}
         return render(request, "sentence/index.html",context)
 
-# def show_link(request, obj):
+
+
+def get_translation(request,sid):
+    #get translation
+    sentencemodel = Sentence.objects.get(SID = int(sid))
+    trans_model = Translation.objects.filter(SID = int(sid))
+    translation_click_code = request.GET.get('translation_click_code')
+    TranslationList = []
+
+    if translation_click_code:
+        countryID = Country.objects.filter(Country_code=translation_click_code)[0]
+        print('countryID '+str(countryID.Country_ID))
+        languageID = Country_language.objects.filter(Country_ID=countryID.Country_ID)#list 
+
+        # print(str(languageID))
+
+        languageTag = [lan.Language_ID.Language for lan in languageID]
+
+        print(languageTag)
+
+       
+        for t in languageTag:
+            for mt in trans_model:
+                modelT = mt.Translation_tag
+                print(t.lower()+' '+ modelT.lower() )
+                if t.lower() == modelT.lower():
+                    TranslationList.append(mt)
+                
+
+    print([TranslationList])
+    context = {'translation':TranslationList}
+    # return TranslationList
+    # return render(request,"sentence/translation_modal.html",json.dumps(context))
+    return render(request,"sentence/translation_modal.html",context)
 
 def sentence_url(request, sid):
     json_trans_code = ''
@@ -63,6 +97,8 @@ def sentence_url(request, sid):
     sentencemodel = Sentence.objects.get(SID = int(sid))
     trans_model = Translation.objects.filter(SID = int(sid))
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
+    TranslationList = ''
+    # TranslationList = get_translation(request,sid)
     
     for i in trans_model:
         trans_code_list.append(getCountryByLanguage(i.Translation_tag))
@@ -105,14 +141,17 @@ def sentence_url(request, sid):
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
-            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code}
+            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code
+            ,'translation':TranslationList}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
-            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,'trans_region_code':json_trans_code}
+            'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
+            'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':TranslationList}
         del json_trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
-        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code,'trans_region_code':json_trans_code}
+        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code
+        ,'trans_region_code':json_trans_code,'translation':TranslationList}
         del json_trans_code
         return render(request, 'sentence/sentence.html',context)
 

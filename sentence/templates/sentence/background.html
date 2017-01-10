@@ -327,28 +327,28 @@
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
     <script type="text/javascript">
-      var saveButton = document.getElementById('save');
-        saveButton.addEventListener('click', function(event){
-          var user_icon_img;
-          // canvas.toBlob(function(blob) {
-          //     user_icon_img = URL.createObjectURL(blob);
-          // });
-          // canvas.toBlob(function(blob){
-          //   user_icon_img = URL.createObjectURL(blob);
-          //   console.log(user_icon_img);
+      // var saveButton = document.getElementById('save');
+      //   saveButton.addEventListener('click', function(event){
+      //     var user_icon_img;
+      //     // canvas.toBlob(function(blob) {
+      //     //     user_icon_img = URL.createObjectURL(blob);
+      //     // });
+      //     // canvas.toBlob(function(blob){
+      //     //   user_icon_img = URL.createObjectURL(blob);
+      //     //   console.log(user_icon_img);
             
-          // }, "image/png", 1);
-          user_icon_img = canvas.toDataURL("image/png");
+      //     // }, "image/png", 1);
+      //     user_icon_img = canvas.toDataURL("image/png");
           
-            $.get('/get_new_user_icon/',{
-                userPicture: user_icon_img
-              });
-            // $.get('/get_new_user_icon/',{
-            //     userPicture: user_icon_img
-            //   },function(data){
-            // });
-            window.location = user_icon_img;
-        }, false);
+      //       $.get('/get_new_user_icon/',{
+      //           userPicture: user_icon_img
+      //         });
+      //       // $.get('/get_new_user_icon/',{
+      //       //     userPicture: user_icon_img
+      //       //   },function(data){
+      //       // });
+      //       window.location = user_icon_img;
+      //   }, false);
     </script>
 
     <!-- WorldMAP js -->
@@ -406,8 +406,55 @@
         $('#vmap_choose').vectorMap({
             
             map: 'world_en'
-            , onRegionClick: function (element, code, region) {}
+            , onRegionClick: function (element, code, region) {
+                
+                $.get('/get/translation/'+ $('#get_sid').attr('data-post-id')+'/',{
+                    translation_click_code : code
+                 },function(data){
+                    $('#translation_certain_language').html(data);
+                    $('#postshow-modal').modal('show');
+
+                 });
+            }
         });
+
+
+
+// function button_fix(){
+//     $('#postPK').click(function(ev){
+//         ev.preventDefault();
+//         var textInput = $('#comment-textarea').val();
+//         var emoInput = $('input[name=emotion]:checked').val();
+//         $.ajax({
+//             type: 'POST',
+//             url: '/post/' + $('#postPK').attr('value') + '/comment/',
+//             data: {
+//                 'csrfmiddlewaretoken'  : token,
+//                 'textData'             : textInput,
+//                 'emoData'             : emoInput,
+//             },
+//             success: function(data){
+//                 var reloadResults = $(data).find('#resultBorder');
+//                 var reloadComments = $(data).find('#__comments__');
+//                 $('#resultBorder').html(reloadResults);
+//                 $('#__comments__').html(reloadComments);
+//                 $('#comment-textarea').val("");
+
+//                 $('.post-likes').click(function() {
+//                     var id;
+//                     id = $(this).attr('data-post-id');
+//                     $.get('/like-blog/', {
+//                         post_id: id
+//                     }, function(data) {
+//                         $('#test' + id).html(data);
+//                 });
+//             });
+//             }
+//         });
+//     });
+
+// }
+
         
         jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
         if ('{{trans_region_code}}') {
