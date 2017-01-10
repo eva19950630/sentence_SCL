@@ -400,7 +400,7 @@
             console.log("vector" + i);
             key = sentence_region_code[Object.keys(sentence_region_code)[i]];
             console.log(key);
-            rc[key] = "#000";
+            rc[key] = "#005454";
         }
         
         $('#vmap_choose').vectorMap({
@@ -419,43 +419,6 @@
         });
 
 
-
-// function button_fix(){
-//     $('#postPK').click(function(ev){
-//         ev.preventDefault();
-//         var textInput = $('#comment-textarea').val();
-//         var emoInput = $('input[name=emotion]:checked').val();
-//         $.ajax({
-//             type: 'POST',
-//             url: '/post/' + $('#postPK').attr('value') + '/comment/',
-//             data: {
-//                 'csrfmiddlewaretoken'  : token,
-//                 'textData'             : textInput,
-//                 'emoData'             : emoInput,
-//             },
-//             success: function(data){
-//                 var reloadResults = $(data).find('#resultBorder');
-//                 var reloadComments = $(data).find('#__comments__');
-//                 $('#resultBorder').html(reloadResults);
-//                 $('#__comments__').html(reloadComments);
-//                 $('#comment-textarea').val("");
-
-//                 $('.post-likes').click(function() {
-//                     var id;
-//                     id = $(this).attr('data-post-id');
-//                     $.get('/like-blog/', {
-//                         post_id: id
-//                     }, function(data) {
-//                         $('#test' + id).html(data);
-//                 });
-//             });
-//             }
-//         });
-//     });
-
-// }
-
-        
         jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
         if ('{{trans_region_code}}') {
             var trans_region_code = '{{trans_region_code|escapejs}}'
@@ -603,8 +566,8 @@
         var id = $('.sharebtn').attr('data-post-id');
         FB.ui({
             method: 'share',
-            href:'https://sentence-eva19950630.c9users.io/'+id,
-            // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
+            // href:'https://sentence-eva19950630.c9users.io/'+id,//sentence
+            href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
             //href:'localhost:8000'
             title: 'A SENTENCE A DAY',  // The same than name in feed method
             picture: bannerImage.src,  

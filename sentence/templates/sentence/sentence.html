@@ -34,7 +34,7 @@
                                 <h2>DAILY TRANSLATION</h2>
 
                                 <div class="modal-language">
-                                    <span class="modalLanguage-content" class="text-center">{{ sentence_content.Sentence_tag }}</span>
+                                    <span class="modalLanguage-content" class="text-center">#{{ sentence_content.Sentence_tag }}</span>
                                 </div>
 
                                 <div class="modal-sentence">
@@ -86,9 +86,9 @@
         </div>
         <!-- Like / Stae / Share -->
         <div class="sentenceInfo rightbtn">    
-            <span>
+            <!-- <span>
                 <button type="button" class="btn btn-default navbar-btn" id="country-btn"><span>click</span></button>
-            </span>
+            </span> -->
 
             {% if liked %}
             <span>
@@ -128,7 +128,7 @@
 <div class="map-container-fluid map-content">
     <div class="map-block">
         <!-- Posttime -->
-        <div class="sentenceInfo posttime">
+        <div class="sentenceInfo posttime" id="get_sid" data-post-id="{{ sentence_content.SID }}">
             <span id="float-posttime" class="text-center"><i class="fa fa-clock-o"></i>&ensp;{{ sentence_content.Date|timezone:"Asia/Taipei" }}</span>
         </div>
         <!-- Sentence -->    
@@ -184,7 +184,7 @@
                 
                 <div class="row">
                     <div class ="col-md-12 col-xs-12" id="translation_certain_language">
-                    
+
                     </div>
                 </div>
                 

@@ -8,14 +8,16 @@
         <div class="col-sm-4">
             <div class="profiletitle collection"><i class="fa fa-star"></i>&emsp;COLLECTION</div>
             {% for collection in collection_model %}
-                <div class="panel panel-default collection">
-                    <!-- <div class="panel-heading">
-                        <h3 class="panel-title">{{ sentence.Date }}</h3>
-                    </div> -->
-                    <div class="panel-body collection">
-                        {{ collection.SID.Content }}
+                <a href="{% url 'sentence_url' sid=collection.SID.SID%}" class="collection-link" style="text-decoration: none;"> 
+                    <div class="panel panel-default collection">
+                        <!-- <div class="panel-heading">
+                            <h3 class="panel-title">{{ sentence.Date }}</h3>
+                        </div> -->
+                        <div class="panel-body collection">
+                            {{ collection.SID.Content }}
+                        </div>
                     </div>
-                </div>
+                </a>
             {% endfor %}
             </div>
     </div> <!-- end row -->
