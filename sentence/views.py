@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http import HttpResponse
 import json
+import unicodedata
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
@@ -63,6 +64,7 @@ def get_translation(request,sid):
     trans_model = Translation.objects.filter(SID = int(sid))
     translation_click_code = request.GET.get('translation_click_code')
     TranslationList = []
+    languageID = []
 
     if translation_click_code:
         countryID = Country.objects.filter(Country_code=translation_click_code)[0]
@@ -82,10 +84,11 @@ def get_translation(request,sid):
                 print(t.lower()+' '+ modelT.lower() )
                 if t.lower() == modelT.lower():
                     TranslationList.append(mt)
-                
-
+            
+    # languageTag_trans = [unicodedata.normalize('NFKD', i).encode('ascii','ignore') for i in languageTag]
+    
     print([TranslationList])
-    context = {'translation':TranslationList}
+    context = {'translation':TranslationList,'trans_tag':languageID}
     # return TranslationList
     # return render(request,"sentence/translation_modal.html",json.dumps(context))
     return render(request,"sentence/translation_modal.html",context)

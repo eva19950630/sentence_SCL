@@ -1,13 +1,33 @@
 {% load tz %}
-  {% for t in translation %}
-      <div class="card card-1 postshow">
-          <div class="postshowcard-content">{{t.Content}}</div>
-          <div class="postcard-btn show">
-            <span class="posttime">{{t.Date|timezone:"Asia/Taipei"}}</span>
-            <span>|</span>
-            <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{t.Views}}</span>
-            &ensp;
-            <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">{{t.Likes}}</span></button></a>
-          </div>
-      </div>
+<div class="top" style="padding: 15px;">
+    <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+</div>
+<div class="postshowbox-title">
+  {% for t in trans_tag %}
+    {{t.Language_ID.Language}}
   {% endfor %}
+</div>
+<div class="postshowbox-showlink">
+    link
+</div>
+<div class="postshowbox-content translation">
+    <div class="row">
+        <div class ="col-md-12 col-xs-12">
+          {% for t in translation %}
+            <div class="card card-1 postshow">
+                <div class="postshowcard-content">{{t.Content}}</div>
+                <div class="postcard-btn show">
+                  <span class="posttime">{{t.Date|timezone:"Asia/Taipei"}}</span>
+                  <span>|</span>
+                  <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{t.Views}}</span>
+                  &ensp;
+                  <a><button class="cardheart" data-post-id=""><i class="fa fa-heart"></i>&ensp;<span class="">{{t.Likes}}</span></button></a>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+    </div>  
+</div>
+
+
+ 
