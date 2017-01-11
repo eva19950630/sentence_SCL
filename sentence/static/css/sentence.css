@@ -131,6 +131,7 @@
   background-color: rgba(221, 104, 100, 0.6);
   color: #fff;
   border-color: rgba(221, 104, 100, 0.6);
+  outline: 0;
 }
 
 .btn.heartbtn:hover {
@@ -149,6 +150,7 @@
   background-color: rgba(255, 199, 15, 0.6);
   color: #fff;
   border-color: rgba(255, 199, 15, 0.6);
+  outline: 0;
 }
 
 .btn.starbtn:hover {
