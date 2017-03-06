@@ -50,7 +50,7 @@ function initializeDocument(){
     paintList[0].classList.add("selected");
     paintButton.classList.add("selected");
 
-    context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
+    //context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
 }
 
 function get_mouse_position(canvas, event) {
@@ -81,7 +81,7 @@ function resetCanvas(){
 
 function clearCanvas(context){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
+    //context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
 }
 
 function redraw(context){
