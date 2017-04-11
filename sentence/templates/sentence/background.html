@@ -29,6 +29,9 @@
     <!-- Sentence CSS -->
     <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
     <!-- Usermap CSS -->
+    {% if twoLine == 'twoLine' %}
+    <link rel="stylesheet" href="{% static 'css/mountain.css' %}">
+    {% endif %}
     <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
     <!-- Userprofile CSS -->
     <link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
@@ -49,6 +52,8 @@
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
 
 <body>
@@ -323,7 +328,12 @@
         var userSentence = '{{sentence.Content}}';
     </script> 
     <!-- Usermap js -->
-    <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script> -->
+    {% if twoLine == 'twoLine' %}
+    <script src='https://rawgithub.com/soulwire/sketch.js/master/js/sketch.min.js'></script>
+    <script type="text/javascript" src="{% static 'js/mountain.js' %}"></script>
+    {% endif %}
+
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
     <script type="text/javascript">

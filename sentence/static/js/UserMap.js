@@ -137,6 +137,8 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
         // }
    // };
 };
+
+
 //message
 /*catch before create*/
 var msgHeader = ".message-username";
@@ -202,6 +204,7 @@ $('body').each(function (i) {
         mesag.scrollTop = mesag.scrollHeight;
     });
 });
+
 
 // $(function() {
 //     $(c ).draggable();

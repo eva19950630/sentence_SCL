@@ -290,7 +290,7 @@ def usermap(request):
             sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
         
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
-            ,'sentence':sentencemodel
+            ,'sentence':sentencemodel, 'twoLine': 'twoLine'
         }
 
         return render(request, "sentence/usermap.html",context)
