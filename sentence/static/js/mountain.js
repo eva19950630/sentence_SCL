@@ -1,5 +1,5 @@
 (function() {
-  var Mountain, MountainRange, dt, mountainRanges, sketch;
+  var Mountain, MountainRange, dt, mountainRanges, sketch, allI;
 
   sketch = Sketch.create();
 
@@ -47,6 +47,7 @@
     totalWidth = 0;
     results = [];
     while (totalWidth <= sketch.width + (this.width.max * 4)) {
+      console.log(totalWidth);
       newWidth = round(random(this.width.min, this.width.max));
       newHeight = round(random(this.height.min, this.height.max));
       this.mountains.push(new Mountain({
@@ -81,23 +82,41 @@
       return this.mountains.push(this.mountains.shift());
     }
   };
-
+var resetX = 1000;
+var resetCount = resetX;
   MountainRange.prototype.render = function() {
     var c, d, i, j, pointCount, ref;
+
     sketch.save();
     sketch.translate(this.x, (sketch.height - sketch.mouse.y) / 20 * this.layer);
 
     sketch.beginPath();
     pointCount = this.mountains.length;
+    // console.log(pointCount);
     sketch.moveTo(this.mountains[0].x, this.mountains[0].y);
     for (i = j = 0, ref = pointCount - 2; j <= ref; i = j += 1) {
-      // console.log(ref+' '+i);
-     
+      // console.log(i+' '+this.mountains[i].x+' '+this.mountains[i].y);
+      // console.log(ref+' '+i+' '+this.mountains.sentLenghtngth);
       c = (this.mountains[i].x + this.mountains[i + 1].x) / 2;
       d = (this.mountains[i].y + this.mountains[i + 1].y) / 2;
-      if (ref == 12 && i == 0) {
-        console.log("ref");
-        DrawIcons(icons[0].src, this.x+1000, this.mountains[i].y-100, "у меня есть яблоко.");
+      
+      if (allI == 4 && i == 12) { 
+        
+        resetCount  -= 3.5;
+        if(resetCount <= 0){
+          resetX += 1000;
+          resetCount = 1000;
+        }
+        // console.log(this.x);
+        DrawIcons(icons[0].src, resetX, 450, "у меня есть яблоко.");
+        console.log(resetX);
+
+      }
+      if (allI == 0 && i == 0 ) { 
+        
+        // console.log(this.x);
+        DrawIcons(icons[1].src, this.mountains[i].x, 550, "у меня есть яблоко.");
+        // console.log(resetX);
       }
       sketch.quadraticCurveTo(this.mountains[i].x, this.mountains[i].y, c, d);
     }
@@ -107,7 +126,6 @@
     
     sketch.fillStyle = this.color;
     sketch.fill();
-
     return sketch.restore();
   };
 
@@ -177,8 +195,10 @@
   sketch.draw = function() {
     var i, results;
     i = mountainRanges.length;
+    // console.log(i);
     results = [];
     while (i--) {
+      allI = i;
       results.push(mountainRanges[i].render(i));
     }
     return results;
