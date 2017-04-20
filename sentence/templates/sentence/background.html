@@ -316,16 +316,27 @@
     <!-- Imagefile js -->
     <script>
         //user profile
-        var userPicture = new Image();
-        userPicture.src = "{% static username.UserIcon %}";
-        //user map
-        var icon1 = "{% static 'images/whale.png' %}";
-        var icons = new Array();
-        icons[0] = new Image();
-        icons[0].src = "{% static 'images/whale.png' %}";
-        icons[1] = new Image();
-        icons[1].src = "{% static 'images/fish.png' %}";
-        var userSentence = '{{sentence.Content}}';
+        $.get('/user/usermap/',{
+           
+        },function(data){
+          // var icons = new Array();
+            var icons = "{{ranfriendlist|safe}}";
+            for(var i = 0 ; i < icons.length; i++){
+               console.log("icons " + icons[Object.keys(icons)[i]] );     
+            }
+            
+            
+        });
+        // var userPicture = new Image();
+        // userPicture.src = "{% static username.UserIcon %}";
+        // //user map
+        // var icon1 = "{% static 'images/whale.png' %}";
+        // var icons = new Array();
+        // icons[0] = new Image();
+        // icons[0].src = "{% static 'images/whale.png' %}";
+        // icons[1] = new Image();
+        // icons[1].src = "{% static 'images/fish.png' %}";
+        // var userSentence = '{{sentence.Content}}';
     </script> 
     <!-- Usermap js -->
     <!-- <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script> -->
@@ -373,7 +384,7 @@
             console.log("ha");
             
             var e = 0;
-            console.log(region_code + "ha");
+            
             for (var i = 0; i < region_code.length; i++) {
                 //        new_region_code[i]=region_code.match('[a-z]');     
                 //        console.log(new_region_code[i]);

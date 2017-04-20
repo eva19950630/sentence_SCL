@@ -284,13 +284,14 @@ def translation_post(request, get_sid):
 def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
+        ranfriendlist = User.objects.all().order_by('?')[:3];
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
         sentencemodel = None
         if Sentence.objects.filter(UID=request.session.get('UID')).exists():
             sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
         
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
-            ,'sentence':sentencemodel, 'twoLine': 'twoLine'
+            ,'sentence':sentencemodel, 'twoLine': 'twoLine', 'ranfriendlist': ranfriendlist
         }
 
         return render(request, "sentence/usermap.html",context)

@@ -9,6 +9,8 @@
 
   mountainRanges = [];
 
+  
+
   dt = 1;
 
   Mountain = function(config) {
@@ -62,10 +64,11 @@
     }
     return results;
   };
-
+ var nowX = 0;
   MountainRange.prototype.update = function() {
     var firstMountain, lastMountain, newHeight, newWidth;
     this.x -= (sketch.mouse.x * this.speed) * dt;
+    nowX= this.x;
     firstMountain = this.mountains[0];
     if (firstMountain.width + firstMountain.x + this.x < -this.width.max) {
       newWidth = round(random(this.width.min, this.width.max));
@@ -78,6 +81,7 @@
         width: newWidth,
         height: newHeight,
         color: this.color
+
       });
       return this.mountains.push(this.mountains.shift());
     }
@@ -101,23 +105,24 @@ var resetCount = resetX;
       d = (this.mountains[i].y + this.mountains[i + 1].y) / 2;
       
       if (allI == 4 && i == 12) { 
-        
-        resetCount  -= 3.5;
-        if(resetCount <= 0){
-          resetX += 1000;
-          resetCount = 1000;
-        }
+
+        // resetCount  = nowX/this.speed/1000 ;
+        // // console.log(resetCount);
+        // if(resetCount <= 0){
+        //   resetX += 1000;
+        //   resetCount = 1000;
+        // }
         // console.log(this.x);
         DrawIcons(icons[0].src, resetX, 450, "у меня есть яблоко.");
-        console.log(resetX);
-
-      }
-      if (allI == 0 && i == 0 ) { 
-        
-        // console.log(this.x);
-        DrawIcons(icons[1].src, this.mountains[i].x, 550, "у меня есть яблоко.");
         // console.log(resetX);
+      //   console.log("currentx  " + resetCount);
       }
+      // if (allI == 0 && i == 0 ) { 
+        
+      //   // console.log(this.x);
+      //   DrawIcons(icons[1].src, this.mountains[i].x, 550, "у меня есть яблоко.");
+      //   // console.log(resetX);
+      // }
       sketch.quadraticCurveTo(this.mountains[i].x, this.mountains[i].y, c, d);
     }
     sketch.lineTo(sketch.width - this.x, sketch.height);
