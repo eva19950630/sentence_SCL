@@ -15,7 +15,7 @@ import json
 import unicodedata
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
-
+from django.core import serializers
 # Create your views here.
 
 
@@ -286,12 +286,17 @@ def usermap(request):
         usermodel = User.objects.get(UID=request.session.get('UID'))
         ranfriendlist = User.objects.all().order_by('?')[:3];
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+
+        friendsImg = [f.UserIcon for f in ranfriendlist]
+        print(friendsImg)
         sentencemodel = None
         if Sentence.objects.filter(UID=request.session.get('UID')).exists():
             sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
         
+      
+        data = serializers.serialize('json', ranfriendlist)
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
-            ,'sentence':sentencemodel, 'twoLine': 'twoLine', 'ranfriendlist': ranfriendlist
+            ,'sentence':sentencemodel, 'twoLine': 'twoLine',  'ranfriendlist': data, 'friendsImg': friendsImg
         }
 
         return render(request, "sentence/usermap.html",context)
