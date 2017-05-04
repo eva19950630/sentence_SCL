@@ -24,6 +24,7 @@
     this.width = config.width;
     this.height = config.height;
     return this.color = config.color;
+    
   };
 
   MountainRange = function(config) {
@@ -49,7 +50,7 @@
     totalWidth = 0;
     results = [];
     while (totalWidth <= sketch.width + (this.width.max * 4)) {
-      console.log(totalWidth);
+      // console.log(totalWidth);
       newWidth = round(random(this.width.min, this.width.max));
       newHeight = round(random(this.height.min, this.height.max));
       this.mountains.push(new Mountain({
@@ -61,6 +62,7 @@
         color: this.color
       }));
       results.push(totalWidth += newWidth);
+
     }
     return results;
   };
@@ -69,6 +71,7 @@
     var firstMountain, lastMountain, newHeight, newWidth;
     this.x -= (sketch.mouse.x * this.speed) * dt;
     nowX= this.x;
+    // console.log(this.x);
     firstMountain = this.mountains[0];
     if (firstMountain.width + firstMountain.x + this.x < -this.width.max) {
       newWidth = round(random(this.width.min, this.width.max));
@@ -86,8 +89,13 @@
       return this.mountains.push(this.mountains.shift());
     }
   };
-var resetX = 1000;
+var resetX = sketch.width;
 var resetCount = resetX;
+var isRandom = false;
+var RanLayer = [];
+var RanI = [];
+var curX = 0;
+var dx = 0;
   MountainRange.prototype.render = function() {
     var c, d, i, j, pointCount, ref;
 
@@ -95,30 +103,60 @@ var resetCount = resetX;
     sketch.translate(this.x, (sketch.height - sketch.mouse.y) / 20 * this.layer);
 
     sketch.beginPath();
-    pointCount = this.mountains.length;
+    pointCount = this.mountains.length;//mountain next x
     // console.log(pointCount);
+    if(!isRandom){
+      console.log("isRandom");
+      for(var i = 0;i<icons.length;i++){
+        RanLayer[i] = round(random()*5);
+        if(RanLayer[i] == 4)
+          RanI[i] = round(random() * 21);
+        else if(RanLayer[i] == 3)
+          RanI[i] = round(random() * 11);
+        else if(RanLayer[i] == 2)
+          RanI[i] = round(random() * 9);
+        else
+          RanI[i] = round(random() * 7);
+      } 
+      isRandom = true;
+    }
     sketch.moveTo(this.mountains[0].x, this.mountains[0].y);
     for (i = j = 0, ref = pointCount - 2; j <= ref; i = j += 1) {
       // console.log(i+' '+this.mountains[i].x+' '+this.mountains[i].y);
       // console.log(ref+' '+i+' '+this.mountains.sentLenghtngth);
       c = (this.mountains[i].x + this.mountains[i + 1].x) / 2;
       d = (this.mountains[i].y + this.mountains[i + 1].y) / 2;
+      // console.log("draw "+nowX);
       
-      if (allI == 4 && i == 12) { 
-       
-      
-        // resetCount  = nowX/this.speed/1000 ;
-        // // console.log(resetCount);
-        // if(resetCount <= 0){
-        //   resetX += 1000;
-        //   resetCount = 1000;
-        // }
-        // console.log(this.x);
-        DrawIcons(icons[Object.keys(icons)[0]].fields.UserIcon, resetX, 450, "у меня есть яблоко.");
-        // console.log(resetX);
-      //   console.log("currentx  " + resetCount);
+      for(var k = 0;k < icons.length;k++){
+        
+        if (allI == RanLayer[k] && i == RanI[k]) {     
+          if(dx == 0)
+            curX = nowX;
+          
+          // resetCount  = nowX/this.speed/1000 ;
+          // // console.log(resetCount);
+          // if(resetCount <= 0){
+          //   resetX += 1000;
+          //   resetCount = 1000;
+          // }
+          // console.log(this.x);
+          
+          DrawIcons(icons[Object.keys(icons)[k]].fields.UserIcon, resetX, d-80, "у меня есть яблоко.");
+          
+          // console.log(resetX);
+        //   console.log("currentx  " + resetCount);
 
-      }
+        }
+        dx = curX -nowX;
+        // console.log('x '+ sketch.width);
+
+        if(dx > sketch.width){
+            console.log("in");
+            resetX += sketch.width;
+            dx = 0;
+          }
+    }
       // if (allI == 0 && i == 0 ) { 
         
       //   // console.log(this.x);

@@ -313,20 +313,20 @@
     <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Imagefile js -->
     <script>
+        
+        var icons = null;
         //user profile
         $.get('/user/usermap/',{
            
         },function(data){
           // var icons = new Array();
             // var icons = "{{ranfriendlist|safe}}";
-            var icons = {{ranfriendlist|safe}};
-            
-            
+            icons = {{ranfriendlist|safe}};
+                  
             for(var i = 0 ; i < icons.length; i++){
                console.log("icons " + icons[Object.keys(icons)[i]].fields.UserIcon ); 
                //console.log("icons " + icons[i] );    
             }
-            
             
         });
         // var userPicture = new Image();
@@ -339,6 +339,7 @@
         // icons[1] = new Image();
         // icons[1].src = "{% static 'images/fish.png' %}";
         // var userSentence = '{{sentence.Content}}';
+
     </script> 
     <!-- Usermap js -->
     <!-- <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script> -->
