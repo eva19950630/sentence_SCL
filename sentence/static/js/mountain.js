@@ -105,7 +105,8 @@ var resetCount = resetX;
       d = (this.mountains[i].y + this.mountains[i + 1].y) / 2;
       
       if (allI == 4 && i == 12) { 
-
+       
+      
         // resetCount  = nowX/this.speed/1000 ;
         // // console.log(resetCount);
         // if(resetCount <= 0){
@@ -113,9 +114,10 @@ var resetCount = resetX;
         //   resetCount = 1000;
         // }
         // console.log(this.x);
-        DrawIcons(icons[0].src, resetX, 450, "у меня есть яблоко.");
+        DrawIcons(icons[Object.keys(icons)[0]].fields.UserIcon, resetX, 450, "у меня есть яблоко.");
         // console.log(resetX);
       //   console.log("currentx  " + resetCount);
+
       }
       // if (allI == 0 && i == 0 ) { 
         

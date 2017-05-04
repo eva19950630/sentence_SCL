@@ -318,9 +318,13 @@
            
         },function(data){
           // var icons = new Array();
-            var icons = "{{ranfriendlist|safe}}";
+            // var icons = "{{ranfriendlist|safe}}";
+            var icons = {{ranfriendlist|safe}};
+            
+            
             for(var i = 0 ; i < icons.length; i++){
-               console.log("icons " + icons[Object.keys(icons)[i]] );     
+               console.log("icons " + icons[Object.keys(icons)[i]].fields.UserIcon ); 
+               //console.log("icons " + icons[i] );    
             }
             
             
