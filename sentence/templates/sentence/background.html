@@ -27,9 +27,9 @@
     <!-- Sentence CSS -->
     <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
     <!-- Usermap CSS -->
-    {% if twoLine == 'twoLine' %}
+    <!-- {% if twoLine == 'twoLine' %}
     <link rel="stylesheet" href="{% static 'css/mountain.css' %}">
-    {% endif %}
+    {% endif %} -->
     <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
     <!-- Userprofile CSS -->
     <link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
@@ -338,15 +338,15 @@
         // icons[0].src = "{% static 'images/whale.png' %}";
         // icons[1] = new Image();
         // icons[1].src = "{% static 'images/fish.png' %}";
-        // var userSentence = '{{sentence.Content}}';
+        var userSentence = '{{sentence.Content}}';
 
     </script> 
     <!-- Usermap js -->
-    <!-- <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script> -->
-    {% if twoLine == 'twoLine' %}
+    <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
+    <!-- {% if twoLine == 'twoLine' %}
     <script src='https://rawgithub.com/soulwire/sketch.js/master/js/sketch.min.js'></script>
     <script type="text/javascript" src="{% static 'js/mountain.js' %}"></script>
-    {% endif %}
+    {% endif %} -->
 
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>

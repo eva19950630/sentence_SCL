@@ -296,7 +296,7 @@ def usermap(request):
       
         data = serializers.serialize('json', ranfriendlist)
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
-            ,'sentence':sentencemodel, 'twoLine': 'twoLine',  'ranfriendlist': data, 'friendsImg': friendsImg
+            ,'sentence':sentencemodel,   'ranfriendlist': data, 'friendsImg': friendsImg
         }
 
         return render(request, "sentence/usermap.html",context)

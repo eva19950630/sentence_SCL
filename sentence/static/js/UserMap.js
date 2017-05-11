@@ -33,6 +33,13 @@ var moveDir = {
     x: 0
     , y: 0
 };
+
+//random position
+for(var i =0;i<3;i++){
+    var x = Math.random()*900;
+    var y = Math.random()*500;
+    passerbyPos[i] = {x:x,y:y};
+}
 //var PosChange = false;
 /*var proPasser = {
     'nickname': "BigV"
@@ -55,10 +62,12 @@ $(c).on("click", function (event) {
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
     canvasY = event.pageY - totalOffsetY;
-    if ((canvasX >= passerbyPos.x && canvasX <= passerbyPos.x + 100) && (canvasY >= passerbyPos.y && canvasY <= passerbyPos.y + 100)) {
-        $(currentElement).css( 'cursor', 'pointer' );
-        $("#passerIntro").modal();
-       //GetProfile(proPasser);
+    for(var i = 0;i< 3;i++){
+        if ((canvasX >= passerbyPos[i].x && canvasX <= passerbyPos[i].x + 100) && (canvasY >= passerbyPos[i].y && canvasY <= passerbyPos[i].y + 100)) {
+            $(currentElement).css( 'cursor', 'pointer' );
+            $("#passerIntro").modal();
+           //GetProfile(proPasser);
+        }
     }
 });
 /*var GetProfile = function (pro) {
@@ -96,6 +105,7 @@ document.addEventListener('mousedown', function (e) {
         , y: mousePos.y - CurPos.y
     };
 }, false);
+
 setInterval(function () {
     if ((Math.abs(CurPos.x - mousePos.x) >= 0.1) && (Math.abs(CurPos.y - mousePos.y) >= 0.1)) {
         grd.addColorStop(0, "white");
@@ -105,15 +115,16 @@ setInterval(function () {
         CurPos.x += moveDir.x * 0.1;
         CurPos.y += moveDir.y * 0.1;
     }
-    
+
+    DrawIcons(icons[Object.keys(icons)[0]].fields.UserIcon, CurPos.x-50, CurPos.y-100,userSentence );
+
     /*No Picture*/
-    
-    DrawIcons(icons[0].src, passerbyPos.x, passerbyPos.y, "у меня есть яблоко.");
-    DrawIcons(icons[1].src, CurPos.x-50, CurPos.y-100, userSentence);
-    
+    for(var i = 0;i< 3;i++){
+        DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,"kfndenfknflekfmodkfojfokmdsfkjewk" );
+    }
     
 }, 30);
-console.log('icon '+icons[1].src);
+// console.log('icon '+icons[1].src);
 //image
 var DrawIcons = function (isrc, pox, poy, sentence) {
     var ic = new Image();

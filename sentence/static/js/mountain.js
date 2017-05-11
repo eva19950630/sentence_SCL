@@ -71,7 +71,6 @@
     var firstMountain, lastMountain, newHeight, newWidth;
     this.x -= (sketch.mouse.x * this.speed) * dt;
     nowX= this.x;
-    // console.log(this.x);
     firstMountain = this.mountains[0];
     if (firstMountain.width + firstMountain.x + this.x < -this.width.max) {
       newWidth = round(random(this.width.min, this.width.max));
@@ -97,11 +96,11 @@ var RanI = [];
 var curX = 0;
 var dx = 0;
   MountainRange.prototype.render = function() {
-    var c, d, i, j, pointCount, ref;
-
+    var c, d, i, j, pointCount, ref,firstMountain;
+    firstMountain = this.mountains[0];
     sketch.save();
     sketch.translate(this.x, (sketch.height - sketch.mouse.y) / 20 * this.layer);
-
+    // console.log(this.x);
     sketch.beginPath();
     pointCount = this.mountains.length;//mountain next x
     // console.log(pointCount);
@@ -141,9 +140,13 @@ var dx = 0;
           //   resetCount = 1000;
           // }
           // console.log(this.x);
-          
-          DrawIcons(icons[Object.keys(icons)[k]].fields.UserIcon, resetX, d-80, "у меня есть яблоко.");
-          
+          // DrawIcons(icons[Object.keys(icons)[k]].fields.UserIcon, resetX, d-80, "у меня есть яблоко.");
+          if (firstMountain.width + firstMountain.x + this.x  < -200) {
+            console.log("in");
+            DrawIcons(icons[Object.keys(icons)[k]].fields.UserIcon, resetX, d-80, "у меня есть яблоко.");
+            firstMountain = this.mountains[10];
+            resetX-=10;
+          }
           // console.log(resetX);
         //   console.log("currentx  " + resetCount);
 
@@ -152,11 +155,11 @@ var dx = 0;
         // console.log('x '+ sketch.width);
 
         if(dx > sketch.width){
-            console.log("in");
-            resetX += sketch.width;
-            dx = 0;
-          }
-    }
+          
+          resetX += sketch.width;
+          dx = 0;
+        }
+      }
       // if (allI == 0 && i == 0 ) { 
         
       //   // console.log(this.x);
