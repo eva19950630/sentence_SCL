@@ -35,7 +35,7 @@ var moveDir = {
 };
 
 //random position
-for(var i =0;i<3;i++){
+for(var i =0;i<10;i++){
     var x = Math.random()*900;
     var y = Math.random()*500;
     passerbyPos[i] = {x:x,y:y};
@@ -62,7 +62,7 @@ $(c).on("click", function (event) {
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
     canvasY = event.pageY - totalOffsetY;
-    for(var i = 0;i< 3;i++){
+    for(var i = 0;i< 10;i++){
         if ((canvasX >= passerbyPos[i].x && canvasX <= passerbyPos[i].x + 100) && (canvasY >= passerbyPos[i].y && canvasY <= passerbyPos[i].y + 100)) {
             $(currentElement).css( 'cursor', 'pointer' );
             $("#passerIntro").modal();
@@ -116,11 +116,11 @@ setInterval(function () {
         CurPos.y += moveDir.y * 0.1;
     }
 
-    DrawIcons(icons[Object.keys(icons)[0]].fields.UserIcon, CurPos.x-50, CurPos.y-100,userSentence );
+    DrawIcons(userImg, CurPos.x-50, CurPos.y-100,userSentence[Object.keys(userSentence)[0]].fields.Content );
 
     /*No Picture*/
-    for(var i = 0;i< 3;i++){
-        DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,"kfndenfknflekfmodkfojfokmdsfkjewk" );
+    for(var i = 0;i< 10;i++){
+        DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content );
     }
     
 }, 30);

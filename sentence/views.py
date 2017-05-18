@@ -284,19 +284,23 @@ def translation_post(request, get_sid):
 def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
-        ranfriendlist = User.objects.all().order_by('?')[:3];
+        ranfriendlist = User.objects.all().exclude(UID = usermodel.UID).order_by('?','pk')[:10]
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
 
-        friendsImg = [f.UserIcon for f in ranfriendlist]
-        print(friendsImg)
         sentencemodel = None
-        if Sentence.objects.filter(UID=request.session.get('UID')).exists():
-            sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
+        if Sentence.objects.filter(UID=usermodel.UID).exists():
+            sentencemodel = Sentence.objects.filter(UID=usermodel.UID).order_by('-Date')[:1]
         
+        friendSentencelist = []
+        for f in ranfriendlist:
+            friendSentencelist.extend(Sentence.objects.filter(UID = f.UID).order_by('-Date')[:1])
       
+
         data = serializers.serialize('json', ranfriendlist)
+        friendSentencelistdata = serializers.serialize('json', friendSentencelist)
+        sentencemodeldata = serializers.serialize('json', sentencemodel)
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
-            ,'sentence':sentencemodel,   'ranfriendlist': data, 'friendsImg': friendsImg
+            ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
         }
 
         return render(request, "sentence/usermap.html",context)

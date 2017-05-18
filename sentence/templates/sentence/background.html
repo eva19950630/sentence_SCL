@@ -315,6 +315,10 @@
     <script>
         
         var icons = null;
+        var friendSentencelist = null;
+        var userSentence = null;
+        var userImg = null;
+        var iconsLenght = 0;
         //user profile
         $.get('/user/usermap/',{
            
@@ -322,13 +326,21 @@
           // var icons = new Array();
             // var icons = "{{ranfriendlist|safe}}";
             icons = {{ranfriendlist|safe}};
-                  
+            iconsLength = icons.length;
+            console.log("length:" + iconsLength);
+            userSentence = {{sentence|safe}};
+            userImg = "{{username.UserIcon}}";
+            friendSentencelist = {{friendSentencelist|safe}};    
             for(var i = 0 ; i < icons.length; i++){
-               console.log("icons " + icons[Object.keys(icons)[i]].fields.UserIcon ); 
+               console.log("icons " + icons[Object.keys(icons)[i]].fields.UserName ); 
                //console.log("icons " + icons[i] );    
-            }
-            
+            }   
+            for(var i = 0 ; i < userSentence.length; i++){
+               console.log("userSentence " + userSentence[Object.keys(userSentence)[i]] ); 
+               //console.log("icons " + icons[i] );    
+            }         
         });
+      
         // var userPicture = new Image();
         // userPicture.src = "{% static username.UserIcon %}";
         // //user map
@@ -338,7 +350,6 @@
         // icons[0].src = "{% static 'images/whale.png' %}";
         // icons[1] = new Image();
         // icons[1].src = "{% static 'images/fish.png' %}";
-        var userSentence = '{{sentence.Content}}';
 
     </script> 
     <!-- Usermap js -->

@@ -20,6 +20,7 @@ class AddUser(forms.Form):
 		#         del form_data['password']
 		#     return form_data
         
+
 class PostSentence(forms.Form):
 	"""docstring for ClassName"""
 	class Meta:
