@@ -46,6 +46,7 @@ urlpatterns = [
     # url(r'^getuserid/', views.getuserid, name = 'getuserid'),
     url(r'^getcountry/', views.getCountry, name = 'getcountry'),
     url(r'^getregion/', views.getregion, name = 'getregion'),
+    url(r'^addfriend/', views.addfriend, name = 'addfriend'),
     #google+
     #url(r'^allauth/accounts/', include('allauth.urls')),
 ]

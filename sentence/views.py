@@ -1,6 +1,6 @@
 from django.shortcuts import render#, render_to_response
 #google+
-from .forms import AddUser, PostSentence, PostTranslate, PostTopic
+from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend
 from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -637,6 +637,24 @@ def getregion(request):
         region_code = json.dumps({"code": region_code})    
        
         return HttpResponse({ region_code, })
+
+def addfriend(request):
+    if request.method == "GET":
+        friendID = request.GET.get('UID')
+        uid = request.session.get('UID')
+        print("FRIEND: " +friendID)
+
+        usermodel = User.objects.get(UID = uid)
+        friendmodel = User.objects.get(UID = friendID)
+
+        if not Friendship.objects.filter(UID = uid,Friend = friendID).exists():
+            Friendship.objects.create(
+                    AreFriends = 1,
+                    UID=usermodel,
+                    Friend=friendmodel,
+                )
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+    return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
    
  #google+
 # def signup_google(request):

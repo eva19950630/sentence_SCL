@@ -35,11 +35,11 @@ var moveDir = {
 };
 
 //random position
-for(var i =0;i<10;i++){
-    var x = Math.random()*900;
-    var y = Math.random()*500;
-    passerbyPos[i] = {x:x,y:y};
-}
+// for(var i =0;i<10;i++){
+//     var x = Math.random()*900+100;
+//     var y = Math.random()*500+100;
+//     passerbyPos[i] = {x:x,y:y};
+// }
 //var PosChange = false;
 /*var proPasser = {
     'nickname': "BigV"
@@ -48,6 +48,35 @@ for(var i =0;i<10;i++){
     , 'Languages': 'English'
     , 'icon': 'Imgae/whale.png'
 };*/
+
+var ranArray = [0,0,0,0,0,0,0,0,0,0];
+
+//no repeat random
+for(var i = 0;i<10;i++){
+    var ranInterval = Math.round(Math.random()*50);
+    ranArray[i]= ranInterval;
+    ranNoRepeat(ranInterval,i);
+
+    console.log("rand ranInterval "+ranArray[i]);
+    var x = (ranArray[i] % 10 )*Math.round((screen.width-200)/10);
+    var y = Math.floor(ranArray[i] / 10 )*Math.round((screen.height-200)/5);
+    passerbyPos[i] = {x:x,y:y};   
+}
+
+function ranNoRepeat(num,i) {
+    for(var j = i-1;j >=0 ;j--){
+        if(ranArray[i] != ranArray[j]){
+            ranArray[i] = num;
+            // console.log("if true");
+        }else{
+            // console.log("in repeat");
+            ranNoRepeat(Math.round(Math.random()*50),i);
+            break;
+            // console.log("out repeat");
+        }
+    }
+}
+var currentStranger;
 //Click icons
 $(c).on("click", function (event) {
     var totalOffsetX = 0;
@@ -64,12 +93,24 @@ $(c).on("click", function (event) {
     canvasY = event.pageY - totalOffsetY;
     for(var i = 0;i< 10;i++){
         if ((canvasX >= passerbyPos[i].x && canvasX <= passerbyPos[i].x + 100) && (canvasY >= passerbyPos[i].y && canvasY <= passerbyPos[i].y + 100)) {
+            currentStranger = i;
             $(currentElement).css( 'cursor', 'pointer' );
+            $("#introImg").attr("src",icons[Object.keys(icons)[i]].fields.UserIcon);
+            $("#introName").html(icons[Object.keys(icons)[i]].fields.UserName);
             $("#passerIntro").modal();
            //GetProfile(proPasser);
         }
     }
 });
+function AddFriend(){
+    var FriendID = icons[Object.keys(icons)[currentStranger]].pk;
+    console.log("UID" +FriendID);
+    $.get('/addfriend/',{
+           UID: FriendID
+    },function(data){
+        $("#friendlist_certain_content").html(data);
+    });
+}
 /*var GetProfile = function (pro) {
     var userID = pro.nickname + "Intro";
     if ($(userID).length == 0) {
@@ -131,16 +172,16 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
     ic.src = isrc;
    // ic.onload=function(){
         // console.log();
-        var sentLenght = sentence.length * 10;
-        ctx.beginPath();
-        ctx.moveTo(pox + 100, poy - 5);
-        ctx.lineTo(pox + 100, poy - 40);
-        ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
-        ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
-        ctx.lineTo(pox + 110, poy - 10);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.closePath();
+        // var sentLenght = sentence.length * 10;
+        // ctx.beginPath();
+        // ctx.moveTo(pox + 100, poy - 5);
+        // ctx.lineTo(pox + 100, poy - 40);
+        // ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
+        // ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
+        // ctx.lineTo(pox + 110, poy - 10);
+        // ctx.fillStyle = '#FFFFFF';
+        // ctx.fill();
+        // ctx.closePath();
         // ic.onload=function(){
         ctx.drawImage(ic, pox, poy, 100, 100);
         ctx.fillStyle = "black";
