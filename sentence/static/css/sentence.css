@@ -131,6 +131,7 @@
   background-color: rgba(221, 104, 100, 0.6);
   color: #fff;
   border-color: rgba(221, 104, 100, 0.6);
+  outline: 0;
 }
 
 .btn.heartbtn:hover {
@@ -149,6 +150,7 @@
   background-color: rgba(255, 199, 15, 0.6);
   color: #fff;
   border-color: rgba(255, 199, 15, 0.6);
+  outline: 0;
 }
 
 .btn.starbtn:hover {
@@ -271,9 +273,9 @@
 }
 
 .postshowbox-content {
-  max-height: calc(100vh - 420px);
+  max-height: calc(100vh - 250px);
   overflow-y: auto;
-  margin: 0 0 0 95px;
+  margin: 50px 0 0 95px;
 }
 
 .card-1.postshow {
@@ -284,6 +286,11 @@
   padding: 10px;
   text-align: left;
 }
+
+.card-1.postshow:hover {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+}
+
 
 .postshowbox-title {
   width: 150px;
@@ -307,7 +314,7 @@
 }
 
 .postcard-btn.show {
-  margin: 40px 0 0 230px;
+  margin: 40px 0 0 270px;
 }
 
 .postcard-btn.show i, .postcard-btn.show span, .postcard-time.show span {

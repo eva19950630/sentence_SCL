@@ -110,7 +110,7 @@
             </span>
             {% endif %}
             <span>
-                <button type="button" class="btn sharebtn btn-default navbar-btn"><i class="fa fa-facebook"></i>&ensp;Share</button>
+                <button type="button" class="btn sharebtn btn-default navbar-btn" data-post-id="{{ sentence_content.SID }}"><i class="fa fa-facebook"></i>&ensp;Share</button>
             </span>
 
         </div>
@@ -149,7 +149,7 @@
         </div>
         <!-- Translate -->
         <div class="sentenceInfo translatecount">
-            <span id="float-translatecount">TRANSLATION :&emsp;0</span>
+            <span id="float-translatecount">TRANSLATION :&emsp;{{ sentence_content.Translation_count }}</span>
         </div>
         <!-- Like -->
         <div class="sentenceInfo rightbtn">
@@ -170,25 +170,8 @@
 <!-- Translation postshow Modal -->
 <div class="modal fade" id="postshow-modal" role="dialog">
     <div class="modal-dialog">
-        <div class="postshow-box translation">
-            <div class="top" style="padding: 15px;">
-                <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-            </div>
-            <div class="postshowbox-title">
-                #Language
-            </div>
-            <div class="postshowbox-showlink">
-                link
-            </div>
-            <div class="postshowbox-content translation">
-                
-                <div class="row">
-                    <div class ="col-md-12 col-xs-12" id="translation_certain_language">
-
-                    </div>
-                </div>
-                
-            </div>
+        <div class="postshow-box translation" id="translation_certain_language">
+            
         </div> <!-- end post-box translation -->
     </div>
 </div>

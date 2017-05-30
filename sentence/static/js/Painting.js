@@ -39,6 +39,8 @@ var toolKit = document.getElementById('tools');
 function initializeDocument(){
     canvas.width = document.body.clientHeight - control.clientHeight;
     canvas.height = document.body.clientHeight - control.clientHeight;
+    //canvas.width = 500;
+    //canvas.height = 500;
     for (var i = 0; i < kit_dict['paints'].length; i++){
         paintKit.innerHTML += "<div class='tool-thin' style='background:" + kit_dict['paints'][i] + "!important' " + "color='"+ kit_dict['paints'][i] +"'" +"></div>\n";
     }
@@ -49,8 +51,6 @@ function initializeDocument(){
     var paintButton = document.getElementById("paint");
     paintList[0].classList.add("selected");
     paintButton.classList.add("selected");
-
-    //context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
 }
 
 function get_mouse_position(canvas, event) {
@@ -81,7 +81,6 @@ function resetCanvas(){
 
 function clearCanvas(context){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    //context.drawImage(userPicture, 0, 0,canvas.width,canvas.Height);
 }
 
 function redraw(context){
@@ -160,7 +159,10 @@ clearButton.addEventListener('click', function(event){
 var saveButton = document.getElementById('save');
 saveButton.addEventListener('click', function(event){
     var img = canvas.toDataURL("image/png");
-    window.location = img;
+    $.get('/user/profileIcon/',{
+        user_icon_img: img
+    });
+    //window.location = img;
 }, false);
 
 for (var i = 0; i < paintList.length; i++) {
@@ -207,3 +209,12 @@ var DrawIcons = function (isrc) {
     ic.src = isrc;
     context.drawImage(ic, 100, 100, 100, 100);
 };
+
+
+// $('.save-test-btn').click(function(e){
+//     var image_test = canvas.toDataURL("image/png").replace(image_test,"image/test1");
+//     $('.save-test-btn').attr({
+//         'download': 'MyIcon.png',  /// set filename
+//         'href'    : image_test              /// set data-uri
+//     });
+// });

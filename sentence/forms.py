@@ -5,13 +5,13 @@ class AddUser(forms.Form):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password','UserIcon','language',)
+        fields = ('username', 'email', 'password','UserIcon','language','UserIcon')
 
         def clean_email(self):
-		    email = self.cleaned_data['email']
-		    if User.objects.filter(Email=email).exists():
-		        raise forms.ValidationError("Email already exists")
-		    return email
+        	email = self.cleaned_data['email']
+        	if User.objects.filter(Email=email).exists():
+        		raise forms.ValidationError("Email already exists")
+        	return email
 
 		# def clean(self):
 		#     form_data = self.cleaned_data
@@ -38,4 +38,6 @@ class PostTopic(forms.Form):
 	class Meta:
 		model = Topic
 		fields = ('Topic_tag','Link',)
+
+				
 

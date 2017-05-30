@@ -1,7 +1,7 @@
 from django.shortcuts import render#, render_to_response
 #google+
 from .forms import AddUser, PostSentence, PostTranslate, PostTopic
-from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence, Rank_translation
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -11,7 +11,11 @@ from django.core.urlresolvers import reverse
 #json by Gim
 from django.http import JsonResponse
 from django.http import HttpResponse
-import json
+import json, re, base64, PIL
+from PIL import Image
+from io import StringIO
+import unicodedata
+from django.core.files.base import ContentFile
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 
@@ -63,29 +67,31 @@ def get_translation(request,sid):
     trans_model = Translation.objects.filter(SID = int(sid))
     translation_click_code = request.GET.get('translation_click_code')
     TranslationList = []
+    languageID = []
 
     if translation_click_code:
         countryID = Country.objects.filter(Country_code=translation_click_code)[0]
-        print('countryID '+str(countryID.Country_ID))
+        # print('countryID '+str(countryID.Country_ID))
         languageID = Country_language.objects.filter(Country_ID=countryID.Country_ID)#list 
 
         # print(str(languageID))
 
         languageTag = [lan.Language_ID.Language for lan in languageID]
 
-        print(languageTag)
+        # print(languageTag)
 
        
         for t in languageTag:
             for mt in trans_model:
                 modelT = mt.Translation_tag
-                print(t.lower()+' '+ modelT.lower() )
+                # print(t.lower()+' '+ modelT.lower() )
                 if t.lower() == modelT.lower():
                     TranslationList.append(mt)
-                
-
-    print([TranslationList])
-    context = {'translation':TranslationList}
+            
+    # languageTag_trans = [unicodedata.normalize('NFKD', i).encode('ascii','ignore') for i in languageTag]
+    
+    # print([TranslationList])
+    context = {'translation':TranslationList,'trans_tag':languageID}
     # return TranslationList
     # return render(request,"sentence/translation_modal.html",json.dumps(context))
     return render(request,"sentence/translation_modal.html",context)
@@ -307,17 +313,41 @@ def user_profile(request):
         return render(request, "sentence/user_profile.html",context)
 
 def get_new_user_icon(request):
-    print('in icon save')
-    if request.session.get('UID'):
-        userpicture = request.GET.get('userPicture')
-        if userpicture:
-            usermodel = User.objects.get(UID=request.session.get('UID'))
-            usermodel.UserIcon = userpicture
-            usermodel.save()
-        # return render(request, "sentence/user_profile.html",{'username': usermodel})
-    else:
-       return render(request, "sentence/user_profile.html")
+    context = {'extend_index': 'sentence/background.html'}
+    if request.method == "GET":
+        UID = request.session.get('UID')
+        if UID:
 
+            signature_url = request.GET.get("user_icon_img")
+            
+
+            if signature_url[-2:] == "^*$=":
+                signature_url += "="
+            elif not signature_url[-2:] == "==":
+                signature_url += "=="
+
+            signature_url = base64.b64decode(signature_url)
+
+            print(signature_url[-4:])
+            # missing_padding = len(signature_url) % 4
+            # if missing_padding != 0:
+            #     signature_url += "="* (4 - missing_padding)
+            # print(signature_url[-4:])
+            # signature_url = base64.b64decode(signature_url)
+            # print("final: "+str(signature_url[:12]))
+
+            if signature_url:
+                usermodel = User.objects.get(UID=UID)
+                usermodel.UserIcon = ContentFile(signature_url, 'icon'+str(UID)+'.png')
+                usermodel.save()
+
+            
+
+            return render(request, "sentence/user_profile.html", context)
+        else:
+           return render(request, "sentence/user_profile.html",context)
+    else:
+        return render(request, "sentence/user_profile.html",context)
 
 def user_account(request):
     if request.session.get('UID'):
@@ -387,10 +417,10 @@ def login_app(request):
             userId = request.GET.get('userId')
             useremail = request.GET.get('email')
             userpucture = request.GET.get('userpucture')
-            print(userpucture)
+            # print(userpucture)
             
             userfriend = request.GET.getlist('friends[]')
-            print(userfriend)
+            # print(userfriend)
             password = '000'
             if User.objects.filter(SocialID = userId).exists():
                 # print('in fb session')
@@ -493,7 +523,7 @@ def login_app(request):
         #login
         if m.Password == request.POST.get('password'):
             request.session['UID'] = m.UID
-            print(m.UserName)
+            # print(m.UserName)
 
             context = {'username': m,'sentence_content': sentencemodel_like_order,
             'sentence_content_date': sentencemodel_date_order,
@@ -528,11 +558,15 @@ def likes_count(request):
     liked = False
     state = False
     if request.method == 'GET':
+        # get sentence
         sentence_id = request.GET.get('sentence_id')
         sentence = Sentence.objects.get(SID=sentence_id)
+
+        #get current user
         userid = request.session.get('UID')
         usermodel = User.objects.get(UID=userid)
         
+        print("sent")
         likes = sentence.Likes
         if request.session.get('has_liked_'+str(sentence_id),liked):
             print("unlike")
@@ -541,7 +575,7 @@ def likes_count(request):
                 likes = likes - 1
                 try:
                     del request.session['has_liked_'+sentence_id]
-                    print('session del ' + str(request.session['has_liked_'+sentence_id]))
+                    # print('session del ' + str(request.session['has_liked_'+sentence_id]))
                 except KeyError:
                     print("keyerror")
                     
@@ -551,7 +585,7 @@ def likes_count(request):
                 sentence.save()
         else:
             state= True
-            print("like")
+            # print("like")
             request.session['has_liked_'+sentence_id] = True
             likes = likes + 1
             if not Rank_sentence.objects.filter(UID=userid,SID=sentence_id).exists():
@@ -566,6 +600,51 @@ def likes_count(request):
     else:
         return HttpResponse()
 
+#translation likes
+def transltion_likes_count(request):
+    liked = False
+    state = False
+    if request.method == 'GET':
+        #get traslation
+        translation_id = request.GET.get('translation_id')
+        translation = Translation.objects.get(TID=translation_id)
+
+        #get current user
+        userid = request.session.get('UID')
+        usermodel = User.objects.get(UID=userid)
+
+        likes = translation.Likes
+        if request.session.get('has_liked_'+str(translation_id),liked):
+            # print("unlike")
+            state = False
+            if translation.Likes > 0:
+                likes = likes - 1
+                try:
+                    del request.session['has_liked_'+translation_id]
+                    # print('session del ' + str(request.session['has_liked_'+translation_id]))
+                except KeyError:
+                    print("keyerror")
+                    
+                if Rank_translation.objects.filter(UID=userid,TID=translation_id).exists():
+                    Rank_translation.objects.filter(UID=userid,TID=translation_id).delete()
+                translation.Likes = likes
+                translation.save()
+        else:
+            state= True
+            # print("like")
+            request.session['has_liked_'+translation_id] = True
+            likes = likes + 1
+            if not Rank_translation.objects.filter(UID=userid,TID=translation_id).exists():
+                Rank_translation.objects.create(
+                    UID=usermodel,
+                    TID=translation,
+                )
+            translation.Likes = likes
+            translation.save()   
+        data = {'data':likes,'state':state} 
+        return HttpResponse(json.dumps(data),liked)
+    else:
+        return HttpResponse()
 #collection
 def collection(request):
     isCollect = False
@@ -597,8 +676,7 @@ def getCountry(request):
             print(i.Language_ID.Language)
             
         return HttpResponse(json.dumps({
-                "country": country.Country_name,   
-            }))   
+                "country": country.Country_name,}))   
     
     
 def getCountryByLanguage(language_model):

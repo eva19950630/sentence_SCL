@@ -14,7 +14,7 @@ class User(models.Model):
 	Password = models.CharField(max_length=50, null=False)
 	SocialID = models.BigIntegerField(null=True,unique = True)
  	# UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
- 	UserIcon = models.ImageField(upload_to='UserIcon_folder',default='/static/images/fish.png')
+	UserIcon = models.ImageField(upload_to='/static/UserIcon_folder',default='/static/images/fish.png')
 	NativeLanguage = models.CharField(max_length=50, null=False)
 	#IconPosition = models.
 	# EXP = models.IntegerField()
@@ -72,13 +72,13 @@ class Language(models.Model):
 # USER-LANGUAGE
 class User_language(models.Model):
   	Language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
-	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+  	UID = models.ForeignKey('User', on_delete=models.CASCADE)
   
 # FRIENDSHIP
 class Friendship(models.Model):
 	AreFriends = models.IntegerField()
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
-  	Friend = models.ForeignKey('User', on_delete=models.CASCADE,related_name="friends")
+	Friend = models.ForeignKey('User', on_delete=models.CASCADE,related_name="friends")
    
 #ACHIEVEMENT
 #class Achievement(models.Model):

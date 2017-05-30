@@ -566,8 +566,8 @@
         var id = $('.sharebtn').attr('data-post-id');
         FB.ui({
             method: 'share',
-            // href:'https://sentence-eva19950630.c9users.io/'+id,//sentence
-            href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
+            href:'https://sentence-eva19950630.c9users.io/sentence/'+id,//sentence
+            // href:'https://test-eva19950630.c9users.io/sentence/'+id,//test
             //href:'localhost:8000'
             title: 'A SENTENCE A DAY',  // The same than name in feed method
             picture: bannerImage.src,  
@@ -617,6 +617,23 @@
 
 <!-- like / collect -->
     <script type="text/javascript">
+        //translation
+        function trans_like(){
+            console.log("in");
+            var id;
+            id = $('.cardheart.trans').attr('data-post-id');
+            console.log(id);
+            $.get('/translation_likes/', {
+                translation_id: id
+            }, function(data) {
+                json_like = JSON.parse(data);
+                console.log(json_like.data + ' ' +json_like.state);
+                var trans_likes = document.getElementsByClassName("trans_like_");
+                trans_likes.innerHTML = ' '+json_like.data;
+                $('.trans_like_'+id).html(' '+json_like.data);
+            });
+        }
+
         $(document).ready(function() {
             //likes
             $('.btn.heartbtn').click(function() {
@@ -638,6 +655,7 @@
                     $('.like_'+id).html(' '+json_like.data);
                 });
             });
+            //sentence
             $('.cardheart').click(function() {
                 var id;
                 id = $(this).attr('data-post-id');
