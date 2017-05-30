@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Sentence, Translation, Topic
+from .models import User, Sentence, Translation, Topic, Friendship
 
 class AddUser(forms.Form):
     
@@ -20,6 +20,7 @@ class AddUser(forms.Form):
 		#         del form_data['password']
 		#     return form_data
         
+
 class PostSentence(forms.Form):
 	"""docstring for ClassName"""
 	class Meta:
@@ -39,5 +40,9 @@ class PostTopic(forms.Form):
 		model = Topic
 		fields = ('Topic_tag','Link',)
 
-				
+class AddFriend(forms.Form):
+	"""docstring for ClassName"""
+	class Meta:
+		model = Friendship
+		fields = ('Friend','UID',)
 

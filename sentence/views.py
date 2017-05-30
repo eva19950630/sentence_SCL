@@ -1,6 +1,6 @@
 from django.shortcuts import render#, render_to_response
 #google+
-from .forms import AddUser, PostSentence, PostTranslate, PostTopic
+from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend
 from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence, Rank_translation
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -18,7 +18,7 @@ import unicodedata
 from django.core.files.base import ContentFile
 # import pytz
 # timezone.activate(pytz.timezone("Asia/Taipei"))
-
+from django.core import serializers
 # Create your views here.
 
 
@@ -287,13 +287,23 @@ def translation_post(request, get_sid):
 def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
+        ranfriendlist = User.objects.all().exclude(UID = usermodel.UID).order_by('?','pk')[:10]
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+
         sentencemodel = None
-        if Sentence.objects.filter(UID=request.session.get('UID')).exists():
-            sentencemodel = Sentence.objects.filter(UID=request.session.get('UID')).order_by('-Date')[0]
+        if Sentence.objects.filter(UID=usermodel.UID).exists():
+            sentencemodel = Sentence.objects.filter(UID=usermodel.UID).order_by('-Date')[:1]
         
+        friendSentencelist = []
+        for f in ranfriendlist:
+            friendSentencelist.extend(Sentence.objects.filter(UID = f.UID).order_by('-Date')[:1])
+      
+
+        data = serializers.serialize('json', ranfriendlist)
+        friendSentencelistdata = serializers.serialize('json', friendSentencelist)
+        sentencemodeldata = serializers.serialize('json', sentencemodel)
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
-            ,'sentence':sentencemodel
+            ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
         }
 
         return render(request, "sentence/usermap.html",context)
@@ -702,6 +712,24 @@ def getregion(request):
         region_code = json.dumps({"code": region_code})    
        
         return HttpResponse({ region_code, })
+
+def addfriend(request):
+    if request.method == "GET":
+        friendID = request.GET.get('UID')
+        uid = request.session.get('UID')
+        print("FRIEND: " +friendID)
+
+        usermodel = User.objects.get(UID = uid)
+        friendmodel = User.objects.get(UID = friendID)
+
+        if not Friendship.objects.filter(UID = uid,Friend = friendID).exists():
+            Friendship.objects.create(
+                    AreFriends = 1,
+                    UID=usermodel,
+                    Friend=friendmodel,
+                )
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+    return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
    
  #google+
 # def signup_google(request):

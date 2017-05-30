@@ -1,8 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-
-
 <head>
     <meta charset="utf-8">
     <title>A Sentence A Day</title>
@@ -29,6 +27,9 @@
     <!-- Sentence CSS -->
     <link rel="stylesheet" href="{% static 'css/sentence.css' %}">
     <!-- Usermap CSS -->
+    <!-- {% if twoLine == 'twoLine' %}
+    <link rel="stylesheet" href="{% static 'css/mountain.css' %}">
+    {% endif %} -->
     <link rel="stylesheet" href="{% static 'css/userMap.css' %}">
     <!-- Userprofile CSS -->
     <link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
@@ -49,6 +50,8 @@
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
 
 <body>
@@ -310,20 +313,52 @@
     <script type="text/javascript" src="{% static 'js/postcard.js' %}"></script>
     <!-- Imagefile js -->
     <script>
+        
+        var icons = null;
+        var friendSentencelist = null;
+        var userSentence = null;
+        var userImg = null;
+        var iconsLenght = 0;
         //user profile
-        var userPicture = new Image();
-        userPicture.src = "{% static username.UserIcon %}";
-        //user map
-        var icon1 = "{% static 'images/whale.png' %}";
-        var icons = new Array();
-        icons[0] = new Image();
-        icons[0].src = "{% static 'images/whale.png' %}";
-        icons[1] = new Image();
-        icons[1].src = "{% static 'images/fish.png' %}";
-        var userSentence = '{{sentence.Content}}';
+        $.get('/user/usermap/',{
+           
+        },function(data){
+          // var icons = new Array();
+            // var icons = "{{ranfriendlist|safe}}";
+            icons = {{ranfriendlist|safe}};
+            iconsLength = icons.length;
+            console.log("length:" + iconsLength);
+            userSentence = {{sentence|safe}};
+            userImg = "{{username.UserIcon}}";
+            friendSentencelist = {{friendSentencelist|safe}};    
+            for(var i = 0 ; i < icons.length; i++){
+               console.log("icons " + icons[Object.keys(icons)[i]].fields.UserName ); 
+               //console.log("icons " + icons[i] );    
+            }   
+            for(var i = 0 ; i < userSentence.length; i++){
+               console.log("userSentence " + userSentence[Object.keys(userSentence)[i]] ); 
+               //console.log("icons " + icons[i] );    
+            }         
+        });
+      
+        // var userPicture = new Image();
+        // userPicture.src = "{% static username.UserIcon %}";
+        // //user map
+        // var icon1 = "{% static 'images/whale.png' %}";
+        // var icons = new Array();
+        // icons[0] = new Image();
+        // icons[0].src = "{% static 'images/whale.png' %}";
+        // icons[1] = new Image();
+        // icons[1].src = "{% static 'images/fish.png' %}";
+
     </script> 
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
+    <!-- {% if twoLine == 'twoLine' %}
+    <script src='https://rawgithub.com/soulwire/sketch.js/master/js/sketch.min.js'></script>
+    <script type="text/javascript" src="{% static 'js/mountain.js' %}"></script>
+    {% endif %} -->
+
     <!-- Painting js -->
     <script type="text/javascript" src="{% static 'js/Painting.js' %}"></script>
     <script type="text/javascript">
@@ -363,7 +398,7 @@
             console.log("ha");
             
             var e = 0;
-            console.log(region_code + "ha");
+            
             for (var i = 0; i < region_code.length; i++) {
                 //        new_region_code[i]=region_code.match('[a-z]');     
                 //        console.log(new_region_code[i]);
