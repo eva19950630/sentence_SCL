@@ -21,15 +21,15 @@
 <div class="FriendsList">
     <div class="row">
         <div class="col-sm-12" id="friendlist_certain_content">
-            <font class="title friend">FRIEND LIST</font>
-            {% for friend in friendlist %}
-            <div class="row friend-panel">
-                <div class="col-lg-2"> <img class="panel-title" src="{{ friend.Friend.UserIcon }}"> </div>
-                <div class="col-lg-5 friend-name">
-                    <h4>{{ friend.Friend.UserName }}</h4>
+            <div class="title friend">FRIEND LIST</div>
+            <div class="friendlistframe">
+                {% for friend in friendlist %}
+                <div class="row friend-panel">
+                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon }}"> </div>
+                    <div class="col-lg-5 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>

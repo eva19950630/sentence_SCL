@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^user/achievement/', views.user_achievement),
     url(r'^user/collection/', views.user_collection),
     url(r'^user/history/', views.user_history),
+    url(r'^user/friends/', views.user_friends),
     
     # url(r'^login/', views.signup_app),
     url(r'^login/', views.login_app),
