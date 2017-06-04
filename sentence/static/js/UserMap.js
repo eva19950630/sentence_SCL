@@ -9,7 +9,7 @@ grd.addColorStop(0, "white");
 grd.addColorStop(1, "#05a3d6");
 // Fill with gradient
 ctx.fillStyle = grd;
-ctx.fillRect(0, 0, 2000, 1000);
+ctx.fillRect(0, 0, screen.width, screen.height);
 
 
 /*var icon = new Image();
@@ -22,8 +22,9 @@ var mousePos = {
     , y: 500
 };
 var CurPos = {
-    x: 800
-    , y: 500
+    x: screen.width/2
+    , y: screen.height/2
+    ,scale:(screen.width*screen.height)/20736
 };
 var passerbyPos = {
     x: 500
@@ -32,6 +33,10 @@ var passerbyPos = {
 var moveDir = {
     x: 0
     , y: 0
+};
+var screenScale = {
+    width: screen.width
+    ,height: screen.height
 };
 
 //random position
@@ -50,32 +55,72 @@ var moveDir = {
 };*/
 
 var ranArray = [0,0,0,0,0,0,0,0,0,0];
+var thetaArray = [0,0,0,0,0,0,0,0,0,0];
 
 //no repeat random
 for(var i = 0;i<10;i++){
-    var ranInterval = Math.round(Math.random()*50);
-    ranArray[i]= ranInterval;
-    ranNoRepeat(ranInterval,i);
+    // var ranInterval = Math.round(Math.random()*50);
+    // ranArray[i]= ranInterval;
+    // ranNoRepeat(ranInterval,i);
 
-    console.log("rand ranInterval "+ranArray[i]);
-    var x = (ranArray[i] % 10 )*Math.round((screen.width-200)/10);
-    var y = Math.floor(ranArray[i] / 10 )*Math.round((screen.height-200)/5);
-    passerbyPos[i] = {x:x,y:y};   
+    // console.log("rand ranInterval "+ranArray[i]);
+    // var x = (ranArray[i] % 10 )*Math.round((screen.width-200)/10);
+    // var y = Math.floor(ranArray[i] / 10 )*Math.round((screen.height-200)/5);
+    // passerbyPos[i] = {x:x,y:y};   
+    randOvalCoordinate(i);
+    console.log(i+"("+passerbyPos[i].x+","+passerbyPos[i].y+")");
+
 }
 
-function ranNoRepeat(num,i) {
-    for(var j = i-1;j >=0 ;j--){
-        if(ranArray[i] != ranArray[j]){
-            ranArray[i] = num;
-            // console.log("if true");
-        }else{
-            // console.log("in repeat");
-            ranNoRepeat(Math.round(Math.random()*50),i);
+function randOvalCoordinate(i){
+    var r = screenScale.height/2 - CurPos.scale,
+    R = screenScale.width/2 - CurPos.scale;
+    var _r = Math.sqrt(Math.random()*(R*R-r*r)+r*r);
+    var theta = Math.random()*2*Math.PI;
+    // var theta = Math.random()*2*Math.PI;
+    passerbyPos[i] = {x:_r*Math.cos(theta)+(screenScale.width/2- CurPos.scale),y:_r*Math.sin(theta)/4+(screenScale.height/2- CurPos.scale)};
+    // plot(_r*Math.cos(theta),_r*Math.sin(theta)/4);
+    imgOverlapping(i);
+}
+
+// function NormalDistribution(){
+//     var rand = 0;
+
+//     for (var i = 0; i < 6; i += 1) {
+//         rand += Math.random();
+//     }
+
+//     return rand / 6;
+// }
+
+// function gaussianRandom(start, end) {
+//   return Math.floor(start + NormalDistribution() * (end - start + 1));
+// }
+
+// function ranNoRepeat(num,i,list) {
+//     for(var j = i-1;j >=0 ;j--){
+//         if(list[i] != list[j]){
+//             list[i] = num;
+//             // console.log("if true");
+//         }else{
+//             // console.log("in repeat");
+//             ranNoRepeat(Math.round(Math.random()*50),i);
+//             break;
+//             // console.log("out repeat");
+//         }
+//     }
+// }
+
+function imgOverlapping(i){
+    for(var j = 0;j < i;j++){
+        if(passerbyPos[i].x <= (passerbyPos[j].x + CurPos.scale) && (passerbyPos[i].x + CurPos.scale)>= passerbyPos[j].x
+            && passerbyPos[i].y <= (passerbyPos[j].y + CurPos.scale) && (passerbyPos[i].y + CurPos.scale) >= passerbyPos[j].y){
+            randOvalCoordinate(i);
             break;
-            // console.log("out repeat");
         }
     }
 }
+
 var currentStranger;
 //Click icons
 $(c).on("click", function (event) {
@@ -87,12 +132,17 @@ $(c).on("click", function (event) {
     do {
         totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
         totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+        console.log("currentElement.scrollTop: "+currentElement.offsetTop+" ,"+currentElement.scrollTop);
     }
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
-    canvasY = event.pageY - totalOffsetY;
+    // canvasY = event.pageY - totalOffsetY;
+    canvasY = event.pageY-80;
+    console.log("pageX: "+event.pageX+" ,"+event.pageY);
+
+    console.log("canvasX: "+canvasX+" ,"+canvasY);
     for(var i = 0;i< 10;i++){
-        if ((canvasX >= passerbyPos[i].x && canvasX <= passerbyPos[i].x + 100) && (canvasY >= passerbyPos[i].y && canvasY <= passerbyPos[i].y + 100)) {
+        if ((canvasX >= passerbyPos[i].x && canvasX <= (passerbyPos[i].x + CurPos.scale)) && (canvasY >= (passerbyPos[i].y+ CurPos.scale) && canvasY <= (passerbyPos[i].y + CurPos.scale*2))) {
             currentStranger = i;
             $(currentElement).css( 'cursor', 'pointer' );
             $("#introImg").attr("src",icons[Object.keys(icons)[i]].fields.UserIcon);
@@ -157,7 +207,7 @@ setInterval(function () {
         CurPos.y += moveDir.y * 0.1;
     }
 
-    DrawIcons(userImg, CurPos.x-50, CurPos.y-100,userSentence[Object.keys(userSentence)[0]].fields.Content );
+    DrawIcons(userImg, CurPos.x, CurPos.y,userSentence[Object.keys(userSentence)[0]].fields.Content );
 
     /*No Picture*/
     for(var i = 0;i< 10;i++){
@@ -183,9 +233,9 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
         // ctx.fill();
         // ctx.closePath();
         // ic.onload=function(){
-        ctx.drawImage(ic, pox, poy, 100, 100);
+        ctx.drawImage(ic, pox, poy, CurPos.scale, CurPos.scale);
         ctx.fillStyle = "black";
-        ctx.fillText(sentence, pox + 110, poy - 18);
+        ctx.fillText(sentence, pox + (0.000053*(screen.width*screen.height)), poy - (0.00000868*(screen.width*screen.height)));
         // }
    // };
 };

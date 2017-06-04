@@ -104,7 +104,7 @@ def sentence_url(request, sid):
     trans_model = Translation.objects.filter(SID = int(sid))
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
     # TranslationList = ''
-    
+
     for i in trans_model:
         trans_code_list.append(getCountryByLanguage(i.Translation_tag))
         json_trans_code = json.dumps(trans_code_list)
