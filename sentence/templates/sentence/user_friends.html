@@ -1,0 +1,20 @@
+{% extends 'sentence/userSidebar.html' %}
+{% load staticfiles %}
+{% load tz %}
+{% block pagecontent1 %}
+
+<!-- User History -->
+<div class="container-fluid friends">
+    <div class="row">
+        {% for friend in friendlist %}
+            <div class="col-sm-4">
+                <div class="row friendlist-manage">
+                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon }}"> </div>
+                    <div class="col-lg-5 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div> <!-- end row -->
+</div> <!-- end container-fluid -->
+
+{% endblock pagecontent1 %}

@@ -413,6 +413,18 @@ def user_history(request):
         context = {'extend_index': 'sentence/background.html'}
         return render(request, "sentence/user_history.html",context)
 
+def user_friends(request):
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session.get('UID'))
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+
+        context = {'username': usermodel,'extend_index': 'sentence/background.html',
+        'friendlist': friendlist,}
+
+        return render(request, "sentence/user_friends.html",context)
+    else:
+        context = {'extend_index': 'sentence/background.html'}
+        return render(request, "sentence/user_friends.html",context)
 
 
 def login_app(request):

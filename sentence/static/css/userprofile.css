@@ -20,6 +20,7 @@
 	margin-top: 70px;
 }
 
+
 /*History*/
 .profiletitle.sentence {
 	color: #005454;
@@ -146,4 +147,10 @@
 .page-header.profile {
 	color: #777777;
 	letter-spacing: 2px;
+}
+
+
+/*Friends*/
+.row.friendlist-manage {
+	padding: 10px 0;
 }
