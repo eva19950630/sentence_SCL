@@ -33,6 +33,13 @@ var moveDir = {
     x: 0
     , y: 0
 };
+
+//random position
+// for(var i =0;i<10;i++){
+//     var x = Math.random()*900+100;
+//     var y = Math.random()*500+100;
+//     passerbyPos[i] = {x:x,y:y};
+// }
 //var PosChange = false;
 /*var proPasser = {
     'nickname': "BigV"
@@ -41,6 +48,35 @@ var moveDir = {
     , 'Languages': 'English'
     , 'icon': 'Imgae/whale.png'
 };*/
+
+var ranArray = [0,0,0,0,0,0,0,0,0,0];
+
+//no repeat random
+for(var i = 0;i<10;i++){
+    var ranInterval = Math.round(Math.random()*50);
+    ranArray[i]= ranInterval;
+    ranNoRepeat(ranInterval,i);
+
+    console.log("rand ranInterval "+ranArray[i]);
+    var x = (ranArray[i] % 10 )*Math.round((screen.width-200)/10);
+    var y = Math.floor(ranArray[i] / 10 )*Math.round((screen.height-200)/5);
+    passerbyPos[i] = {x:x,y:y};   
+}
+
+function ranNoRepeat(num,i) {
+    for(var j = i-1;j >=0 ;j--){
+        if(ranArray[i] != ranArray[j]){
+            ranArray[i] = num;
+            // console.log("if true");
+        }else{
+            // console.log("in repeat");
+            ranNoRepeat(Math.round(Math.random()*50),i);
+            break;
+            // console.log("out repeat");
+        }
+    }
+}
+var currentStranger;
 //Click icons
 $(c).on("click", function (event) {
     var totalOffsetX = 0;
@@ -55,12 +91,26 @@ $(c).on("click", function (event) {
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
     canvasY = event.pageY - totalOffsetY;
-    if ((canvasX >= passerbyPos.x && canvasX <= passerbyPos.x + 100) && (canvasY >= passerbyPos.y && canvasY <= passerbyPos.y + 100)) {
-        $(currentElement).css( 'cursor', 'pointer' );
-        $("#passerIntro").modal();
-       //GetProfile(proPasser);
+    for(var i = 0;i< 10;i++){
+        if ((canvasX >= passerbyPos[i].x && canvasX <= passerbyPos[i].x + 100) && (canvasY >= passerbyPos[i].y && canvasY <= passerbyPos[i].y + 100)) {
+            currentStranger = i;
+            $(currentElement).css( 'cursor', 'pointer' );
+            $("#introImg").attr("src",icons[Object.keys(icons)[i]].fields.UserIcon);
+            $("#introName").html(icons[Object.keys(icons)[i]].fields.UserName);
+            $("#passerIntro").modal();
+           //GetProfile(proPasser);
+        }
     }
 });
+function AddFriend(){
+    var FriendID = icons[Object.keys(icons)[currentStranger]].pk;
+    console.log("UID" +FriendID);
+    $.get('/addfriend/',{
+           UID: FriendID
+    },function(data){
+        $("#friendlist_certain_content").html(data);
+    });
+}
 /*var GetProfile = function (pro) {
     var userID = pro.nickname + "Intro";
     if ($(userID).length == 0) {
@@ -96,6 +146,7 @@ document.addEventListener('mousedown', function (e) {
         , y: mousePos.y - CurPos.y
     };
 }, false);
+
 setInterval(function () {
     if ((Math.abs(CurPos.x - mousePos.x) >= 0.1) && (Math.abs(CurPos.y - mousePos.y) >= 0.1)) {
         grd.addColorStop(0, "white");
@@ -105,31 +156,32 @@ setInterval(function () {
         CurPos.x += moveDir.x * 0.1;
         CurPos.y += moveDir.y * 0.1;
     }
-    
+
+    DrawIcons(userImg, CurPos.x-50, CurPos.y-100,userSentence[Object.keys(userSentence)[0]].fields.Content );
+
     /*No Picture*/
-    
-    DrawIcons(icons[0].src, passerbyPos.x, passerbyPos.y, "у меня есть яблоко.");
-    DrawIcons(icons[1].src, CurPos.x-50, CurPos.y-100, userSentence);
-    
+    for(var i = 0;i< 10;i++){
+        DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content );
+    }
     
 }, 30);
-console.log('icon '+icons[1].src);
+// console.log('icon '+icons[1].src);
 //image
 var DrawIcons = function (isrc, pox, poy, sentence) {
     var ic = new Image();
     ic.src = isrc;
    // ic.onload=function(){
         // console.log();
-        var sentLenght = sentence.length * 10;
-        ctx.beginPath();
-        ctx.moveTo(pox + 100, poy - 5);
-        ctx.lineTo(pox + 100, poy - 40);
-        ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
-        ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
-        ctx.lineTo(pox + 110, poy - 10);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.closePath();
+        // var sentLenght = sentence.length * 10;
+        // ctx.beginPath();
+        // ctx.moveTo(pox + 100, poy - 5);
+        // ctx.lineTo(pox + 100, poy - 40);
+        // ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
+        // ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
+        // ctx.lineTo(pox + 110, poy - 10);
+        // ctx.fillStyle = '#FFFFFF';
+        // ctx.fill();
+        // ctx.closePath();
         // ic.onload=function(){
         ctx.drawImage(ic, pox, poy, 100, 100);
         ctx.fillStyle = "black";
@@ -137,6 +189,8 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
         // }
    // };
 };
+
+
 //message
 /*catch before create*/
 var msgHeader = ".message-username";
@@ -202,6 +256,7 @@ $('body').each(function (i) {
         mesag.scrollTop = mesag.scrollHeight;
     });
 });
+
 
 // $(function() {
 //     $(c ).draggable();

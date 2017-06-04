@@ -1,0 +1,7 @@
+<font class="title friend">FRIEND LIST</font>
+{% for friend in friendlist %}
+<div class="row friend-panel">
+    <div class="col-lg-2"> <img class="panel-title" width="40px" height="40px" src="{{ friend.Friend.UserIcon }}"> </div>
+    <div class="col-lg-5 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
+</div>
+{% endfor %}

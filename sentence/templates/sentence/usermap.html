@@ -18,16 +18,16 @@
 <canvas id="UserMap" width="2000" height="1000">Your browser does not support canvas element.</canvas>
 <div class="FriendsList">
     <div class="row">
-        <div class="col-sm-12">
-            <font class="title friend">FRIEND LIST</font>
-            {% for friend in friendlist %}
-            <div class="row friend-panel">
-                <div class="col-lg-2"> <img class="panel-title" src="{{ friend.Friend.UserIcon }}"> </div>
-                <div class="col-lg-5 friend-name">
-                    <h4>{{ friend.Friend.UserName }}</h4>
+        <div class="col-sm-12" id="friendlist_certain_content">
+            <div class="title friend">FRIEND LIST</div>
+            <div class="friendlistframe">
+                {% for friend in friendlist %}
+                <div class="row friend-panel">
+                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon }}"> </div>
+                    <div class="col-lg-5 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>
@@ -40,21 +40,20 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">BigV</h4>
+                    <h4 class="modal-title" id="introName">NAME</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-2 intro-img"> <img src="{% static 'images/whale.png' %}"> </div>
+                        <div class="col-lg-2 intro-img"> <img id = "introImg" src="{% static 'images/whale.png' %}"> </div>
                         <div class="col-lg-6 user-profile">
-                            <h5>LV.1</h5>
-                            <h5>Gutten Tag</h5>
-                            <h5>German,English</h5>
+                            <h5>Emotion</h5>
+                            <h5>Language</h5>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddFriend()">add</button>
                 </div>
             </div>
         </div>

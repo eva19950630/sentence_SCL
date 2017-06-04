@@ -1,17 +1,17 @@
 from django import forms
-from .models import User, Sentence, Translation, Topic
+from .models import User, Sentence, Translation, Topic, Friendship
 
 class AddUser(forms.Form):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password','UserIcon','language',)
+        fields = ('username', 'email', 'password','UserIcon','language','UserIcon')
 
         def clean_email(self):
-		    email = self.cleaned_data['email']
-		    if User.objects.filter(Email=email).exists():
-		        raise forms.ValidationError("Email already exists")
-		    return email
+        	email = self.cleaned_data['email']
+        	if User.objects.filter(Email=email).exists():
+        		raise forms.ValidationError("Email already exists")
+        	return email
 
 		# def clean(self):
 		#     form_data = self.cleaned_data
@@ -20,6 +20,7 @@ class AddUser(forms.Form):
 		#         del form_data['password']
 		#     return form_data
         
+
 class PostSentence(forms.Form):
 	"""docstring for ClassName"""
 	class Meta:
@@ -38,4 +39,10 @@ class PostTopic(forms.Form):
 	class Meta:
 		model = Topic
 		fields = ('Topic_tag','Link',)
+
+class AddFriend(forms.Form):
+	"""docstring for ClassName"""
+	class Meta:
+		model = Friendship
+		fields = ('Friend','UID',)
 

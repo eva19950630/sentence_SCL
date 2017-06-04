@@ -16,6 +16,11 @@
 	height: 150px;
 }
 
+.sidebar-menu.user {
+	margin-top: 70px;
+}
+
+
 /*History*/
 .profiletitle.sentence {
 	color: #005454;
@@ -68,7 +73,7 @@
 
 .panel-default.collection:hover {
 	box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
-	color: #005454;
+	color: #555;
 }
 
 .collection-link {
@@ -142,4 +147,10 @@
 .page-header.profile {
 	color: #777777;
 	letter-spacing: 2px;
+}
+
+
+/*Friends*/
+.row.friendlist-manage {
+	padding: 10px 0;
 }
