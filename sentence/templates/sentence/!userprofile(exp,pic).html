@@ -1,0 +1,67 @@
+<!-- User Profile -->
+<div class="container-fluid">
+    <div class="profiletitle profile"><i class="fa fa-user"></i>&emsp;USER PROFILE</div>
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header profile">
+                LV. 0&emsp;{{username.UserName}}
+                <!-- <i class="fa fa-money" style="margin-left: 70%;font-size: 20px;">$100</i> -->
+            </h2>
+            <div class=".col-lg-2">
+            </div>
+
+        </div>
+    </div>
+    <div class="row profile-content">
+        <div class="col-lg-6">
+            <div class="title profile"><i class="fa fa-battery"></i>&emsp;EXP</div>
+            <div class="progress">
+                <div class="progress-bar exp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row profile-content">
+        <div class="col-lg-12">
+            <div class="title profile"><i class="fa fa-paint-brush"></i>&emsp;USER PIC</div>
+            <canvas id="icon-canvas">Your browser does not support canvas element.</canvas>
+        </div>
+    </div>
+    <div class="row profile-content">
+        <div class="col-lg-12">
+            <div id="control">
+                <div class="paint-container">
+                    <div class="control-box">
+                        <div class="control-header">Toolkit</div>
+                        <div id="tools" class="control-inner">
+                        </div>
+                    </div>
+                    <!--
+                     -->
+                    <div class="control-box brush">
+                        <div class="control-header">Brush Settings</div>
+                        <div class="brush">
+                            <div class="control-inner">
+                                <div class="control-header" style="margin-top:10px!important">Size</div>
+                                <input id="brush" type="text" value="5" />
+                                <div class="control-header" style="margin-top:10px!important">Color</div>
+                                <input id="color" type="text" value="#00B16A" />
+                                <div class="control-header" style="margin-top:10px!important">Alpha</div>
+                                <input id="alpha" type="text" value="1.0" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                     -->
+                    <div class="control-box palette">
+                        <div class="control-header">Palette</div>
+                        <div id="paints" class="control-inner">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div> <!-- end row -->
+</div> <!-- end container-fluid -->
