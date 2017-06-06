@@ -56,7 +56,6 @@ var screenScale = {
 
 var ranArray = [0,0,0,0,0,0,0,0,0,0];
 var thetaArray = [0,0,0,0,0,0,0,0,0,0];
-
 //no repeat random
 for(var i = 0;i<10;i++){
     // var ranInterval = Math.round(Math.random()*50);
@@ -78,7 +77,7 @@ function randOvalCoordinate(i){
     var _r = Math.sqrt(Math.random()*(R*R-r*r)+r*r);
     var theta = Math.random()*2*Math.PI;
     // var theta = Math.random()*2*Math.PI;
-    passerbyPos[i] = {x:_r*Math.cos(theta)+(screenScale.width/2- CurPos.scale),y:_r*Math.sin(theta)/4+(screenScale.height/2- CurPos.scale)};
+    passerbyPos[i] = {x:Math.abs(_r*Math.cos(theta)+(screenScale.width/2- CurPos.scale*2)),y:Math.abs(_r*Math.sin(theta)/4+(screenScale.height/2- CurPos.scale*2))};
     // plot(_r*Math.cos(theta),_r*Math.sin(theta)/4);
     imgOverlapping(i);
 }
@@ -118,6 +117,11 @@ function imgOverlapping(i){
             randOvalCoordinate(i);
             break;
         }
+
+        if(((passerbyPos[i].x+passerbyPos[i].scale) > screen.width) || ((passerbyPos.y+passerbyPos[i].scale+200) > screen.height)){
+            console.log("out");
+            randOvalCoordinate(i);
+        }
     }
 }
 
@@ -138,9 +142,10 @@ $(c).on("click", function (event) {
     canvasX = event.pageX - totalOffsetX;
     // canvasY = event.pageY - totalOffsetY;
     canvasY = event.pageY-80;
-    console.log("pageX: "+event.pageX+" ,"+event.pageY);
+    // console.log("pageX: "+event.pageX+" ,"+event.pageY);
 
-    console.log("canvasX: "+canvasX+" ,"+canvasY);
+    // console.log("canvasX: "+canvasX+" ,"+canvasY);
+    console.log("CurPos",CurPos.x,',',CurPos.y)
     for(var i = 0;i< 10;i++){
         if ((canvasX >= passerbyPos[i].x && canvasX <= (passerbyPos[i].x + CurPos.scale)) && (canvasY >= (passerbyPos[i].y+ CurPos.scale) && canvasY <= (passerbyPos[i].y + CurPos.scale*2))) {
             currentStranger = i;
@@ -211,7 +216,9 @@ setInterval(function () {
 
     /*No Picture*/
     for(var i = 0;i< 10;i++){
-        DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content );
+        if(icons != null && friendSentencelist != null){
+            DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content );
+        }
     }
     
 }, 30);

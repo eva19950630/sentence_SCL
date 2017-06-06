@@ -333,10 +333,7 @@
             friendSentencelist = {{friendSentencelist|safe}};    
             for(var i = 0 ; i < icons.length; i++){
                console.log("icons " + icons[Object.keys(icons)[i]].fields.UserName ); 
-               //console.log("icons " + icons[i] );    
-            }   
-            for(var i = 0 ; i < userSentence.length; i++){
-               console.log("userSentence " + userSentence[Object.keys(userSentence)[i]] ); 
+               console.log("userSentence " + friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content  ); 
                //console.log("icons " + icons[i] );    
             }         
         });
