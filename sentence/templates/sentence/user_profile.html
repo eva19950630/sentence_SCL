@@ -7,7 +7,9 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="profiletitle account"><i class="fa fa-user"></i>&emsp;PROFILE</div>
-            <form role="form" class="profilecontent account">
+            <form role="form" class="profilecontent account" method = "POST" action = "/user/profile/">
+            {% csrf_token %}
+            {{ form.as_p }}                             
                 <ul class="updatefield">
                     <div class="userpic-upload update">
                         <div class="userpic-edit">
@@ -33,8 +35,14 @@
                     <li>
                         <font class="title account">LANGUAGE / </font>
                         <select name="updatelang" class="accountlang">
-                            <option value="Chinese">Chinese</option>
-                            <option value="Taiwanese">Taiwanese</option>
+                        {% for l in alllanguage %}
+                            {% if l.Language == username.NativeLanguage.Language %}
+                            <option value="{{l.Language}}" selected="">{{l.Language}}</option>
+                            {% else %}
+                            <option value="{{l.Language}}">{{l.Language}}</option>
+                            {% endif %}
+                        {% endfor %}
+                            <!-- <option value="Taiwanese">Taiwanese</option> -->
                         </select>
                     </li>
                 </ul>

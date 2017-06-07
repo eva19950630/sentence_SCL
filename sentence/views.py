@@ -314,19 +314,21 @@ def usermap(request):
 def user_profile(request):
     if request.session.get('UID'):
         alllanguage = Language.objects.filter()
-        new_language = request.GET.get('new_language')
-        new_name = request.GET.get("new_name")
-        new_password = request.GET.get("new_password")
-        new_icon = request.GET.get("new_icon")
         usermodel = User.objects.get(UID=request.session.get('UID'))
-
-        if new_language and new_icon and new_password and new_name:
-            new_languagemodel = Language.objects.get(Language=new_language)
-            usermodel.NativeLanguage = new_languagemodel
-            usermodel.UserName = new_name
-            usermodel.Password = new_password
-            usermodel.UserIcon = new_icon
-            usermodel.save()
+        if request.method == 'POST': 
+            new_language = request.POST.get('updatelang')
+            new_name = request.POST.get("updatename")
+            new_password = request.POST.get("updatepass")
+            # new_icon = request.GET.get("upuserpic")
+            
+            # print(new_icon)
+            if new_language and new_password and new_name:
+                new_languagemodel = Language.objects.get(Language=new_language)
+                usermodel.NativeLanguage = new_languagemodel
+                usermodel.UserName = new_name
+                usermodel.Password = new_password
+                # usermodel.UserIcon = new_icon
+                usermodel.save()
 
         context = {'username': usermodel,'extend_index': 'sentence/background.html','alllanguage':alllanguage}
 
