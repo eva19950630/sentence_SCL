@@ -1,6 +1,6 @@
 from django.shortcuts import render#, render_to_response
 #google+
-from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend
+from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend, ImageUploadForm
 from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence, Rank_translation
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -20,12 +20,9 @@ from django.core.files.base import ContentFile
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 from django.core import serializers
 # Create your views here.
-from django.contrib import messages
+from django.core.files.base import ContentFile
 
 
-
-    
-    
 def index(request): 
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
@@ -325,8 +322,12 @@ def user_profile(request):
             new_name = request.POST.get("updatename")
             new_password = request.POST.get("updatepass")
             # new_icon = request.GET.get("upuserpic")
+            # img=request.FILES['upuserpic']
+            new_icon = ImageUploadForm(request.FILES)
+            print(new_icon)
+            if new_icon.is_valid():
+                    new_icon.save()
             
-            # print(new_icon)
             if new_language and new_password and new_name:
                 new_languagemodel = Language.objects.get(Language=new_language)
                 usermodel.NativeLanguage = new_languagemodel
@@ -334,6 +335,7 @@ def user_profile(request):
                 usermodel.Password = new_password
                 # usermodel.UserIcon = new_icon
                 usermodel.save()
+                
 
         context = {'username': usermodel,'extend_index': 'sentence/background.html','alllanguage':alllanguage}
 

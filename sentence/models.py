@@ -14,12 +14,16 @@ class User(models.Model):
 	Password = models.CharField(max_length=50, null=False)
 	SocialID = models.BigIntegerField(null=True,unique = True)
  	# UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
-	UserIcon = models.ImageField(upload_to='/static/UserIcon_folder',default='/static/images/fish.png')
+	UserIcon = models.ImageField(upload_to='static/UserIcon_folder',default='/static/images/fish.png')
 	NativeLanguage = models.ForeignKey('Language', on_delete=models.CASCADE)
 	#IconPosition = models.
 	# EXP = models.IntegerField()
 	# Money = models.DecimalField(max_digits=20,decimal_places=0)
 	# language_ID = models.ForeignKey('Language', on_delete=models.CASCADE)
+	def cache(self):
+		result = urllib.urlretrieve(self.url)
+		self.photo.save(os.path.basename(self.url),File(open(result[0])))
+		self.save()
 
 #SENTENCE
 class Sentence(models.Model):

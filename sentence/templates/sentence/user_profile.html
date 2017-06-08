@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="profiletitle account"><i class="fa fa-user"></i>&emsp;PROFILE</div>
-            <form role="form" class="profilecontent account" method = "POST" action = "/user/profile/">
+            <form role="form" class="profilecontent account" method = "POST" action = "/user/profile/" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}                             
                 <ul class="updatefield">
