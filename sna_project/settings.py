@@ -169,3 +169,6 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 
 # GEOIP_DATABASE = '/GeoIP.dat/GeoLiteCity.dat'
+
+MEDIA_URL = '/UserIcon_folder/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'UserIcon_folder')
