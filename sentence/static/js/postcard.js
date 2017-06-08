@@ -8,3 +8,6 @@ $(function(){
         }
     });
 });
+
+
+/*search page: scrollbar*/

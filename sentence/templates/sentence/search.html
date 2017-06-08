@@ -1,0 +1,35 @@
+{% extends extend_index %}
+{% load staticfiles %}
+{% load tz %}
+
+{% block content1 %}
+
+<div class="index-title newtitle searchcontent">
+	<div class="index-title-word">New Sentence</div>
+</div>
+
+<div class="container-fluid searchcontent">
+	<div class="row">
+		<div class="col-sm-5">
+			<a href="">
+			    <div class="card card-1 newmore">
+			      <div class="postcard-content newmore">123</div>
+			      <div class="postcard-btn new">
+			        <div class="postinfo translatecount">
+			        	<span class="postcount translate"><i class="fa fa-language"></i>&emsp;0</span>
+			        </div>
+			        <div class="postinfo">
+				        <span class="posttime">June 8. 2017. 4:06 p.m.</span>
+				        <span>|</span>
+				        <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">0</span>
+				        &ensp;
+				        <a><button class="cardheart" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">0</span></button></a>
+				    </div>
+			      </div>
+			    </div>
+			</a>
+		</div>
+	</div>
+</div>
+
+{% endblock content1 %}

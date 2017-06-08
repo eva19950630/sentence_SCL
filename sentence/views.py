@@ -23,8 +23,6 @@ from django.core import serializers
 
 
 
-    
-    
 def index(request): 
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
@@ -757,6 +755,18 @@ def addfriend(request):
                 )
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
     return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
+
+
+def search(request):
+    if request.session.get('UID'):
+        usermodel = User.objects.get(UID=request.session.get('UID'))
+
+        context = {'username': usermodel,'extend_index': 'sentence/background.html',}
+
+        return render(request, "sentence/search.html",context)
+    else:
+        context = {'extend_index': 'sentence/background.html'}
+        return render(request, "sentence/search.html",context)
    
  #google+
 # def signup_google(request):

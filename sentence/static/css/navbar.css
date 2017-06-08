@@ -915,7 +915,8 @@ button.social-signin.google {
 }
 
 #user-name {
-    letter-spacing: 2px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
 }
 
 
