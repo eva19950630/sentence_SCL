@@ -1,0 +1,40 @@
+(CMD)python manage.py startapp ﹝mycontacts﹞  (新增一個app)
+
+myproject/
+url.py -> connect to back-end management platform
+
+
+﹝mycontacts﹞/
+views.py -> put all the functions
+models.py -> construct the model and really connect to the DATABASE
+
+
+myproject/
+settings.py -> find 'INSTALLED_APPS' and state the app in 'INSTALLED_APPS'
+
+
+﹝mycontacts﹞/
+(create file)form.py -> use to fetch data from HTML Form
+admin.py -> use to register the MODEL in the DATABASE
+
+
+↓建完資料庫後須做
+(CMD)python manage.py makemigrations  (create the model)
+(CMD)python manage.py migrate  (write the model into the DATABASE)
+-->the DB will be created with the model written in it
+
+(CMD)python manage.py createsuperuser
+
+(CMD)python manage.py runserver 0.0.0.0:8080  (RUN SERVER)
+ERROR(TemplateDoesNotExist) --> 0.0.0.0:8080/admin  or  localhost:8080/admin
+-->add data
+
+
+﹝mycontacts﹞/
+(create folder)templates/APP_name/ -> put HTML files
+(create folder)static/ -> put CSS JS files
+
+
+
+Ctrl+C --> kill server
+(CMD)python manage.py runserver 0.0.0.0:8080  (RUN SERVER)
