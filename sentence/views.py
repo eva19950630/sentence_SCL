@@ -768,23 +768,27 @@ def search(request,ranktype):
     if request.method == 'GET':
         # rankType = request.GET.get("rankType")
         # print("rank:"+str(rankType))
+        searchtype = None
         sentencemodel_order = None
-        if ranktype == '1':
+        if ranktype == 'newSentence':
             sentencemodel_order = Sentence.objects.filter().order_by('-Date')
-        elif ranktype == '0':
+            searchtype = "new"
+        elif ranktype == 'popularSentence':
             sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
+            searchtype = "popu"
         else:
             sentencemodel_order = Sentence.objects.filter()
 
         if request.session.get('UID'):
             usermodel = User.objects.get(UID=request.session.get('UID'))
             print(sentencemodel_order)
-            context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
+            context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,
+            'searchtype': searchtype,}
 
             return render(request, "sentence/search.html",context)
         else:
             print("13")
-            context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
+            context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,'searchtype': searchtype,}
             return render(request, "sentence/search.html",context)
    
  #google+

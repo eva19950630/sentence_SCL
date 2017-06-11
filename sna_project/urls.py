@@ -36,7 +36,7 @@ urlpatterns = [
     
     # url(r'^login/', views.signup_app),
     url(r'^login/', views.login_app),
-    url(r'^search/(?P<ranktype>\d+)', views.search,name="search"),
+    url(r'^search/(?P<ranktype>\w+)', views.search,name="search"),
     url(r'^sentence/translation/(?P<get_sid>\d+)/$', views.translation_post, name = 'translation_post'),
     url(r'^get/translation/(?P<sid>\d+)/$', views.get_translation, name = 'get_translation'),
     url(r'^sentence_post/', views.sentence_post,name = 'sentence_post'),
