@@ -320,19 +320,19 @@ def user_profile(request):
             new_language = request.POST.get('updatelang')
             new_name = request.POST.get("updatename")
             new_password = request.POST.get("updatepass")
-            # new_icon = request.GET.get("upuserpic")
-            # img=request.FILES['upuserpic']
-            new_icon = ImageUploadForm(request.FILES)
-            print(new_icon)
-            if new_icon.is_valid():
-                    new_icon.save()
+            # new_icon = request.POST.get("upuserpic")
+            img=request.FILES['upuserpic']
+            # new_icon = ImageUploadForm(request.FILES)
+            # print(new_icon)
+            # if new_icon.is_valid():
+            #         new_icon.save()
             
             if new_language and new_password and new_name:
                 new_languagemodel = Language.objects.get(Language=new_language)
                 usermodel.NativeLanguage = new_languagemodel
                 usermodel.UserName = new_name
                 usermodel.Password = new_password
-                # usermodel.UserIcon = new_icon
+                usermodel.UserIcon = img
                 usermodel.save()
                 
 
@@ -767,19 +767,22 @@ def addfriend(request):
 def search(request):
     if request.method == 'GET':
         rankType = request.GET.get("rankType")
+        print("rank:"+str(rankType))
         sentencemodel_order = None
-        if rankType == 1:
+        if rankType == '1':
             sentencemodel_order = Sentence.objects.filter().order_by('-Date')
-        elif rankType == 0:
+            print("1")
+        elif rankType == '0':
             sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
 
         if request.session.get('UID'):
             usermodel = User.objects.get(UID=request.session.get('UID'))
-
+            print("12")
             context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
 
             return render(request, "sentence/search.html",context)
         else:
+            print("13")
             context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
             return render(request, "sentence/search.html",context)
    

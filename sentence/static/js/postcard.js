@@ -10,21 +10,20 @@ $(function(){
 
   	$("#newmorelink").click(function() {
   		console.log("new")
-  		$.get('/search/',{
-  			rankType:1
-  		},function(data){
 
-  		});
+  		 $.get('/search/', {
+                rankType:1
+            },function(data){
+              console.log(data);
+            });
 
   	});
 
-  	
+
   	$("#popumorelink").click(function() {
   		$.get('/search/',{
   			rankType:0
-  		},function(data){
-
-  		});
+  		},function(data){});
 
   	});
 });
