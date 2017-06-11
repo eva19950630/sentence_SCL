@@ -1,0 +1,37 @@
+{% extends extend_index %}
+{% load staticfiles %}
+{% load tz %}
+
+{% block content1 %}
+
+<div class="index-title newtitle searchcontent">
+	<div class="index-title-word">New Sentence</div>
+</div>
+
+<div class="container-fluid searchcontent">
+	<div class="row">
+		<div class="col-sm-5">
+		{% for surl in sentence_content_date %}
+			<a href="">
+			    <div class="card card-1 newmore">
+			      <div class="postcard-content newmore">{{surl.Content}}</div>
+			      <div class="postcard-btn new">
+			        <div class="postinfo translatecount">
+			        	<span class="postcount translate"><i class="fa fa-language"></i>&emsp;{{ surl.Translation_count }}</span>
+			        </div>
+			        <div class="postinfo">
+				        <span class="posttime">{{surl.Date|timezone:"Asia/Taipei"}}</span>
+				        <span>|</span>
+				        <i class="fa fa-eye"></i>&ensp;<span class="postcount eye">{{ surl.Views }}</span>
+				        &ensp;
+				        <a><button class="cardheart" data-post-id="{{ surl.SID }}"><i class="fa fa-heart"></i>&ensp;<span class="postcount heart like_{{ surl.SID }}">{{ surl.Likes }}</span></button></a>
+				    </div>
+			      </div>
+			    </div>
+			</a>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock content1 %}

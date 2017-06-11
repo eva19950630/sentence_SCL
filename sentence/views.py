@@ -22,7 +22,6 @@ from django.core import serializers
 # Create your views here.
 from django.core.files.base import ContentFile
 
-
 def index(request): 
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
@@ -763,6 +762,26 @@ def addfriend(request):
                 )
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
     return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
+
+
+def search(request):
+    if request.method == 'GET':
+        rankType = request.GET.get("rankType")
+        sentencemodel_order = None
+        if rankType == 1:
+            sentencemodel_order = Sentence.objects.filter().order_by('-Date')
+        elif rankType == 0:
+            sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
+
+        if request.session.get('UID'):
+            usermodel = User.objects.get(UID=request.session.get('UID'))
+
+            context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
+
+            return render(request, "sentence/search.html",context)
+        else:
+            context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
+            return render(request, "sentence/search.html",context)
    
  #google+
 # def signup_google(request):

@@ -149,30 +149,10 @@
                                             <form name="signupform" method="POST" action="/login/">
                                                 {% csrf_token %}
                                                 {{ form.as_p }}
-                                                
                                                 <input type="text" name="name" placeholder="Username" required>
                                                 <input type="text" name="email" placeholder="E-mail" required>
                                                 <input type="password" name="password" placeholder="Password" required>
                                                 <input type="password" name="password" placeholder="Retype password" required>
-                                                
-                                                <!-- <div>
-                                                    <label class="label language">Choose your native language</label>
-                                                    <select class="form-control language" name="language">
-                                                        <option>Chinese</option>
-                                                        <option>Japanese</option>
-                                                        <option>Korean</option>
-                                                        <option>Hindi</option>
-                                                        <option>Thai</option>
-                                                        <option>English</option>
-                                                        <option>French</option>
-                                                        <option>Spanish</option>
-                                                        <option>Portuguese</option>
-                                                        <option>German</option>
-                                                        <option>Italian</option>
-                                                        <option>Swedish</option>
-                                                        <option>Russian</option>
-                                                    </select>
-                                                </div> -->
                                                 <input type="submit" class="signupBtn" name="signup_submit" value="Sign me up" />
                                             </form>
 
@@ -196,42 +176,6 @@
                             </div> 
                             <!-- end Sign up Modal -->
 
-                                    <!-- Ask language Modal -->
-                                    <div class="modal fade" id="asklanguage-modal" role="dialog">
-                                        <div class="modal-dialog">
-                                            <div id="asklanguage-box">
-                                                <div class="top" style="padding: 15px;">
-                                                    <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
-                                                </div>
-                                                <div class="asklanguagebox-content">
-                                                    <h2>About you ...</h2>
-                                                      
-                                                    <div class="form-group input-group">
-                                                          <label>Choose your native language</label>
-                                                          <select class="form-control" id="user_language">
-                                                                <option>Chinese</option>
-                                                                <option>Japanese</option>
-                                                                <option>Korean</option>
-                                                                <option>Hindi</option>
-                                                                <option>Thai</option>
-                                                                <option>English</option>
-                                                                <option>French</option>
-                                                                <option>Spanish</option>
-                                                                <option>Portuguese</option>
-                                                                <option>German</option>
-                                                                <option>Italian</option>
-                                                                <option>Swedish</option>
-                                                                <option>Russian</option>
-                                                            </select>
-                                                      </div>
-                                                      <input type="submit" class="confirmRegisterBtn" name="signup_submit" value="Sign me up" />
-                                                    
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end Ask language Modal -->
 
                         <!-- LOG OUT -->
                         {% else %}

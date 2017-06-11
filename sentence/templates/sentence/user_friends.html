@@ -8,10 +8,10 @@
     <div class="profiletitle friends"><i class="fa fa-address-book"></i>&emsp;FRIENDS</div>
     <div class="row">
         {% for friend in friendlist %}
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="row friendlist-manage">
                     <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon }}"> </div>
-                    <div class="col-lg-5 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
+                    <div class="col-lg-2 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
                 </div>
             </div>
         {% endfor %}
