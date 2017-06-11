@@ -764,20 +764,21 @@ def addfriend(request):
     return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
 
 
-def search(request):
+def search(request,ranktype):
     if request.method == 'GET':
-        rankType = request.GET.get("rankType")
-        print("rank:"+str(rankType))
+        # rankType = request.GET.get("rankType")
+        # print("rank:"+str(rankType))
         sentencemodel_order = None
-        if rankType == '1':
+        if ranktype == '1':
             sentencemodel_order = Sentence.objects.filter().order_by('-Date')
-            print("1")
-        elif rankType == '0':
+        elif ranktype == '0':
             sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
+        else:
+            sentencemodel_order = Sentence.objects.filter()
 
         if request.session.get('UID'):
             usermodel = User.objects.get(UID=request.session.get('UID'))
-            print("12")
+            print(sentencemodel_order)
             context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
 
             return render(request, "sentence/search.html",context)
