@@ -1,6 +1,6 @@
 from django.shortcuts import render#, render_to_response
 #google+
-from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend
+from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend, ImageUploadForm
 from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence, Rank_translation
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -20,8 +20,7 @@ from django.core.files.base import ContentFile
 # timezone.activate(pytz.timezone("Asia/Taipei"))
 from django.core import serializers
 # Create your views here.
-
-
+from django.core.files.base import ContentFile
 
 def index(request): 
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
@@ -37,7 +36,7 @@ def index(request):
 
     if User.objects.filter(UID = uid).exists():
         if request.session.get('UID'):
-            print('login index')
+            # print('login index')
             
             usermodel = User.objects.get(UID=request.session['UID'])
 
@@ -152,8 +151,7 @@ def sentence_url(request, sid):
         del json_trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
-        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code
-        ,'trans_region_code':json_trans_code,'translation':trans_model}
+        context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html'}
         del json_trans_code
         return render(request, 'sentence/sentence.html',context)
 
@@ -167,63 +165,68 @@ def sentence_post(request):
         usermodel = User.objects.get(UID=get_uid)
 
         if django_form.is_valid():
-            if django_form.data.get("topic"):
-                new_sentence = django_form.data.get("sentence")
-                new_sentence_tag = django_form.data.get("language")
-                new_sentence_topic = django_form.data.get("topic")
-                new_sentence_link = django_form.data.get("link")
-                
-                # region_code = []
-                # language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
-                # request.session['region_code']=getCountryByLanguage(language_id)
-                
-                if User.objects.filter(UID = get_uid).exists():
-                    """ This is how your model connects to database and create a new member """
-                    #if topic exist
-                    if(Topic.objects.filter(Topic_tag=new_sentence_topic).exists()):
-                        new_topic_model = Topic.objects.get(Topic_tag=new_sentence_topic)
+            new_sentence_tag = django_form.data.get("language")
 
+            if Language.objects.filter(Language__iexact=new_sentence_tag).exists():
+
+                if django_form.data.get("topic"):
+                    new_sentence = django_form.data.get("sentence")
+                    new_sentence_topic = django_form.data.get("topic")
+                    new_sentence_link = django_form.data.get("link")
+
+                    # region_code = []
+                    # language_id = Language.objects.get(Language=django_form.data.get("language")).Language_ID
+                    # request.session['region_code']=getCountryByLanguage(language_id)
+                    
+                    if User.objects.filter(UID = get_uid).exists():
+                        """ This is how your model connects to database and create a new member """
+                        #if topic exist
+                        if(Topic.objects.filter(Topic_tag=new_sentence_topic).exists()):
+                            new_topic_model = Topic.objects.get(Topic_tag=new_sentence_topic)
+
+                            new_sentence_model = Sentence.objects.create(
+                                Content = new_sentence,
+                                Sentence_tag =  new_sentence_tag, 
+                                UID = usermodel,
+                                TopicID = new_topic_model,
+                            )      
+      
+                        else:
+                            new_topic_model = Topic.objects.create(
+                                Topic_tag = new_sentence_topic,
+                                Link = new_sentence_link,
+                            ) 
+
+                            new_sentence_model = Sentence.objects.create(
+                                Content = new_sentence,
+                                Sentence_tag =  new_sentence_tag, 
+                                UID = usermodel,
+                                TopicID = new_topic_model,
+                            )      
+
+                    print("topic sentence  store")
+                    return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
+                    # return render(request, 'sentence/sentence.html')
+                else:       
+                    """ daily sentence """
+                    new_sentence = django_form.data.get("sentence")
+                    # new_sentence_tag = django_form.data.get("language")
+       
+                    if User.objects.filter(UID = get_uid).exists():
+                        """ This is how your model connects to database and create a new member """
                         new_sentence_model = Sentence.objects.create(
                             Content = new_sentence,
                             Sentence_tag =  new_sentence_tag, 
                             UID = usermodel,
-                            TopicID = new_topic_model,
-                        )      
-  
-                    else:
-                        new_topic_model = Topic.objects.create(
-                            Topic_tag = new_sentence_topic,
-                            Link = new_sentence_link,
-                        ) 
+                        )            
 
-                        new_sentence_model = Sentence.objects.create(
-                            Content = new_sentence,
-                            Sentence_tag =  new_sentence_tag, 
-                            UID = usermodel,
-                            TopicID = new_topic_model,
-                        )      
-
-                print("topic sentence  store")
-                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID}))
-                # return render(request, 'sentence/sentence.html')
-            else:       
-                """ daily sentence """
-                new_sentence = django_form.data.get("sentence")
-                new_sentence_tag = django_form.data.get("language")
-   
-                if User.objects.filter(UID = get_uid).exists():
-                    """ This is how your model connects to database and create a new member """
-                    new_sentence_model = Sentence.objects.create(
-                        Content = new_sentence,
-                        Sentence_tag =  new_sentence_tag, 
-                        UID = usermodel,
-                    )            
-
-                print("daily sentence  store " + str(new_sentence_model.SID))
-            
-                return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID,
-                }))
-                # return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence})                     
+                    print("daily sentence  store " + str(new_sentence_model.SID))
+                
+                    return HttpResponseRedirect(reverse('sentence_url',kwargs={'sid': new_sentence_model.SID,
+                    }))
+                    # return render(request, 'sentence/sentence.html',{'sentence_content': new_sentence})                     
+            else:
+                return HttpResponseRedirect('/')
         else:
             return render(request, 'sentence/index.html')
         
@@ -317,16 +320,21 @@ def user_profile(request):
             new_language = request.POST.get('updatelang')
             new_name = request.POST.get("updatename")
             new_password = request.POST.get("updatepass")
-            # new_icon = request.GET.get("upuserpic")
-            
+            # new_icon = request.POST.get("upuserpic")
+            img=request.FILES['upuserpic']
+            # new_icon = ImageUploadForm(request.FILES)
             # print(new_icon)
+            # if new_icon.is_valid():
+            #         new_icon.save()
+            
             if new_language and new_password and new_name:
                 new_languagemodel = Language.objects.get(Language=new_language)
                 usermodel.NativeLanguage = new_languagemodel
                 usermodel.UserName = new_name
                 usermodel.Password = new_password
-                # usermodel.UserIcon = new_icon
+                usermodel.UserIcon = img
                 usermodel.save()
+                
 
         context = {'username': usermodel,'extend_index': 'sentence/background.html','alllanguage':alllanguage}
 
@@ -715,16 +723,15 @@ def getCountry(request):
     
     
 def getCountryByLanguage(language_model):
-        language_id = Language.objects.get(Language__iexact=language_model).Language_ID
-        country = Country_language.objects.filter(Language_ID=language_id)
-        region_code = []
-        for i in country:
-            region_code.append(i.Country_ID.Country_code) 
-        json_region_code = json.dumps(region_code)
-        
-        
-        return json_region_code
-        
+    language_id = Language.objects.get(Language__iexact=language_model).Language_ID
+    country = Country_language.objects.filter(Language_ID=language_id)
+    region_code = []
+    for i in country:
+        region_code.append(i.Country_ID.Country_code) 
+    json_region_code = json.dumps(region_code)
+    
+    
+    return json_region_code
         
 def getregion(request):
     if request.method == "GET":
@@ -758,15 +765,26 @@ def addfriend(request):
 
 
 def search(request):
-    if request.session.get('UID'):
-        usermodel = User.objects.get(UID=request.session.get('UID'))
+    if request.method == 'GET':
+        rankType = request.GET.get("rankType")
+        print("rank:"+str(rankType))
+        sentencemodel_order = None
+        if rankType == '1':
+            sentencemodel_order = Sentence.objects.filter().order_by('-Date')
+            print("1")
+        elif rankType == '0':
+            sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
 
-        context = {'username': usermodel,'extend_index': 'sentence/background.html',}
+        if request.session.get('UID'):
+            usermodel = User.objects.get(UID=request.session.get('UID'))
+            print("12")
+            context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
 
-        return render(request, "sentence/search.html",context)
-    else:
-        context = {'extend_index': 'sentence/background.html'}
-        return render(request, "sentence/search.html",context)
+            return render(request, "sentence/search.html",context)
+        else:
+            print("13")
+            context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order}
+            return render(request, "sentence/search.html",context)
    
  #google+
 # def signup_google(request):
