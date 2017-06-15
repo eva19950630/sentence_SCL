@@ -343,37 +343,49 @@
         }
         
         function escapeXml(string) {//跳過大於小於符號 使字串成為map可接受的形式
-        return string.replace(/[<>]/g, function (c) {
-          switch (c) {
-            case '<': return '\u003c';
-            case '>': return '\u003e';
-          }
-        });
-      }
-        var fakepins = {};
-        var test_trans_count = '{{country_trans_count|escapejs}}'
-        console.log("pins" );
-        for(var i=0;i<test_trans_count.length;i++){
-            Object.keys(test_trans_count[0]);
+            return string.replace(/[<>]/g, function (c) {
+                switch (c) {
+                    case '<': return '\u003c';
+                    case '>': return '\u003e';
+                }
+            });
         }
-        var pins = {
-            'ru' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
-            'tw' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
-            'fr' : escapeXml('<img class=test src=../../static/images/seastar.png/><span>87</span>' ),
-        };
+        var fakepins = {};
+        var test_trans_count = JSON.parse('{{country_trans_count|escapejs}}');
+        for(var i=0;i<Object.keys(test_trans_count).length;i++){
+            var key = Object.keys(test_trans_count)[i];
+            var value = test_trans_count[Object.keys(test_trans_count)[i]];
+            fakepins[key] =  escapeXml('<img class="'+ key +' hidden"  src=../../static/images/amiba.png/ ><span>' + value + '</span>' );
+        }
+        
+//        var pins = {
+//            'ru' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
+//            'tw' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
+//            'fr' : escapeXml('<img class=test src=../../static/images/seastar.png/><span>87</span>' ),
+//        };
         $('#vmap_choose').vectorMap({
             
-            map: 'world_en'
-            ,pins : pins
-            , onRegionClick: function (element, code, region) {
-                
+            map: 'world_en',
+            pins : fakepins, 
+            onRegionClick: function (element, code, region){  
                 $.get('/get/translation/'+ $('#get_sid').attr('data-post-id')+'/',{
                     translation_click_code : code
                  },function(data){
                     $('#translation_certain_language').html(data);
                     $('#postshow-modal').modal('show');
-
                  });
+            },
+            onRegionOver: function(event, code, region){
+                
+            },
+            onLabelShow:  function(event, label, code){
+//                console.log("event",event);
+                console.log("label",label);
+//                console.log("code",code);
+                if(Object.keys(test_trans_count).indexOf(code)>=0){
+                    label.append("<div></div>");
+                }
+//                var trans_region_code = Object.keys(test_trans_count).indexOf(code);
             }
         });
        
