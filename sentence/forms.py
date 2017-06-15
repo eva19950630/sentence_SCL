@@ -2,10 +2,9 @@ from django import forms
 from .models import User, Sentence, Translation, Topic, Friendship
 
 class AddUser(forms.Form):
-    
     class Meta:
         model = User
-        fields = ('username', 'email', 'password','UserIcon','language','UserIcon')
+        fields = ('username', 'email', 'password','UserIcon','NativeLanguage')
 
         def clean_email(self):
         	email = self.cleaned_data['email']
@@ -46,3 +45,8 @@ class AddFriend(forms.Form):
 		model = Friendship
 		fields = ('Friend','UID',)
 
+class ImageUploadForm(forms.ModelForm):
+    """Image upload form."""
+    class Meta:
+    	model = User
+    	fields = ('UserIcon','NativeLanguage')

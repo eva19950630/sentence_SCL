@@ -9,5 +9,4 @@ $(function(){
     });
 });
 
-
 /*search page: scrollbar*/

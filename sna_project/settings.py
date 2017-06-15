@@ -169,3 +169,6 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 
 # GEOIP_DATABASE = '/GeoIP.dat/GeoLiteCity.dat'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "sentence/").replace('\\','/')
+# MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "../../web/media").replace('\\','/')

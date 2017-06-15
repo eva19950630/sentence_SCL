@@ -185,7 +185,7 @@
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {% if username %}
-                                    <img src="{{ username.UserIcon }}" height="40" width="40" id="user-pic">
+                                    <img src="{{ username.UserIcon.url }}" height="40" width="40" id="user-pic">
                                     <span id="user-name"><font color=#fff>{{username.UserName}}</font></span>
                                   {% else %}
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
@@ -272,7 +272,7 @@
             iconsLength = icons.length;
             console.log("length:" + iconsLength);
             userSentence = {{sentence|safe}};
-            userImg = "{{username.UserIcon}}";
+            userImg = "{{username.UserIcon.url}}";
             friendSentencelist = {{friendSentencelist|safe}};    
             for(var i = 0 ; i < icons.length; i++){
                console.log("icons " + icons[Object.keys(icons)[i]].fields.UserName ); 

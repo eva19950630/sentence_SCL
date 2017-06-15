@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from sentence import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,7 +36,7 @@ urlpatterns = [
     
     # url(r'^login/', views.signup_app),
     url(r'^login/', views.login_app),
-    url(r'^search/', views.search),
+    url(r'^search/(?P<ranktype>\w+)', views.search,name="search"),
     url(r'^sentence/translation/(?P<get_sid>\d+)/$', views.translation_post, name = 'translation_post'),
     url(r'^get/translation/(?P<sid>\d+)/$', views.get_translation, name = 'get_translation'),
     url(r'^sentence_post/', views.sentence_post,name = 'sentence_post'),
@@ -52,5 +54,4 @@ urlpatterns = [
     url(r'^addfriend/', views.addfriend, name = 'addfriend'),
     #google+
     #url(r'^allauth/accounts/', include('allauth.urls')),
-]
-  
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
