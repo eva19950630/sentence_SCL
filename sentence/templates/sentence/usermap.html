@@ -4,7 +4,7 @@
 
 <!-- User map and let user find friends to contact -->
 <!--Introduction page-->
-<div style="overflow-x: hidden;">
+<!-- <div style="overflow-x: hidden;">
 <div id="myIntro">
     <div class="row map-intro">
         <div class="col-lg-2 intro-img"> <img src="{{username.UserIcon}}"> </div>
@@ -14,10 +14,10 @@
             <h5>English</h5>
         </div>
     </div>
-</div>
+</div> -->
 
-<div style="overflow-x: hidden; overflow-y: hidden;">
-    <canvas id="UserMap" width="2000" height="550">Your browser does not support canvas element.</canvas>
+<div style="overflow-x: hidden; overflow-y: hidden; margin: -80px 0 0 0;">
+    <canvas id="UserMap" width="100" height="100">Your browser does not support canvas element.</canvas>
 </div>
 <div class="FriendsList">
     <div class="row">
@@ -41,22 +41,21 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="introName">NAME</h4>
+                <div class="top" style="padding: 15px;">
+                    <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-2 intro-img"> <img id = "introImg" src="{% static 'images/whale.png' %}"> </div>
-                        <div class="col-lg-6 user-profile">
-                            <h5>Emotion</h5>
-                            <h5>Language</h5>
-                        </div>
+                    <div class="intro-img"> <img id = "introImg" src="{% static 'images/whale.png' %}"> </div>
+                    <div class="intro-info">
+                        <ul>
+                            <li><font class="userintro-title">NAME /</font>&ensp;<font class="userintro-content" id="introName">NAME</font></li>
+                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content">Language</font></li>
+                        </ul>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddFriend()">add</button>
+                    <div class="usermap-modalbtn">
+                        <button type="button" class="modalbtn messagebtn" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button>
+                        <button type="button" class="modalbtn addbtn" data-dismiss="modal" onclick="AddFriend()">add friend</button>
+                    </div>
                 </div>
             </div>
         </div>

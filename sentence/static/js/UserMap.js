@@ -1,4 +1,7 @@
 var c = document.getElementById("UserMap");
+c.width = document.body.clientWidth;
+c.height = document.body.clientHeight;
+
 var ctx = c.getContext("2d");
 ctx.font = "18px Georgia";
 // Create gradient
@@ -140,8 +143,8 @@ $(c).on("click", function (event) {
     }
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
-    // canvasY = event.pageY - totalOffsetY;
-    canvasY = event.pageY-80;
+    canvasY = event.pageY - totalOffsetY;
+    // canvasY = event.pageY-80;
     // console.log("pageX: "+event.pageX+" ,"+event.pageY);
 
     // console.log("canvasX: "+canvasX+" ,"+canvasY);
@@ -151,6 +154,7 @@ $(c).on("click", function (event) {
             currentStranger = i;
             $(currentElement).css( 'cursor', 'pointer' );
             $("#introImg").attr("src",icons[Object.keys(icons)[i]].fields.UserIcon);
+            // $("#introImg").css('border-radius','60%');
             $("#introName").html(icons[Object.keys(icons)[i]].fields.UserName);
             $("#passerIntro").modal();
            //GetProfile(proPasser);
