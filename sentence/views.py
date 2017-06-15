@@ -101,12 +101,13 @@ def sentence_url(request, sid):
     sentencemodel = Sentence.objects.get(SID = int(sid))
     trans_model = Translation.objects.filter(SID = int(sid))
     language_model = Language.objects.all()
+#    trans_model_by_likes = Translation.objects.filter(SID = int(sid)).order_by('Likes')[:3]
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
     trans_country_code = []
     country_trans_count = {}
     # TranslationList = ''
     
-     
+    #get the count of translation 
     translation_count = [ 0 for i in range(0,100) ]
     
     for t in trans_model:
@@ -116,7 +117,13 @@ def sentence_url(request, sid):
                 for j in json.loads(getCountryByLanguage(l.Language)):
                     country_trans_count[j] = translation_count[l.Language_ID]
             
-    print(country_trans_count)        
+    #classify translation by language
+#    translation_classified_by_lang = {} 
+#    for t in trans_model:
+#        for l in language_model:
+#        t.Translation_tag
+#    trans_model_by_lang = trans_model
+    
 
     for i in trans_model:
         trans_code_list.append(getCountryByLanguage(i.Translation_tag))

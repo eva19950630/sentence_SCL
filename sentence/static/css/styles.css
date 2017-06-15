@@ -33,3 +33,10 @@ body {
     padding-top: 80px;
   }
 }
+
+.hidden{
+    display:none;   
+}
+.hidden + span{
+    display:none;   
+}
