@@ -23,6 +23,7 @@ from django.core import serializers
 
 
 
+
 def index(request): 
     sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
     sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
@@ -100,8 +101,23 @@ def sentence_url(request, sid):
     # print('sentence_url called')
     sentencemodel = Sentence.objects.get(SID = int(sid))
     trans_model = Translation.objects.filter(SID = int(sid))
+    language_model = Language.objects.all()
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
+    trans_country_code = []
+    country_trans_count = {}
     # TranslationList = ''
+    
+     
+    translation_count = [ 0 for i in range(0,100) ]
+    
+    for t in trans_model:
+         for l in language_model:
+            if t.Translation_tag.lower() == l.Language.lower():
+                translation_count[l.Language_ID] += 1
+                for j in json.loads(getCountryByLanguage(l.Language)):
+                    country_trans_count[j] = translation_count[l.Language_ID]
+            
+    print(country_trans_count)        
 
     for i in trans_model:
         trans_code_list.append(getCountryByLanguage(i.Translation_tag))
@@ -144,7 +160,7 @@ def sentence_url(request, sid):
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
-            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':trans_model}
+            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':trans_model,}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,
@@ -153,7 +169,8 @@ def sentence_url(request, sid):
         return render(request, 'sentence/sentence.html',context)
     else:
         context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code
-        ,'trans_region_code':json_trans_code,'translation':trans_model}
+        ,'trans_region_code':json_trans_code,'translation':trans_model
+        ,'country_trans_count':json.dumps(country_trans_count)}
         del json_trans_code
         return render(request, 'sentence/sentence.html',context)
 

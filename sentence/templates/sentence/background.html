@@ -339,9 +339,29 @@
             rc[key] = "#005454";
         }
         
+        function escapeXml(string) {//跳過大於小於符號 使字串成為map可接受的形式
+        return string.replace(/[<>]/g, function (c) {
+          switch (c) {
+            case '<': return '\u003c';
+            case '>': return '\u003e';
+          }
+        });
+      }
+        var fakepins = {};
+        var test_trans_count = '{{country_trans_count|escapejs}}'
+        console.log("pins" );
+        for(var i=0;i<test_trans_count.length;i++){
+            Object.keys(test_trans_count[0]);
+        }
+        var pins = {
+            'ru' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
+            'tw' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
+            'fr' : escapeXml('<img class=test src=../../static/images/seastar.png/><span>87</span>' ),
+        };
         $('#vmap_choose').vectorMap({
             
             map: 'world_en'
+            ,pins : pins
             , onRegionClick: function (element, code, region) {
                 
                 $.get('/get/translation/'+ $('#get_sid').attr('data-post-id')+'/',{
@@ -353,7 +373,8 @@
                  });
             }
         });
-
+       
+        
 
         jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
         if ('{{trans_region_code}}') {
