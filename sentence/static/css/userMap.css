@@ -548,18 +548,23 @@ input[type="text"]:hover {
 /*user intro modal*/
 .modal-content {
     position: relative;
-    margin: 20% auto;
-    width: 350px;
-    height: 400px;
     background: #FFF;
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
+.modal-content.intro {
+    margin: 20% auto;
+    width: 450px;
+    height: 500px;
+}
 .intro-img {
-    margin: 0 0 0 80px;
+    margin: 15px 0 0 130px;
+}
+.intro-img img {
+    border-radius: 100%;
 }
 .intro-info {
-    margin: 20px 0 0 25px;
+    margin: 20px 0 0 20px;
 }
 .intro-info ul {
     list-style: square;
@@ -574,6 +579,15 @@ input[type="text"]:hover {
 }
 .userintro-title + .userintro-content {
     display: inline;
+}
+.userintro-sentence {
+    /*background-color: #000;*/
+    border: 1px solid #005454;
+    border-radius: 5px;
+    width: 300px;
+    height: 120px;
+    padding: 5px 10px;
+    overflow-y: auto;
 }
 .modalbtn {
     background: #00CCCC;
@@ -597,18 +611,162 @@ input[type="text"]:hover {
     transition: 0.1s ease;
 }
 .modalbtn.messagebtn,
-.modalbtn.addbtn {
-    margin-top: 10px;
+.modalbtn.addbtn,
+.modalbtn.sendbtn {
+    /*margin-top: 20px;*/
     width: 120px;
     height: 32px; 
 }
-.modalbtn.addbtn {
+/*.modalbtn.addbtn {
     background: #FFF;
     color: #00CCCC;
     border: 1px solid #00CCCC;
-}
+}*/
 .usermap-modalbtn {
     /*background-color: #AAA;*/
-    margin: 20px 0 0 95px;
+    margin: 25px 0 0 150px;
     width: 150px;
+}
+
+
+.modal-content.message {
+    margin: 5% auto;
+    width: 600px;
+    height: 650px;
+}
+.message-friendinfo {
+    background-color: #00CCCC;
+    border-radius: 3px;
+    height: 60px;
+}
+.message-dialogcontent {
+    /*background-color: #000;*/
+    border: 1px solid #00CCCC;
+    border-radius: 3px;
+    margin: 2px 0 0 0;
+    height: 370px;
+    overflow-y: auto;
+}
+.message-sendframe {
+    /*background-color: #AAA;*/
+    border: 1px solid #AAA;
+    border-radius: 3px;
+    margin: 10px 0 0 0;
+    padding: 5px 10px;
+    height: 100px;
+    width: 100%;
+    color: #00CCCC;
+    letter-spacing: 0.5px;
+}
+.message-sendframe:focus {
+    border: 2px solid #AAA;
+    outline: 0;
+}
+.message-sendbtn {
+    margin: 5px 0 0 220px;
+}
+
+/*.message-friendinfo:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}*/
+.message-friendinfo img {
+    float: left;
+    border: 2.5px solid #fff;
+    border-radius: 100%;
+    margin: 8px 0 0 10px;
+    width: 45px;
+    height: 45px;
+}
+.friendabout {
+    float: left;
+    margin: 10px 0 0 10px;
+    letter-spacing: 0.5px;
+}
+.friendname {
+    font-weight: 600;
+    font-size: 16px;
+}
+.friendmsgcount {
+    font-size: 13px;
+    color: #f5f5f5;
+}
+
+/*.message-historylist li {
+    margin: 0 0 10px 0;
+}*/
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+.message-data {
+    margin: 0 0 12px -20px;
+}
+.message-data-time {
+    color: #a8aab1;
+    padding-left: 6px;
+    font-size: 12px;
+}
+.message-data-name {
+    color: #666;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.message-data.align-right {
+    text-align: right;
+    padding-right: 1.3em; 
+    /*margin: 0 0 0 -50px;*/
+}
+.messageframe {
+    color: white;
+    padding: 12px 15px;
+    line-height: 24px;
+    font-size: 15px;
+    border-radius: 7px;
+    /*margin-bottom: 30px;*/
+    width: 90%;
+    position: relative;
+}
+.messageframe:after {
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #B5B5B5;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.my-message {
+    background: #00CCCC;
+    margin: 0 0 10px 30px;
+}
+.other-message {
+    margin: 0 0 5px -20px;
+    background: #B5B5B5;
+}
+.circle-me {
+    margin-right: 3px;
+    font-size: 10px;
+    color: #00CCCC;
+}
+.circle-friend {
+    margin-right: 3px;
+    font-size: 10px;
+    color: #B5B5B5;
+}
+.my-message:after {
+    border-bottom-color: #00CCCC;
+    left: 93%;
 }

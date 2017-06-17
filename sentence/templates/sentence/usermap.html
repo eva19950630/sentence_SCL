@@ -34,13 +34,14 @@
         </div>
     </div>
 </div>
+
 <!--intro-->
 <div class="intro" style="display: block;">
     <!--./passerby intro page-->
     <div role="dialog" class="modal fade" id="passerIntro">
         <div class="modal-dialog">
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content intro">
                 <div class="top" style="padding: 15px;">
                     <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
                 </div>
@@ -49,18 +50,117 @@
                     <div class="intro-info">
                         <ul>
                             <li><font class="userintro-title">NAME /</font>&ensp;<font class="userintro-content" id="introName">NAME</font></li>
-                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content" id="introLanguage">Language</font></li>
+                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content">Language</font></li>
+                            <li>
+                                <font class="userintro-title">SENTENCE /</font>
+                                <div class="userintro-sentence">
+                                    1234567
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <div class="usermap-modalbtn">
-                        <button type="button" class="modalbtn messagebtn" id="bigV-message"  data-dismiss="modal">message</button>
-                        <button type="button" class="modalbtn addbtn" data-dismiss="modal" onclick="AddFriend()">add friend</button>
+                        <!-- <button type="button" class="modalbtn messagebtn" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button> -->
+                        <button type="button" class="modalbtn messagebtn" id="message-btn" data-toggle="modal">message</button>
+                        <!-- <button type="button" class="modalbtn addbtn" data-dismiss="modal" onclick="AddFriend()">add friend</button> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!--./passerby intro page-->
+</div>
+
+
+<!--friends' message-->
+<div class="message" style="display: block;">
+    <div role="dialog" class="modal fade" id="messagemodal">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content message">
+                <div class="top" style="padding: 15px;">
+                    <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="message-friendinfo">
+                        <img src="{% static 'images/syuan.jpg' %}">
+                        <div class="friendabout">
+                          <div class="friendname">Syuan</div>
+                          <div class="friendmsgcount">already 100 messages</div>
+                        </div>
+                    </div>
+                    <div class="message-dialogcontent">
+                        <ul class="message-historylist">
+                            <!-- my message -->
+                            <li class="clearfix">
+                                <div class="message-data align-right">
+                                  <span class="message-data-time" >June 17. 2017. 9:27 p.m.&ensp;|&ensp;</span>
+                                  <span class="message-data-name" >Trump</span> <i class="fa fa-circle circle-me"></i>
+                                </div>
+                                <div class="messageframe my-message float-right">
+                                  Hi Vincent
+                                </div>
+                            </li>
+                            <!-- friend message -->
+                            <li>
+                                <div class="message-data">
+                                  <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> Syuan</span>
+                                  <span class="message-data-time">&ensp;|&ensp;June 17. 2017. 9:29 p.m.</span>
+                                </div>
+                                <div class="messageframe other-message">
+                                  Are we meeting today? Project has been already finished and I have results to show you.
+                                </div>
+                            </li>
+                            <!-- my message -->
+                            <li class="clearfix">
+                                <div class="message-data align-right">
+                                  <span class="message-data-time" >June 17. 2017. 9:27 p.m.&ensp;|&ensp;</span>
+                                  <span class="message-data-name" >Trump</span> <i class="fa fa-circle circle-me"></i>
+                                </div>
+                                <div class="messageframe my-message float-right">
+                                  Hi Vincent
+                                </div>
+                            </li>
+                            <!-- friend message -->
+                            <li>
+                                <div class="message-data">
+                                  <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> Syuan</span>
+                                  <span class="message-data-time">&ensp;|&ensp;June 17. 2017. 9:29 p.m.</span>
+                                </div>
+                                <div class="messageframe other-message">
+                                  Are we meeting today? Project has been already finished and I have results to show you.
+                                </div>
+                            </li>
+                            <!-- my message -->
+                            <li class="clearfix">
+                                <div class="message-data align-right">
+                                  <span class="message-data-time" >June 17. 2017. 9:27 p.m.&ensp;|&ensp;</span>
+                                  <span class="message-data-name" >Trump</span> <i class="fa fa-circle circle-me"></i>
+                                </div>
+                                <div class="messageframe my-message float-right">
+                                  Hi Vincent
+                                </div>
+                            </li>
+                            <!-- friend message -->
+                            <li>
+                                <div class="message-data">
+                                  <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> Syuan</span>
+                                  <span class="message-data-time">&ensp;|&ensp;June 17. 2017. 9:29 p.m.</span>
+                                </div>
+                                <div class="messageframe other-message">
+                                  Are we meeting today? Project has been already finished and I have results to show you.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <textarea class="message-sendframe" placeholder="Type your message..."></textarea>
+                    <div class="message-sendbtn">
+                        <button type="button" class="modalbtn sendbtn">send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--message-->

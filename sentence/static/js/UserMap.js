@@ -21,7 +21,7 @@ var mousePos = {
 var CurPos = {
     x: screen.width/2
     , y: screen.height/2
-    ,scale:(screen.width*screen.height)/20736
+    ,scale:(screen.width*screen.height)/20736 
 };
 var passerbyPos = {
     x: 500
@@ -44,10 +44,12 @@ var thetaArray = [0,0,0,0,0,0,0,0,0,0];
 for(var i = 0;i<10;i++){  
     randOvalCoordinate(i);
     console.log(i+"("+passerbyPos[i].x+","+passerbyPos[i].y+")");
+    // console.log(overlapping);
 
 }
-
+// var overlapping = 0;
 function randOvalCoordinate(i){
+    // overlapping = 0;
     var r = screenScale.height/2 - CurPos.scale,
     R = screenScale.width/2 - CurPos.scale;
     var _r = Math.sqrt(Math.random()*(R*R-r*r)+r*r);
@@ -60,17 +62,38 @@ function randOvalCoordinate(i){
 
 function imgOverlapping(i){
     for(var j = 0;j < i;j++){
-        if(passerbyPos[i].x <= (passerbyPos[j].x + CurPos.scale) && (passerbyPos[i].x + CurPos.scale)>= passerbyPos[j].x
-            && passerbyPos[i].y <= (passerbyPos[j].y + CurPos.scale) && (passerbyPos[i].y + CurPos.scale) >= passerbyPos[j].y){
+        console.log(xJudge(i,j,1)+xJudge(i,j,2)+yJudge(i,j,1)+yJudge(i,j,2));
+        // xJudge(1);xJudge(2);yJudge(1);yJudge(2);
+        if((xJudge(i,j,1)&&xJudge(i,j,1)) || (xJudge(i,j,1)&&xJudge(i,j,2)) || (xJudge(i,j,2)&&xJudge(i,j,1)) || (xJudge(i,j,2)&&xJudge(i,j,2))){
+            console.log("re1");
             randOvalCoordinate(i);
+            console.log("re2");
             break;
         }
 
-        if(((passerbyPos[i].x+passerbyPos[i].scale) > screen.width) || ((passerbyPos.y+passerbyPos[i].scale+200) > screen.height)){
+        if(((passerbyPos[i].x+CurPos.scale) > screen.width) || ((passerbyPos.y+CurPos.scale+200) > screen.height)){
             console.log("out");
             randOvalCoordinate(i);
         }
     }
+}
+var extraScale = CurPos.scale*2;
+function xJudge(i,j,k){
+    if(k==1)
+        if(passerbyPos[i].x <= (passerbyPos[j].x + CurPos.scale) && (passerbyPos[i].x)>= (passerbyPos[j].x ))
+            return 1;
+    else
+        if((passerbyPos[i].x + CurPos.scale)<= (passerbyPos[j].x + CurPos.scale ) && (passerbyPos[i].x + CurPos.scale)>= (passerbyPos[j].x))
+             return 1;
+}
+
+function yJudge(i,j,k){
+    if(k==1)
+        if(passerbyPos[i].y <= (passerbyPos[j].y + CurPos.scale) && (passerbyPos[i].y)>= (passerbyPos[j].y - extraScale))
+            return 1;
+    else
+        if((passerbyPos[i].y + CurPos.scale)<= (passerbyPos[j].y + CurPos.scale) && (passerbyPos[i].y + CurPos.scale)>= (passerbyPos[j].y))
+            return 1;
 }
 
 var currentStranger;
@@ -88,6 +111,7 @@ $(c).on("click", function (event) {
     }
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
+    canvasX = event.pageX ;
     // canvasY = event.pageY - totalOffsetY;
     canvasY = event.pageY+50;
     // canvasY = event.pageY-80;
@@ -275,3 +299,9 @@ $('body').each(function (i) {
 // $(function() {
 //     $(c ).draggable();
 // });
+
+
+$('#message-btn').click(function() {
+    $('#passerIntro').appendTo("body").modal('hide');
+    $('#messagemodal').appendTo("body").modal('show');
+});

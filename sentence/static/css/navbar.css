@@ -546,20 +546,10 @@ input[type=search-mobile]:focus {
 }
 
 
-.after-login a {
-    text-decoration: none;
-}
-
-.after-login a:hover {
-    opacity: 0.7;
-    text-decoration: none;
-}
-
-
 
 /*Search bar*/
 .search {
-  width: 80%;
+  width: 75%;
   position: relative;
   margin-top: 10px;
 }
@@ -920,11 +910,22 @@ button.social-signin.google {
     white-space: nowrap;
 }
 
+
+.after-login a {
+    text-decoration: none;
+}
+
+.after-login a:hover {
+    opacity: 0.7;
+    text-decoration: none;
+}
+
 #user-pic {
     border-radius: 60%;
 }
 
 #user-name {
+    /*background-color: #000;*/
     font-size: 16px;
     letter-spacing: 1.5px;
 }
