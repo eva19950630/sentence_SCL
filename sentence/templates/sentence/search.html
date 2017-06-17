@@ -12,7 +12,7 @@
 	<div class="row">
 		{% for surl in sentence_content_date %}
 		<div class="col-sm-5">
-			<a href="">
+			<a href="{% url 'sentence_url' sid=surl.SID%}">
 			    <div class="card card-1 newmore">
 			      <div class="postcard-content newmore">{{surl.Content}}</div>
 			      <div class="postcard-btn new">
@@ -41,7 +41,7 @@
 	<div class="row">
 		{% for surl in sentence_content_date %}
 		<div class="col-sm-5">
-			<a href="">
+			<a href="{% url 'sentence_url' sid=surl.SID%}">
 			    <div class="card card-1 newmore">
 			      <div class="postcard-content newmore">{{surl.Content}}</div>
 			      <div class="postcard-btn popu">

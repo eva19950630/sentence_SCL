@@ -143,8 +143,8 @@ $(c).on("click", function (event) {
     }
     while (currentElement = currentElement.offsetParent)
     canvasX = event.pageX - totalOffsetX;
-    canvasY = event.pageY - totalOffsetY;
-    // canvasY = event.pageY-80;
+    // canvasY = event.pageY - totalOffsetY;
+    canvasY = event.pageY+50;
     // console.log("pageX: "+event.pageX+" ,"+event.pageY);
 
     // console.log("canvasX: "+canvasX+" ,"+canvasY);
