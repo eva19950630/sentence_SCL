@@ -266,6 +266,7 @@
         var userSentence = null;
         var userImg = null;
         var iconsLenght = 0;
+        var alllanguage = null;
         //user profile
         $.get('/user/usermap/',{
            
@@ -276,7 +277,8 @@
             console.log("length:" + iconsLength);
             userSentence = {{sentence|safe}};
             userImg = "{{username.UserIcon.url}}";
-            friendSentencelist = {{friendSentencelist|safe}};    
+            friendSentencelist = {{friendSentencelist|safe}};   
+            alllanguage = {{alllanguage|safe}}; 
             for(var i = 0 ; i < icons.length; i++){
                
                if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/'){

@@ -1,7 +1,7 @@
 from django.shortcuts import render#, render_to_response
 #google+
-from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend, ImageUploadForm
-from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence, Rank_translation
+from .forms import AddUser, PostSentence, PostTranslate, PostTopic, AddFriend, ImageUploadForm, PostMessage
+from .models import User, Sentence, Translation, Topic, Country, Country_language, Language, Collection, Friendship, Rank_sentence, Rank_translation, Message
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
@@ -319,6 +319,7 @@ def usermap(request):
         usermodel = User.objects.get(UID=request.session.get('UID'))
         ranfriendlist = User.objects.all().exclude(UID = usermodel.UID).order_by('?','pk')[:10]
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+        alllanguage = Language.objects.all().order_by('pk');
 
         sentencemodel = None
         if Sentence.objects.filter(UID=usermodel.UID).exists():
@@ -329,12 +330,13 @@ def usermap(request):
             friendSentencelist.extend(Sentence.objects.filter(UID = f.UID).order_by('-Date')[:1])
             # print(Sentence.objects.filter(UID = f.UID).order_by('-Date')[:1].Content)
 
-
         data = serializers.serialize('json', ranfriendlist)
         friendSentencelistdata = serializers.serialize('json', friendSentencelist)
         sentencemodeldata = serializers.serialize('json', sentencemodel)
+        alllanguagedata = serializers.serialize('json', alllanguage)
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
             ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
+            ,'alllanguage':alllanguagedata
         }
 
         return render(request, "sentence/usermap.html",context)
@@ -850,28 +852,17 @@ def search(request,ranktype):
             context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,'searchtype': searchtype,}
             return render(request, "sentence/search.html",context)
    
- #google+
-# def signup_google(request):
-#     if request.method == 'POST':
-    
-#         user_form = AddUser(request.POST)
-#         if user_form.is_valid():
-        
-#             new_user_id = user_form.data.get("uid")
-#             new_user_name = user_form.data.get("username")
-#             new_user_email = user_form.data.get("email")
-            
-            
-#             User.objects.create(
-#                 uid = new_user_id,
-#                 username = new_user_name,
-#                 email = new_user_email,
-#             )
-            
-#             return render(request, 'sentence/index.html')
-        
-#         else:
-#             return render(request, 'sentence/index.html')
-        
-#     else:
-#         return render(request, 'sentence/index.html')
+def chat_room(request,uid):
+    if request.method == 'POST':
+        UID = request.session.get('UID')
+        django_form = PostMessage(request.POST)
+        if django_form.is_valid():
+            room = Message.objects.get_or_create(RoomUID=uid)
+            message = request.POST.get('message')
+            room.VisiterUID = UID
+            room.Message = message
+            room.save()
+
+        allMessage = Message.objects.filter(RoomUID=uid)
+        context = {'allMessage':allMessage}
+        return render(request,'sentence/usermap.html',context)

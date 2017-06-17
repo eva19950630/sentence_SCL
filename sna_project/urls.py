@@ -52,6 +52,5 @@ urlpatterns = [
     url(r'^getcountry/', views.getCountry, name = 'getcountry'),
     url(r'^getregion/', views.getregion, name = 'getregion'),
     url(r'^addfriend/', views.addfriend, name = 'addfriend'),
-    #google+
-    #url(r'^allauth/accounts/', include('allauth.urls')),
+    url(r'^message/(?P<uid>\d+)/$', views.chat_room, name='chat_room'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

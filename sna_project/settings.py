@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sentence',
+    # 'channels',
     # 'easy_timezones',
     #google+
 #    'django.contrib.sites',

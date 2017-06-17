@@ -26,8 +26,8 @@
             <div class="friendlistframe">
                 {% for friend in friendlist %}
                 <div class="row friend-panel">
-                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon.url}}"> </div>
-                    <div class="col-lg-5 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
+                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon.url }}"> </div>
+                    <div class="col-lg-2 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
                 </div>
                 {% endfor %}
             </div>
@@ -49,11 +49,11 @@
                     <div class="intro-info">
                         <ul>
                             <li><font class="userintro-title">NAME /</font>&ensp;<font class="userintro-content" id="introName">NAME</font></li>
-                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content">Language</font></li>
+                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content" id="introLanguage">Language</font></li>
                         </ul>
                     </div>
                     <div class="usermap-modalbtn">
-                        <button type="button" class="modalbtn messagebtn" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button>
+                        <button type="button" class="modalbtn messagebtn" id="bigV-message"  data-dismiss="modal">message</button>
                         <button type="button" class="modalbtn addbtn" data-dismiss="modal" onclick="AddFriend()">add friend</button>
                     </div>
                 </div>

@@ -14,12 +14,6 @@ grd.addColorStop(1, "#05a3d6");
 ctx.fillStyle = grd;
 ctx.fillRect(0, 0, screen.width, screen.height);
 
-
-/*var icon = new Image();
-icon.src = "";*/
-/*icon.id="myIntro";
-icon.style.bolder = '2px solid red';
-*/
 var mousePos = {
     x: 900
     , y: 500
@@ -41,34 +35,13 @@ var screenScale = {
     width: screen.width
     ,height: screen.height
 };
+var users = "";
 
-//random position
-// for(var i =0;i<10;i++){
-//     var x = Math.random()*900+100;
-//     var y = Math.random()*500+100;
-//     passerbyPos[i] = {x:x,y:y};
-// }
-//var PosChange = false;
-/*var proPasser = {
-    'nickname': "BigV"
-    , 'level': 1
-    , 'TDSent': "I have a pen."
-    , 'Languages': 'English'
-    , 'icon': 'Imgae/whale.png'
-};*/
 
 var ranArray = [0,0,0,0,0,0,0,0,0,0];
 var thetaArray = [0,0,0,0,0,0,0,0,0,0];
 //no repeat random
-for(var i = 0;i<10;i++){
-    // var ranInterval = Math.round(Math.random()*50);
-    // ranArray[i]= ranInterval;
-    // ranNoRepeat(ranInterval,i);
-
-    // console.log("rand ranInterval "+ranArray[i]);
-    // var x = (ranArray[i] % 10 )*Math.round((screen.width-200)/10);
-    // var y = Math.floor(ranArray[i] / 10 )*Math.round((screen.height-200)/5);
-    // passerbyPos[i] = {x:x,y:y};   
+for(var i = 0;i<10;i++){  
     randOvalCoordinate(i);
     console.log(i+"("+passerbyPos[i].x+","+passerbyPos[i].y+")");
 
@@ -84,34 +57,6 @@ function randOvalCoordinate(i){
     // plot(_r*Math.cos(theta),_r*Math.sin(theta)/4);
     imgOverlapping(i);
 }
-
-// function NormalDistribution(){
-//     var rand = 0;
-
-//     for (var i = 0; i < 6; i += 1) {
-//         rand += Math.random();
-//     }
-
-//     return rand / 6;
-// }
-
-// function gaussianRandom(start, end) {
-//   return Math.floor(start + NormalDistribution() * (end - start + 1));
-// }
-
-// function ranNoRepeat(num,i,list) {
-//     for(var j = i-1;j >=0 ;j--){
-//         if(list[i] != list[j]){
-//             list[i] = num;
-//             // console.log("if true");
-//         }else{
-//             // console.log("in repeat");
-//             ranNoRepeat(Math.round(Math.random()*50),i);
-//             break;
-//             // console.log("out repeat");
-//         }
-//     }
-// }
 
 function imgOverlapping(i){
     for(var j = 0;j < i;j++){
@@ -145,6 +90,7 @@ $(c).on("click", function (event) {
     canvasX = event.pageX - totalOffsetX;
     // canvasY = event.pageY - totalOffsetY;
     canvasY = event.pageY+50;
+    // canvasY = event.pageY-80;
     // console.log("pageX: "+event.pageX+" ,"+event.pageY);
 
     // console.log("canvasX: "+canvasX+" ,"+canvasY);
@@ -155,7 +101,9 @@ $(c).on("click", function (event) {
             $(currentElement).css( 'cursor', 'pointer' );
             $("#introImg").attr("src",icons[Object.keys(icons)[i]].fields.UserIcon);
             // $("#introImg").css('border-radius','60%');
-            $("#introName").html(icons[Object.keys(icons)[i]].fields.UserName);
+            users = icons[Object.keys(icons)[i]];
+            $("#introName").html(users.fields.UserName);
+            $("#introLanguage").html(alllanguage[Object.keys(alllanguage)[users.fields.NativeLanguage-1]].fields.Language);
             $("#passerIntro").modal();
            //GetProfile(proPasser);
         }
@@ -170,30 +118,7 @@ function AddFriend(){
         $("#friendlist_certain_content").html(data);
     });
 }
-/*var GetProfile = function (pro) {
-    var userID = pro.nickname + "Intro";
-    if ($(userID).length == 0) {
-        $('.intro').append('<div role="dialog" class="modal fade" id="' + userID + '"></div>');
-        $('.intro').attr('Tittle',userID, pro.nickname);
-        $(userID).dialog({
-            autoOpen: true
-            , buttons: [
-                {
-                    text: 'Message'
-                    , class: 'btn btn-primary'
-                    , click: CallMessage()
-                }, {
-                    text: 'Add'
-                    , class: "btn btn-default"
-                    , click: function () {
-                        $(this).dialog('close')
-                    }
-                }
-            ]
-        });
-    }
-    $('.intro').append('<div role="dialog" class="modal fade" id="'+userID+'"> <div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">'+pro.nickname+'</h4> </div><div class="modal-body"><div class="row"><div class="col-lg-2"> <img src="'+pro.icon+'"> </div><div class="col-lg-6 user-profile"><h5>LV.'+pro.level+'</h5><h5>'+pro.TDSent+'</h5><h5>'+pro.Languages+'</h5> </div></div></div><div class="modal-footer"><i class="fa fa-lg fa-commenting-o" fa-inverse></i><button type="button" class="btn btn-primary" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button><button type="button" class="btn btn-default" data-dismiss="modal">add</button></div></div></div></div>');
-};*/
+
 document.addEventListener('mousedown', function (e) {
     //ctx.clearRect(0, 0, c.width, c.height);
     mousePos = {
@@ -231,24 +156,46 @@ setInterval(function () {
 var DrawIcons = function (isrc, pox, poy, sentence) {
     var ic = new Image();
     ic.src = isrc;
-   // ic.onload=function(){
-        // console.log();
-        var sentLenght = sentence.length * 10;
-        ctx.beginPath();
-        ctx.moveTo(pox + CurPos.scale, poy - 5);
-        ctx.lineTo(pox + CurPos.scale, poy - 40);
-        ctx.lineTo(pox + CurPos.scale + sentLenght, poy - 40); //x:+250
-        ctx.lineTo(pox + CurPos.scale + sentLenght, poy - 10); //x:+250
-        ctx.lineTo(pox + CurPos.scale, poy - 10);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.closePath();
-        // ic.onload=function(){
-        ctx.drawImage(ic, pox, poy, CurPos.scale, CurPos.scale);
-        ctx.fillStyle = "black";
-        ctx.fillText(sentence, pox + (0.000053*(screen.width*screen.height)), poy - (0.00000868*(screen.width*screen.height)));
-        // }
-   // };
+    var sentLenght = CurPos.scale*3.5;
+    var textHeight = 10;
+    var radius = 15;
+    var horn = 10;
+    var neck = 20;
+    var bubbleX = pox + CurPos.scale;
+    var bubbleY = poy;
+    ctx.save();//push current state into canvas
+    ctx.beginPath();
+    ctx.moveTo(bubbleX, bubbleY+horn);
+    ctx.lineTo(bubbleX+horn, bubbleY);
+    ctx.lineTo(bubbleX+radius, bubbleY);
+    ctx.quadraticCurveTo(bubbleX,bubbleY,bubbleX,bubbleY-radius);
+    ctx.lineTo(bubbleX, bubbleY-textHeight-radius);
+    ctx.quadraticCurveTo(bubbleX,bubbleY-2*radius-textHeight,bubbleX+radius,bubbleY-2*radius-textHeight);
+    ctx.lineTo(bubbleX+radius+sentLenght, bubbleY-2*radius-textHeight);
+    ctx.quadraticCurveTo(bubbleX+radius*2+sentLenght,bubbleY-2*radius-textHeight,bubbleX+radius*2+sentLenght,bubbleY-textHeight-radius);
+    ctx.lineTo(bubbleX+radius*2+sentLenght,bubbleY-radius);
+    ctx.quadraticCurveTo(bubbleX+radius*2+sentLenght,bubbleY,bubbleX+radius+sentLenght,bubbleY);
+    ctx.lineTo(bubbleX+horn+neck,bubbleY);
+    // ctx.lineTo(pox + CurPos.scale, poy - 10);
+    ctx.fillStyle = 'rgba(150, 254, 209,0.5)';
+    ctx.fill();
+    ctx.closePath();
+    ctx.clip();
+    ctx.fillStyle = "black";
+    ctx.fillText(sentence, bubbleX+radius, poy - radius);
+    ctx.restore();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(pox+CurPos.scale/2, poy+CurPos.scale/2, CurPos.scale/2, 0, 2 * Math.PI);
+    // ctx.fillStyle = '#FFFFFF';
+    // ctx.fill();
+    ctx.closePath();
+    ctx.clip();
+    
+    ctx.drawImage(ic, pox, poy, CurPos.scale, CurPos.scale);
+    ctx.restore();
+    
 };
 
 
@@ -270,15 +217,15 @@ $("body").on('click', msgHeader, function () {
         isMsgVisable = true;
     }
 });
-var users = "BigV";
+
 var userPro = "#bigV-message";
-var CallMessage = function () {
+// var CallMessage = function () {
     $(userPro).click(function () {
-        if ($('#' + users).length == 0) {
-            $('#message-area').append('<div id="' + users + '" class="message-contain"><div class="message-username">' + users + '</div><textarea class="message-textarea" placeholder="message" row="2"></textarea><button class="message-send">Send</button><div class="messages" name="mesag"><div class="message-box"></div></div></div>');
+        if ($('#' + users.fields.UserName).length == 0) {
+            $('#message-area').append('<div id="' + users.fields.UserName + '" class="message-contain"><div class="message-username">' + users.fields.UserName + '</div><textarea class="message-textarea" placeholder="message" row="2"></textarea><button class="message-send">Send</button><div class="messages" name="mesag"><div class="message-box"></div></div></div>');
         }
     });
-};
+// };
 //chat-box js
 var arr = [];
 var count = 0;
@@ -296,6 +243,12 @@ $('body').on('keyup', 'textarea', function (event) {
 //$('.message-send').each(function (i) {
 $('body').each(function (i) {
     $(this).on('click', '.message-send', function () {
+        message = $('.message-textarea').val();
+        $.get('/message/'+ users.pk+'/',{
+           'message': message
+        },function(data){
+            
+        });
         if ($('.messages').height() > ($('.message-contain').height())) {
             $('.messages').css('overflowY', 'scroll');
         }

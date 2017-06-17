@@ -85,9 +85,9 @@ class Friendship(models.Model):
 	Friend = models.ForeignKey('User', on_delete=models.CASCADE,related_name="friends")
    
 #ACHIEVEMENT
-#class Achievement(models.Model):
-#    Achievement_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
-# 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+# class Achievement(models.Model):
+#    	Achievement_ID = models.BigIntegerField(primary_key=True, null=False, unique=True)
+#    	UID = models.ForeignKey('User', on_delete=models.CASCADE)
 #  
 #PAINT_TOOLS
 #class Paint_tools(models.Model):
@@ -134,3 +134,13 @@ class Country(models.Model):
 class Collection(models.Model):
 	SID = models.ForeignKey('Sentence', on_delete=models.CASCADE)
 	UID = models.ForeignKey('User', on_delete=models.CASCADE)
+
+#MASSEGE
+class Message(models.Model):
+	RoomUID = models.ForeignKey('User', on_delete=models.CASCADE,related_name="Room_owner")
+	VisiterUID = models.ForeignKey('User', on_delete=models.CASCADE,related_name="Visiter")
+	Message = models.TextField()
+	Date = models.DateTimeField(default=timezone.now,db_index=True)
+
+	
+

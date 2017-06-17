@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Sentence, Translation, Topic, Friendship
+from .models import User, Sentence, Translation, Topic, Friendship, Message
 
 class AddUser(forms.Form):
     class Meta:
@@ -50,6 +50,12 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
     	model = User
     	fields = ('UserIcon','NativeLanguage')
+
+class PostMessage(forms.Form):
+	"""docstring for ClassName"""
+	class Meta:
+		model = Message
+		fields = ('Message',)
 
 
 # """ valid login """
