@@ -114,8 +114,9 @@
                                                 <input type="text" name="email" placeholder="E-mail" required>
                                                 <input type="password" name="password" placeholder="Password" required>
                                                 
-                                                <div class="errormsg"><h6>Wrong password. Try again.</h6></div>
-
+                                                {% if wrongMessage %}
+                                                <div class="errormsg"><h6>{{wrongMessage}}</h6></div>
+                                                {% endif %}
                                                 <input type="submit" class="loginButton" name="login_submit" value="Log in"> 
 
                                             </form>                                       
@@ -269,8 +270,7 @@
         $.get('/user/usermap/',{
            
         },function(data){
-          // var icons = new Array();
-            // var icons = "{{ranfriendlist|safe}}";
+
             icons = {{ranfriendlist|safe}};
             iconsLength = icons.length;
             console.log("length:" + iconsLength);

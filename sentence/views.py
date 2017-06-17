@@ -166,11 +166,12 @@ def sentence_url(request, sid):
         if collectionmodel:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
-            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':trans_model,}
+            'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':trans_model
+            ,'country_trans_count':json.dumps(country_trans_count)}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,
-            'trans_region_code':json_trans_code,'translation':trans_model}
+            'trans_region_code':json_trans_code,'translation':trans_model,'country_trans_count':json.dumps(country_trans_count)}
         del json_trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
@@ -326,6 +327,7 @@ def usermap(request):
         for f in ranfriendlist:
             friendSentencelist.extend(Sentence.objects.filter(UID = f.UID).order_by('-Date')[:1])
             # print(Sentence.objects.filter(UID = f.UID).order_by('-Date')[:1].Content)
+
 
         data = serializers.serialize('json', ranfriendlist)
         friendSentencelistdata = serializers.serialize('json', friendSentencelist)
@@ -558,7 +560,7 @@ def login_app(request):
             new_member_password = django_form.data.get('password')
             new_member_language = Language.objects.get(Language_ID=22)
             # new_uid = str(len(User.objects.all()) + 1)
-           
+
             """ This is how your model connects to database and create a new member """
             new_user_model=User.objects.create(
                 # UID = new_uid,
@@ -567,6 +569,13 @@ def login_app(request):
                 Password = new_member_password,
                 NativeLanguage = new_member_language,
             )
+
+            """ sentence not post """
+            new_sentence_model = Sentence.objects.create(
+                Content = "Haven't post any sentence QAQ",
+                Sentence_tag =  "English", 
+                UID = new_user_model,
+            ) 
                 
             request.session['UID'] = new_user_model.UID
 
@@ -591,6 +600,7 @@ def login_app(request):
     elif User.objects.filter(Email=get_email).exists():
         m = User.objects.get(Email=get_email)
         #login
+
         if m.Password == request.POST.get('password'):
             request.session['UID'] = m.UID
             # print(m.UserName)
@@ -602,14 +612,18 @@ def login_app(request):
             return render(request, 'sentence/index.html',context) 
         #login failed
         else:
+            wrongMessage = 'Wrong password. Try again.'
             print('Password WRONG')
 
-            context = {'sentence_content': sentencemodel_like_order,
+            context = {'sentence_content': sentencemodel_like_order,'wrongMessage':wrongMessage,
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
 
             return render(request, 'sentence/index.html',context)  
+
+
     else:
-        context = {'sentence_content': sentencemodel_like_order,
+        wrongMessage = 'The email you have entered does not exist.'
+        context = {'sentence_content': sentencemodel_like_order,'wrongMessage':wrongMessage,
             'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
         return render(request, 'sentence/index.html',context)      
 
