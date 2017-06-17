@@ -233,16 +233,16 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
     ic.src = isrc;
    // ic.onload=function(){
         // console.log();
-        // var sentLenght = sentence.length * 10;
-        // ctx.beginPath();
-        // ctx.moveTo(pox + 100, poy - 5);
-        // ctx.lineTo(pox + 100, poy - 40);
-        // ctx.lineTo(pox + 100 + sentLenght, poy - 40); //x:+250
-        // ctx.lineTo(pox + 100 + sentLenght, poy - 10); //x:+250
-        // ctx.lineTo(pox + 110, poy - 10);
-        // ctx.fillStyle = '#FFFFFF';
-        // ctx.fill();
-        // ctx.closePath();
+        var sentLenght = sentence.length * 10;
+        ctx.beginPath();
+        ctx.moveTo(pox + CurPos.scale, poy - 5);
+        ctx.lineTo(pox + CurPos.scale, poy - 40);
+        ctx.lineTo(pox + CurPos.scale + sentLenght, poy - 40); //x:+250
+        ctx.lineTo(pox + CurPos.scale + sentLenght, poy - 10); //x:+250
+        ctx.lineTo(pox + CurPos.scale, poy - 10);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        ctx.closePath();
         // ic.onload=function(){
         ctx.drawImage(ic, pox, poy, CurPos.scale, CurPos.scale);
         ctx.fillStyle = "black";
