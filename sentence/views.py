@@ -21,11 +21,12 @@ from django.core.files.base import ContentFile
 from django.core import serializers
 # Create your views here.
 from django.core.files.base import ContentFile
+import datetime
 
 
 def index(request): 
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
 
     # translation_count = []
     # for s in Sentence.objects.filter().count():
@@ -350,19 +351,35 @@ def user_profile(request):
             new_name = request.POST.get("updatename")
             new_password = request.POST.get("updatepass")
             # new_icon = request.POST.get("upuserpic")
-            img=request.FILES['upuserpic']
+            img = None
+            try: 
+                img=request.FILES['upuserpic']
+                if new_language and new_password and new_name:
+                    new_languagemodel = Language.objects.get(Language=new_language)
+                    usermodel.NativeLanguage = new_languagemodel
+                    usermodel.UserName = new_name
+                    usermodel.Password = new_password
+                    usermodel.UserIcon = img
+                    usermodel.save()
+            except KeyError:
+                if new_language and new_password and new_name:
+                    new_languagemodel = Language.objects.get(Language=new_language)
+                    usermodel.NativeLanguage = new_languagemodel
+                    usermodel.UserName = new_name
+                    usermodel.Password = new_password
+                    usermodel.save()
             # new_icon = ImageUploadForm(request.FILES)
             # print(new_icon)
             # if new_icon.is_valid():
             #         new_icon.save()
             
-            if new_language and new_password and new_name:
-                new_languagemodel = Language.objects.get(Language=new_language)
-                usermodel.NativeLanguage = new_languagemodel
-                usermodel.UserName = new_name
-                usermodel.Password = new_password
-                usermodel.UserIcon = img
-                usermodel.save()
+            # if new_language and new_password and new_name:
+            #     new_languagemodel = Language.objects.get(Language=new_language)
+            #     usermodel.NativeLanguage = new_languagemodel
+            #     usermodel.UserName = new_name
+            #     usermodel.Password = new_password
+            #     usermodel.UserIcon = img
+            #     usermodel.save()
                 
 
         context = {'username': usermodel,'extend_index': 'sentence/background.html','alllanguage':alllanguage}
@@ -575,6 +592,7 @@ def login_app(request):
                 Content = "Haven't post any sentence QAQ",
                 Sentence_tag =  "English", 
                 UID = new_user_model,
+                Date = datetime.datetime(2017, 1, 1, 0, 0),
             ) 
                 
             request.session['UID'] = new_user_model.UID
