@@ -471,7 +471,8 @@ def user_history(request):
     if request.session.get('UID'):
         get_uid = request.session.get('UID')
         usermodel = User.objects.get(UID=get_uid)
-        sentencemodel = Sentence.objects.filter(UID=get_uid)
+        sentencemodel = Sentence.objects.filter(UID=get_uid,Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')
+        # sentencemodel = Sentence.objects.filter(UID=get_uid)
         translationmodel = Translation.objects.filter(UID=get_uid)
 
         context = {'sentence_model': sentencemodel,'translation_model': translationmodel,
@@ -497,8 +498,8 @@ def user_friends(request):
 
 
 def login_app(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
     get_email = request.POST.get('email')
 
     #social login
@@ -649,8 +650,8 @@ def login_app(request):
 
 #logout
 def logout(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
     print("logout")
     django_logout(request)
     context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
@@ -832,10 +833,10 @@ def search(request,ranktype):
         searchtype = None
         sentencemodel_order = None
         if ranktype == 'newSentence':
-            sentencemodel_order = Sentence.objects.filter().order_by('-Date')
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
             searchtype = "new"
         elif ranktype == 'popularSentence':
-            sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
             searchtype = "popu"
         else:
             sentencemodel_order = Sentence.objects.filter()

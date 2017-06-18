@@ -3,7 +3,7 @@ c.width = document.body.clientWidth;
 c.height = document.body.clientHeight;
 
 var ctx = c.getContext("2d");
-ctx.font = "18px Georgia";
+ctx.font = "17px Raleway";
 // Create gradient
 var xEnd  = 0;
 var yEnd = 400;
@@ -165,12 +165,12 @@ setInterval(function () {
         CurPos.y += moveDir.y * 0.1;
     }
 
-    DrawIcons(userImg, CurPos.x, CurPos.y,userSentence[Object.keys(userSentence)[0]].fields.Content );
+    DrawIcons(userImg, CurPos.x, CurPos.y,userSentence[Object.keys(userSentence)[0]].fields.Content);
 
     /*No Picture*/
     for(var i = 0;i< 10;i++){
         if(icons != null && friendSentencelist != null){
-            DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y,friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content );
+            DrawIcons(icons[Object.keys(icons)[i]].fields.UserIcon, passerbyPos[i].x, passerbyPos[i].y, friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content);
         }
     }
     
@@ -180,7 +180,14 @@ setInterval(function () {
 var DrawIcons = function (isrc, pox, poy, sentence) {
     var ic = new Image();
     ic.src = isrc;
-    var sentLenght = CurPos.scale*3.5;
+    // var sentLenght = CurPos.scale*3.5;
+    var sentLenght = ctx.measureText(sentence).width;
+    // console.log(sentence + ' ' + sentLenght);
+    if (sentence.length > 30) {
+        sentence = sentence.substring(0, 30)+"...";
+        sentLenght = ctx.measureText(sentence).width;
+    }
+
     var textHeight = 10;
     var radius = 15;
     var horn = 10;
@@ -201,7 +208,7 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
     ctx.quadraticCurveTo(bubbleX+radius*2+sentLenght,bubbleY,bubbleX+radius+sentLenght,bubbleY);
     ctx.lineTo(bubbleX+horn+neck,bubbleY);
     // ctx.lineTo(pox + CurPos.scale, poy - 10);
-    ctx.fillStyle = 'rgba(150, 254, 209,0.5)';
+    ctx.fillStyle = 'rgba(173, 243, 255, 0.5)';
     ctx.fill();
     ctx.closePath();
     ctx.clip();
@@ -303,5 +310,9 @@ $('body').each(function (i) {
 
 $('#message-btn').click(function() {
     $('#passerIntro').appendTo("body").modal('hide');
+    $('#messagemodal').appendTo("body").modal('show');
+});
+
+$('#friendlist-message-btn').click(function() {
     $('#messagemodal').appendTo("body").modal('show');
 });

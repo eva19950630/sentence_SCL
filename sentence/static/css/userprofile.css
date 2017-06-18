@@ -39,6 +39,10 @@
 	color: #fff;
 }
 
+.panel-body {
+	word-wrap: break-word;
+}
+
 .panel-body.sentence {
 	letter-spacing: 1px;
 }

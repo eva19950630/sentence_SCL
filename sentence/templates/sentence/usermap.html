@@ -19,6 +19,7 @@
 <div style="overflow-x: hidden; overflow-y: hidden; margin: -80px 0 0 0;">
     <canvas id="UserMap" width="100" height="100">Your browser does not support canvas element.</canvas>
 </div>
+
 <div class="FriendsList">
     <div class="row">
         <div class="col-sm-12" id="friendlist_certain_content">
@@ -26,8 +27,10 @@
             <div class="friendlistframe">
                 {% for friend in friendlist %}
                 <div class="row friend-panel">
-                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon.url }}"> </div>
-                    <div class="col-lg-2 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
+                    <a href="" id="friendlist-message-btn" data-toggle="modal">
+                        <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon.url }}"> </div>
+                        <div class="col-lg-2 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
@@ -50,10 +53,10 @@
                     <div class="intro-info">
                         <ul>
                             <li><font class="userintro-title">NAME /</font>&ensp;<font class="userintro-content" id="introName">NAME</font></li>
-                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content">Language</font></li>
+                            <li><font class="userintro-title">LANGUAGE /</font>&ensp;<font class="userintro-content" id="introLanguage">Language</font></li>
                             <li>
                                 <font class="userintro-title">SENTENCE /</font>
-                                <div class="userintro-sentence">
+                                <div class="userintro-sentence" id="introSentence">
                                     1234567
                                 </div>
                             </li>
@@ -61,7 +64,8 @@
                     </div>
                     <div class="usermap-modalbtn">
                         <!-- <button type="button" class="modalbtn messagebtn" id="bigV-message" onclick="CallMessage()" data-dismiss="modal">message</button> -->
-                        <button type="button" class="modalbtn messagebtn" id="message-btn" data-toggle="modal">message</button>
+                        
+                        <button type="button" class="modalbtn messagebtn" id="message-btn" data-toggle="modal">message board</button>
                         <!-- <button type="button" class="modalbtn addbtn" data-dismiss="modal" onclick="AddFriend()">add friend</button> -->
                     </div>
                 </div>
@@ -85,7 +89,7 @@
                     <div class="message-friendinfo">
                         <img src="{% static 'images/syuan.jpg' %}">
                         <div class="friendabout">
-                          <div class="friendname">Syuan</div>
+                          <div class="friendname">Syuan's message board</div>
                           <div class="friendmsgcount">already 100 messages</div>
                         </div>
                     </div>
