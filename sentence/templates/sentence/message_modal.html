@@ -1,28 +1,31 @@
-<div class="message-dialogcontent">
-    <ul class="message-historylist">
-    {% for m in allMessage %}
-        {% if m.VisiterUID.UID == UID %}
-          <!-- my message -->
-          <li class="clearfix">
-              <div class="message-data align-right">
-                <span class="message-data-time" >{{m.Date}}&ensp;|&ensp;</span>
-                <span class="message-data-name" >{{m.VisiterUID.UserName}}</span> <i class="fa fa-circle circle-me"></i>
-              </div>
-              <div class="messageframe my-message float-right">
-                {{m.Message}}
-              </div>
-          </li>
-        {% else %}
-          <!-- friend message -->
-          <li>
-              <div class="message-data">
-                <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> {{m.VisiterUID.UserName}}</span>
-                <span class="message-data-time">&ensp;|&ensp;>{{m.Date}}</span>
-              </div>
-              <div class="messageframe other-message">
-                {{m.Message}}
-              </div>
-          </li>
-        {% endif %}
-    {% endfor %}
-</div>
+{% load staticfiles %}
+{% load tz %}
+
+<ul class="message-historylist">
+{% for m in allMessage %}
+    {% if m.VisiterUID.UID == UID %}
+      <!-- my message -->
+      <li class="messagelist clearfix">
+          <div class="message-data align-right">
+            <span class="message-data-time" >{{m.Date|timezone:"Asia/Taipei"}}&ensp;|&ensp;</span>
+            <span class="message-data-name" >{{m.VisiterUID.UserName}}</span> <i class="fa fa-circle circle-me"></i>
+          </div>
+          <div class="messageframe my-message float-right">
+            {{m.Message}}
+          </div>
+      </li>
+    {% else %}
+      <!-- friend message -->
+      <li class="messagelist">
+          <div class="message-data">
+            <!-- <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> {{m.VisiterUID.UserName}}</span> -->
+            <span class="message-data-name"><img src="{% static 'images/syuan.jpg' %}" class="message-friendpic">&ensp;{{m.VisiterUID.UserName}}</span>
+            <span class="message-data-time">&ensp;|&ensp;{{m.Date|timezone:"Asia/Taipei"}}</span>
+          </div>
+          <div class="messageframe other-message">
+            {{m.Message}}
+          </div>
+      </li>
+    {% endif %}
+{% endfor %}
+</ul>

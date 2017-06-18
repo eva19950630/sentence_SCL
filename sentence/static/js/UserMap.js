@@ -140,7 +140,7 @@ $(c).on("click", function (event) {
                     if(userFriends[Object.keys(userFriends)[j]].fields.Friend == users.pk){
                         $('#message-btn').attr('class','modalbtn messagebtn');
                         $('#message-btn').attr('onclick','');
-                        $('#message-btn').html('message');
+                        $('#message-btn').html('message board');
                         console.log("are friend");
                         break;
                     }
@@ -151,7 +151,7 @@ $(c).on("click", function (event) {
                     if(hasAddFriend[j] == users.pk){
                         $('#message-btn').attr('class','modalbtn messagebtn');
                         $('#message-btn').attr('onclick','');
-                        $('#message-btn').html('message');
+                        $('#message-btn').html('message board');
                         console.log("are friend add");
                         break;
                     }
@@ -261,14 +261,14 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
 
 //message
 $('#message-btn').click(function() {
-    $('.friendname').html(users.fields.UserName+"'s message board");
+    $('.friendname').html(users.fields.UserName + " 's message board");
     $("#friendimg").attr("src",users.fields.UserIcon);
     $('#passerIntro').appendTo("body").modal('hide');
     $('#messagemodal').appendTo("body").modal('show');
     $.get('/message/'+ users.pk+'/',function(data){
         $('.message-dialogcontent').html(data);
         // $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 1000);
-        $('.friendmsgcount').html($(".message-historylist li").length);
+        $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
     });
 });
 
@@ -292,7 +292,7 @@ $('#messageform').submit(function(event) {
         $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
         // $('.message-dialogcontent').scrollTop($('.message-dialogcontent')[0].scrollHeight);
         // $('#postshow-modal').modal('show');
-        $('.friendmsgcount').html($(".message-historylist li").length);
+        $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
       });
     $('.message-sendframe').val("");
 });
@@ -300,6 +300,13 @@ $('#messageform').submit(function(event) {
 $('#friendlist-message-btn').click(function() {
     $('#messagemodal').appendTo("body").modal('show');
 });
+
+
+// var scrollbottom = setInterval(function() {
+//   var elem = document.getElementById('message-log');
+//   elem.scrollTop = elem.scrollHeight;
+// }, 1000);
+
 
 /*catch before create*/
 // var msgHeader = ".message-username";
