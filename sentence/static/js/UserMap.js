@@ -124,7 +124,7 @@ $(c).on("click", function (event) {
         $('.userintro-sentence').html(userSentence[Object.keys(userSentence)[0]].fields.Content);
         $('#message-btn').attr('class','modalbtn messagebtn');
         $('#message-btn').attr('onclick','');
-        $('#message-btn').html('message');
+        $('#message-btn').html('message board');
         $("#passerIntro").modal();
         userMessage();
     }
