@@ -21,7 +21,7 @@ from django.core.files.base import ContentFile
 from django.core import serializers
 # Create your views here.
 from django.core.files.base import ContentFile
-import datetime
+
 
 
 def index(request): 
@@ -321,6 +321,13 @@ def usermap(request):
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
         alllanguage = Language.objects.all().order_by('pk');
 
+        userFriendsdata = None
+        try:
+            userFriends = Friendship.objects.filter(UID=usermodel.UID)
+            userFriendsdata = serializers.serialize('json', userFriends)
+        except:
+            userFriendsdata = 'null'
+
         sentencemodel = None
         if Sentence.objects.filter(UID=usermodel.UID).exists():
             sentencemodel = Sentence.objects.filter(UID=usermodel.UID).order_by('-Date')[:1]
@@ -334,9 +341,10 @@ def usermap(request):
         friendSentencelistdata = serializers.serialize('json', friendSentencelist)
         sentencemodeldata = serializers.serialize('json', sentencemodel)
         alllanguagedata = serializers.serialize('json', alllanguage)
+
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
             ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
-            ,'alllanguage':alllanguagedata
+            ,'alllanguage':alllanguagedata,'userFriends':userFriendsdata
         }
 
         return render(request, "sentence/usermap.html",context)
@@ -822,6 +830,8 @@ def addfriend(request):
                     Friend=friendmodel,
                 )
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+
+
     return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
 
 
@@ -842,27 +852,30 @@ def search(request,ranktype):
 
         if request.session.get('UID'):
             usermodel = User.objects.get(UID=request.session.get('UID'))
-            print(sentencemodel_order)
             context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,
             'searchtype': searchtype,}
 
             return render(request, "sentence/search.html",context)
         else:
-            print("13")
             context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,'searchtype': searchtype,}
             return render(request, "sentence/search.html",context)
-   
+
 def chat_room(request,uid):
+    UID = request.session.get('UID')
     if request.method == 'POST':
-        UID = request.session.get('UID')
         django_form = PostMessage(request.POST)
         if django_form.is_valid():
-            room = Message.objects.get_or_create(RoomUID=uid)
-            message = request.POST.get('message')
-            room.VisiterUID = UID
-            room.Message = message
-            room.save()
+            message = django_form.data.get('message')
+            if message:
+                visitermodel = User.objects.get(UID=UID)
+                roomOwnermodel = User.objects.get(UID=uid)
+                room = Message.objects.create(
+                    RoomUID=roomOwnermodel,
+                    VisiterUID = visitermodel,
+                    Message = message,
+                    )
+                room.save()
 
-        allMessage = Message.objects.filter(RoomUID=uid)
-        context = {'allMessage':allMessage}
-        return render(request,'sentence/usermap.html',context)
+    allMessage = Message.objects.filter(RoomUID=uid)
+    context = {'allMessage':allMessage,'UID':UID}
+    return render(request,'sentence/message_modal.html',context)
