@@ -39,11 +39,13 @@ def index(request):
     if User.objects.filter(UID = uid).exists():
         if request.session.get('UID'):
             # print('login index')
-            
-            usermodel = User.objects.get(UID=request.session['UID'])
+            uid = request.session.get('UID')
+            usermodel = User.objects.get(UID=uid)
+            allMessage = Message.objects.filter(RoomUID=uid)
 
             context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'
+            ,'allMessage':allMessage}
 
             return render(request, "sentence/index.html",context)
         
@@ -318,15 +320,20 @@ def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
         ranfriendlist = User.objects.all().exclude(UID = usermodel.UID).order_by('?','pk')[:10]
-        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID')).order_by('pk')
         alllanguage = Language.objects.all().order_by('pk');
 
         userFriendsdata = None
+        userFriendsModeldata = None
         try:
             userFriends = Friendship.objects.filter(UID=usermodel.UID)
             userFriendsdata = serializers.serialize('json', userFriends)
+            userFriendsModel = [User.objects.get(UID=f.Friend.UID) for f in userFriends]
+            userFriendsModeldata = serializers.serialize('json', userFriendsModel)
+
         except:
             userFriendsdata = 'null'
+            userFriendsModeldata = 'null'
 
         sentencemodel = None
         if Sentence.objects.filter(UID=usermodel.UID).exists():
@@ -344,7 +351,7 @@ def usermap(request):
 
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
             ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
-            ,'alllanguage':alllanguagedata,'userFriends':userFriendsdata
+            ,'alllanguage':alllanguagedata,'userFriends':userFriendsdata,'userFriendsModel':userFriendsModeldata
         }
 
         return render(request, "sentence/usermap.html",context)
@@ -819,7 +826,7 @@ def addfriend(request):
     if request.method == "GET":
         friendID = request.GET.get('UID')
         uid = request.session.get('UID')
-        print("FRIEND: " +friendID)
+        # print("FRIEND: " +friendID)
 
         usermodel = User.objects.get(UID = uid)
         friendmodel = User.objects.get(UID = friendID)
@@ -833,7 +840,8 @@ def addfriend(request):
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
 
 
-    return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
+    return render(request,"sentence/usermap.html",{"friendlist":friendlist,'extend_index': 'sentence/background.html'})
+
 
 
 def search(request,ranktype):
@@ -876,7 +884,8 @@ def chat_room(request,uid):
                     Message = message,
                     )
                 room.save()
-
+    print(str(UID)+' '+str(uid) )
     allMessage = Message.objects.filter(RoomUID=uid)
     context = {'allMessage':allMessage,'UID':UID}
     return render(request,'sentence/message_modal.html',context)
+

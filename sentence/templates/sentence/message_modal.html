@@ -19,7 +19,7 @@
       <li class="messagelist">
           <div class="message-data">
             <!-- <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> {{m.VisiterUID.UserName}}</span> -->
-            <span class="message-data-name"><img src="{% static 'images/syuan.jpg' %}" class="message-friendpic">&ensp;{{m.VisiterUID.UserName}}</span>
+            <span class="message-data-name"><img src="{{m.VisiterUID.UserIcon.url}}" class="message-friendpic">&ensp;{{m.VisiterUID.UserName}}</span>
             <span class="message-data-time">&ensp;|&ensp;{{m.Date|timezone:"Asia/Taipei"}}</span>
           </div>
           <div class="messageframe other-message">
@@ -29,3 +29,4 @@
     {% endif %}
 {% endfor %}
 </ul>
+

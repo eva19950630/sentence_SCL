@@ -230,7 +230,7 @@
                         <div class="header-sm messageboard">
                             <!-- Notification -->
                             <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  <a href="" class="dropdown-toggle" id="user-messageboard" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-commenting" style="font-size: 28px; color:#fff;"></i>
                                   </a>
                             </span>
@@ -270,6 +270,37 @@
         </nav> <!-- end navbar-fixed-top -->
     </div> <!-- end header -->
     
+    <div class="message" style="display: block;">
+        <div role="dialog" class="modal fade" id="user-messagemodal">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content message">
+                    <div class="top" style="padding: 15px;">
+                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="message-friendinfo">
+                            <img id="user-friendimg" src="{{username.UserIcon.url}}">
+                            <div class="friendabout">
+                              <div class="user-friendname" id="user-message-name" userid="{{username.UID}}">{{username.UserName }}'s message board</div>
+                              <div class="user-friendmsgcount"></div>
+                            </div>
+                        </div>
+                        <div class="user-message-dialogcontent" id="user-message-log">
+                        </div>
+                        <form id="user-messageform">
+                                  {% csrf_token %}
+                                  {{ form.as_p }}
+                            <textarea class="user-message-sendframe" name="mymessage" placeholder="Type your message..."></textarea>
+                            <div class="message-sendbtn">
+                                <input type="submit" class="user modalbtn sendbtn" value="send">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
    
     <div class="body"> {% block content1 %} {% endblock content1 %} </div>
     <div class="body-2"> {% block content2 %} {% endblock content2 %} </div>
@@ -306,17 +337,29 @@
            
         },function(data){
 
-            icons = {{ranfriendlist|safe}};
-            iconsLength = icons.length;
-            console.log("length:" + iconsLength);
-            userSentence = {{sentence|safe}};
+            //current user
             userImg = "{{username.UserIcon.url}}";
-            friendSentencelist = {{friendSentencelist|safe}};   //random friends list
+            userid = "{{username.UID}}";
+            username = "{{username.UserName}}";
+            userlanguage = "{{username.NativeLanguage.Language}}";
+            userSentence = {{sentence|safe}};
+
+            //other users
+            icons = {{ranfriendlist|safe}}; // user model
+            iconsLength = icons.length;
+            friendSentencelist = {{friendSentencelist|safe}};   //random friends list //friend model
             alllanguage = {{alllanguage|safe}}; 
-            userFriends = {{userFriends|safe}};  //real friends
+            userFriends = {{userFriends|safe}};  //real friends //friend model
+            userFriendsModel = {{userFriendsModel|safe}} // real friend // user model
+            console.log("length:" + iconsLength);
             for(var i = 0 ; i < icons.length; i++){ 
                if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/'){
                 icons[Object.keys(icons)[i]].fields.UserIcon = '/media/'+icons[Object.keys(icons)[i]].fields.UserIcon;
+                }   
+            }         
+            for(var i = 0 ; i < userFriendsModel.length; i++){ 
+               if(userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != '/'){
+                userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon = '/media/'+userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon;
                 }   
             }         
         });

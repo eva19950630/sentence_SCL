@@ -58,3 +58,37 @@ $('.nav li a').click(function(e) {
     $(this).addClass('active');
 });
 
+$('#user-messageboard').click(function(e) {
+    var userid = $('#user-message-name').attr("userid");
+    $.get('/message/'+ userid+'/',function(data){
+        $('.user-message-dialogcontent').html(data);
+        $('.user-friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+    });
+    $('#user-messagemodal').appendTo("body").modal('show');
+});
+
+$('#user-messageform').submit(function(event) {
+    event.preventDefault();
+    var userid = $('#user-message-name').attr("userid");
+    var $form = $( this ),
+    message = $.trim ($('.user-message-sendframe').val());
+    var posting = $.post('/message/'+ userid+'/',{
+           'message': message
+        });
+
+    posting.done(function( data ) {
+        $('.user-message-dialogcontent').html(data);
+        $('.user-message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
+        // $('.message-dialogcontent').scrollTop($('.message-dialogcontent')[0].scrollHeight);
+        // $('#postshow-modal').modal('show');
+        $('.user-friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+      });
+    $('.user-message-sendframe').val("");
+});
+
+$('#user-messageform').on('keyup', 'textarea', function (event) {
+    if (event.keyCode == 13 && !event.shiftKey) {
+        event.preventDefault;
+        $('.user.modalbtn.sendbtn').click();
+    }
+});

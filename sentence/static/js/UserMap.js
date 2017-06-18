@@ -36,7 +36,8 @@ var screenScale = {
     ,height: screen.height
 };
 var users = "";
-
+var hasAddFriend = [];
+var hasAddFriendIndex = 0;
 
 var ranArray = [0,0,0,0,0,0,0,0,0,0];
 var thetaArray = [0,0,0,0,0,0,0,0,0,0];
@@ -96,8 +97,6 @@ function yJudge(i,j,k){
             return 1;
 }
 
-var hasAddFriend = [];
-var hasAddFriendIndex = 0;
 //Click icons
 $(c).on("click", function (event) {
     var totalOffsetX = 0;
@@ -115,11 +114,21 @@ $(c).on("click", function (event) {
     canvasX = event.pageX ;
     // canvasY = event.pageY - totalOffsetY;
     canvasY = event.pageY+50;
-    // canvasY = event.pageY-80;
-    // console.log("pageX: "+event.pageX+" ,"+event.pageY);
 
-    // console.log("canvasX: "+canvasX+" ,"+canvasY);
-    console.log("CurPos",CurPos.x,',',CurPos.y)
+    //click self
+    if ((canvasX >= CurPos.x && canvasX <= (CurPos.x + CurPos.scale)) && (canvasY >= (CurPos.y+ CurPos.scale) && canvasY <= (CurPos.y + CurPos.scale*2))){
+        users = icons[Object.keys(icons)[0]];
+        $("#introImg").attr("src",userImg);
+        $("#introName").html(username);
+        $("#introLanguage").html(userlanguage);
+        $('.userintro-sentence').html(userSentence[Object.keys(userSentence)[0]].fields.Content);
+        $('#message-btn').attr('class','modalbtn messagebtn');
+        $('#message-btn').attr('onclick','');
+        $('#message-btn').html('message');
+        $("#passerIntro").modal();
+        userMessage();
+    }
+    //click others
     for(var i = 0;i< 10;i++){
         if ((canvasX >= passerbyPos[i].x && canvasX <= (passerbyPos[i].x + CurPos.scale)) && (canvasY >= (passerbyPos[i].y+ CurPos.scale) && canvasY <= (passerbyPos[i].y + CurPos.scale*2))) {
             currentStranger = i;
@@ -147,8 +156,8 @@ $(c).on("click", function (event) {
                 }
             }
             for(var j = 0;j< hasAddFriend.length;j++){
-                    console.log('array '+hasAddFriend[j]+' ' + users.pk);
-                    if(hasAddFriend[j] == users.pk){
+                    console.log('array '+hasAddFriend[j].pk+' ' + users.pk);
+                    if(hasAddFriend[j].pk == users.pk){
                         $('#message-btn').attr('class','modalbtn messagebtn');
                         $('#message-btn').attr('onclick','');
                         $('#message-btn').html('message board');
@@ -156,19 +165,24 @@ $(c).on("click", function (event) {
                         break;
                     }
                 }
+            console.log(users.fields.UserName);
             $("#passerIntro").modal();
+            othersMessage();
            //GetProfile(proPasser);
         }
     }
 });
 function AddFriend(){
-    hasAddFriend[hasAddFriendIndex++] = users.pk;
+    hasAddFriend[hasAddFriendIndex++] = users;
     var FriendID = icons[Object.keys(icons)[currentStranger]].pk;
     console.log("UID" +FriendID);
     $.get('/addfriend/',{
            UID: FriendID
     },function(data){
-        $("#friendlist_certain_content").html(data);
+        var content = $( data ).find("#friendlist_certain_content")
+        $("#friendlist_certain_content").html(content);
+        
+        // $("#friendlist_certain_content").html(data);
     });
 }
 
@@ -260,17 +274,71 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
 
 
 //message
-$('#message-btn').click(function() {
-    $('.friendname').html(users.fields.UserName + " 's message board");
-    $("#friendimg").attr("src",users.fields.UserIcon);
-    $('#passerIntro').appendTo("body").modal('hide');
-    $('#messagemodal').appendTo("body").modal('show');
-    $.get('/message/'+ users.pk+'/',function(data){
-        $('.message-dialogcontent').html(data);
-        // $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 1000);
-        $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+
+function userMessage(){
+    console.log('user');
+    $('#message-btn').click(function() {
+        $('.friendname').html(username+"'s message board");
+        $("#friendimg").attr("src",userImg);
+        $('#passerIntro').appendTo("body").modal('hide');
+        $('#messagemodal').appendTo("body").modal('show');
+        $.get('/message/'+ userid+'/',function(data){
+            $('.message-dialogcontent').html(data);
+            // $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 1000);
+            $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+        });
     });
-});
+
+    $('#messageform').submit(function(event) {
+        event.preventDefault();
+        var $form = $( this ),
+        message = $.trim ($('.message-sendframe').val());
+        var posting = $.post('/message/'+ userid+'/',{
+               'message': message
+            });
+
+        posting.done(function( data ) {
+            $('.message-dialogcontent').html(data);
+            $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
+            // $('.message-dialogcontent').scrollTop($('.message-dialogcontent')[0].scrollHeight);
+            // $('#postshow-modal').modal('show');
+            $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+          });
+        $('.message-sendframe').val("");
+    });
+}
+
+function othersMessage(){
+    console.log('others');
+    $('#message-btn').click(function() {
+        $('.friendname').html(users.fields.UserName+"'s message board");
+        $("#friendimg").attr("src",users.fields.UserIcon);
+        $('#passerIntro').appendTo("body").modal('hide');
+        $('#messagemodal').appendTo("body").modal('show');
+        $.get('/message/'+ users.pk+'/',function(data){
+            $('.message-dialogcontent').html(data);
+            // $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 1000);
+            $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+        });
+    });
+
+    $('#messageform').submit(function(event) {
+        event.preventDefault();
+        var $form = $( this ),
+        message = $.trim ($('.message-sendframe').val());
+        var posting = $.post('/message/'+ users.pk+'/',{
+               'message': message
+            });
+
+        posting.done(function( data ) {
+            $('.message-dialogcontent').html(data);
+            $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
+            $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
+            $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
+        });
+        $('.message-sendframe').val("");
+    });
+}
 
 $('#messageform').on('keyup', 'textarea', function (event) {
     if (event.keyCode == 13 && !event.shiftKey) {
@@ -278,29 +346,34 @@ $('#messageform').on('keyup', 'textarea', function (event) {
         $('.modalbtn.sendbtn').click();
     }
 });
-// $('#messageform').attr('action','/message/'+ users.pk+'/');
-$('#messageform').submit(function(event) {
-    event.preventDefault();
-    var $form = $( this ),
-    message = $.trim ($('.message-sendframe').val());
-    var posting = $.post('/message/'+ users.pk+'/',{
-           'message': message
-        });
 
-    posting.done(function( data ) {
-        $('.message-dialogcontent').html(data);
-        $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
-        // $('.message-dialogcontent').scrollTop($('.message-dialogcontent')[0].scrollHeight);
-        // $('#postshow-modal').modal('show');
-        $('.friendmsgcount').html("already " + $(".message-historylist li").length + " messages");
-      });
-    $('.message-sendframe').val("");
-});
+$('.friendlist-message-btn').click(function(e) {
+    var getid = $(this).attr('data-post');
+    console.log("getid "+getid);
+    for(var j = 0;j< hasAddFriend.length;j++){
+        if(hasAddFriend[j].pk == getid){
+            users= hasAddFriend[j];
+            break;
+        }
+    }
+    for(var j = 0;j< userFriendsModel.length;j++){
+        if(userFriendsModel[Object.keys(userFriendsModel)[j]].pk == getid){
+            users = userFriendsModel[Object.keys(userFriendsModel)[j]];
+            break;
+        }
+    }
 
-$('#friendlist-message-btn').click(function() {
+    $('.friendname').html(users.fields.UserName+"'s message board");
+    $("#friendimg").attr("src",users.fields.UserIcon);
+    $('#passerIntro').appendTo("body").modal('hide');
     $('#messagemodal').appendTo("body").modal('show');
+    $.get('/message/'+ users.pk+'/',function(data){
+        $('.message-dialogcontent').html(data);
+        // $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 1000);
+    });
+    $('#messagemodal').appendTo("body").modal('show');
+    othersMessage();
 });
-
 
 // var scrollbottom = setInterval(function() {
 //   var elem = document.getElementById('message-log');

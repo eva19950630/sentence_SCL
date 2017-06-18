@@ -415,6 +415,63 @@ input[type="text"]:hover {
     width: 20%;
 }
 
+.user-message-contain {
+    height: 400px;
+    width: 300px;
+    border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    left: 900;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.user-message-username {
+    color: white;
+    background: black;
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    left: 0;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.user-message-textarea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 80%;
+    border: none;
+    outline: none;
+    border-top: 1px solid black;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    font-size: 15px;
+    word-spacing: 2px;
+    resize: none;
+    background-color: #f2f2f2;
+}
+
+.user-message-send {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    background: black;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    width: 20%;
+}
+
 .messages {
     position: absolute;
     bottom: 40px;
@@ -676,6 +733,14 @@ input[type="text"]:hover {
     height: 370px;
     overflow-y: auto;
 }
+.user-message-dialogcontent {
+    /*background-color: #000;*/
+    border: 1px solid #00CCCC;
+    border-radius: 3px;
+    margin: 2px 0 0 0;
+    height: 370px;
+    overflow-y: auto;
+}
 .message-sendframe {
     /*background-color: #AAA;*/
     border: 1px solid #AAA;
@@ -688,6 +753,21 @@ input[type="text"]:hover {
     letter-spacing: 1px;
 }
 .message-sendframe:focus {
+    border: 2px solid #AAA;
+    outline: 0;
+}
+.user-message-sendframe {
+    /*background-color: #AAA;*/
+    border: 1px solid #AAA;
+    border-radius: 3px;
+    margin: 10px 0 0 0;
+    padding: 5px 10px;
+    height: 100px;
+    width: 100%;
+    color: #AAA;
+    letter-spacing: 1px;
+}
+.user-message-sendframe:focus {
     border: 2px solid #AAA;
     outline: 0;
 }
