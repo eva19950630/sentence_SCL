@@ -432,46 +432,88 @@
                 }
             });
         }
+        var top_three_count = new Array(100);
         var fakepins = {};
+        var country_language = JSON.parse('{{country_language|escapejs}}'); 
         var test_trans_count = JSON.parse('{{country_trans_count|escapejs}}');
-        for(var i=0;i<Object.keys(test_trans_count).length;i++){
+        var top_trans_count = JSON.parse(JSON.stringify(test_trans_count));
+        
+            for(var i=0;i<Object.keys(test_trans_count).length;i++){
             var key = Object.keys(test_trans_count)[i];
             var value = test_trans_count[Object.keys(test_trans_count)[i]];
+            top_three_count[i] = value;    
+               
+            }
             fakepins[key] =  escapeXml('<img class="'+ key +' hidden"  src=../../static/images/amiba.png/ ><span>' + value + '</span>' );
-        }
         
-//        var pins = {
-//            'ru' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
-//            'tw' : escapeXml('<img class=test src=../../static/images/amiba.png/><span>87</span>' ),
-//            'fr' : escapeXml('<img class=test src=../../static/images/seastar.png/><span>87</span>' ),
-//        };
+        top_three_count = top_three_count.sort(function (a, b) {  return b-a;  });//find top three
+        var re=[top_three_count[0]];
+
+        for(var i = 1; i < top_three_count.length; i++){
+
+        if( top_three_count[i] !== re[re.length-1])
+
+        {
+
+        re.push(top_three_count[i]);
+
+        }
+
+        }
+
+        top_three_count = re;
+        
+        
+        for(var i=0; i < top_three_count.length;i++){
+            for(var j=0 ; j < Object.keys(test_trans_count).length; j++ ){
+                if(top_three_count[i] == test_trans_count[Object.keys(test_trans_count)[j]]){
+                    top_trans_count[Object.keys(test_trans_count)[j]] = i+1;
+                    console.log("top_three",top_trans_count);
+                }
+            }
+        }
+
         $('#vmap_choose').vectorMap({
             
             map: 'world_en',
             pins : fakepins, 
-            onRegionClick: function (element, code, region){  
-                $.get('/get/translation/'+ $('#get_sid').attr('data-post-id')+'/',{
+            onRegionClick: function (element, code, region){
+                if(Object.keys(test_trans_count).indexOf(code)>=0){$.get('/get/translation/'+ $('#get_sid').attr('data-post-id')+'/',{
                     translation_click_code : code
                  },function(data){
                     $('#translation_certain_language').html(data);
                     $('#postshow-modal').modal('show');
-                 });
+                 });}
+                
             },
             onRegionOver: function(event, code, region){
                 
             },
             onLabelShow:  function(event, label, code){
 //                console.log("event",event);
-                console.log("label",label);
+                
 //                console.log("code",code);
-                if(Object.keys(test_trans_count).indexOf(code)>=0){
-                    label.append("<div></div>");
+                if(Object.keys(test_trans_count).indexOf(code)>=0){//show translation count when hover on specific country
+                    
+                    jqvmap_label_css(label);
+                    label.prepend('<div class="language"><font style="font-size:20px; letter-spacing:1px; "><span><font style="font-size:30px; letter-spacing:1px; ">'+top_trans_count[code]+'&ensp;</font></span>'+ country_language[code] + '</font></div>');
+                    label.append('<div class="trans_count"><font style="font-size:14px; letter-spacing:1px;">Translation:&ensp;' + test_trans_count[code] + '</font></div>');
+                    console.log("label",label);
+                }
+                else{
+                    jqvmap_label_css(label);
+                    label.prepend('<div class="language"><font style="font-size:20px;letter-spacing:1px;">' + country_language[code] + '</font></div>');
                 }
 //                var trans_region_code = Object.keys(test_trans_count).indexOf(code);
             }
         });
        
-        
+        function jqvmap_label_css(label){
+            label.css("font-size" , "14px");
+            label.css("letter-spacing" , "1px");
+            label.not($("div .language")).css("opacity" , "0.7");
+            label.css("padding","10px");
+        }
 
         jQuery('#vmap_choose').vectorMap('set', 'colors', rc);
         if ('{{trans_region_code}}') {
