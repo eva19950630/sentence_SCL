@@ -22,6 +22,7 @@ from django.core import serializers
 # Create your views here.
 from django.core.files.base import ContentFile
 import datetime
+from collections import OrderedDict#dict sort
 
 
 def index(request): 
@@ -104,19 +105,49 @@ def sentence_url(request, sid):
     language_model = Language.objects.all()
 #    trans_model_by_likes = Translation.objects.filter(SID = int(sid)).order_by('Likes')[:3]
     new_region_code =  getCountryByLanguage(sentencemodel.Sentence_tag)
-    trans_country_code = []
+    country_language = {}
     country_trans_count = {}
+    top_three_trans_count = {}
     # TranslationList = ''
     
     #get the count of translation 
     translation_count = [ 0 for i in range(0,100) ]
+    top_three_trans_lang_id = [0 for i in range(0,10)]
     
     for t in trans_model:
          for l in language_model:
             if t.Translation_tag.lower() == l.Language.lower():
                 translation_count[l.Language_ID] += 1
+                top_three_trans_count[l.Language] = translation_count[l.Language_ID]
                 for j in json.loads(getCountryByLanguage(l.Language)):
                     country_trans_count[j] = translation_count[l.Language_ID]
+    s = sorted(translation_count,reverse=True)
+    s = s[:3]#first three
+    
+    for index,i in enumerate(s):
+        for l in language_model:
+            lang_id = translation_count.index(i)
+    print(index)
+    
+    
+            
+                
+        
+                    
+    d = top_three_trans_count
+    print("top_three_trans_count",top_three_trans_count)
+    sort_top_three_trans_count = sorted(d.values())
+    sort_top_three_trans_lang = sorted(d, key=d.get)          
+    print("sort_top_three_trans_count",sort_top_three_trans_lang)
+    print("sort_top_three_trans_count",s)
+  
+    
+    
+    
+                    
+    for l in language_model:
+         for j in json.loads(getCountryByLanguage(l.Language)):
+                    country_language[j] = l.Language
             
     #classify translation by language
 #    translation_classified_by_lang = {} 
@@ -168,18 +199,21 @@ def sentence_url(request, sid):
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,
             'collect':collectionmodel,'region_code':new_region_code,'trans_region_code':json_trans_code,'translation':trans_model
-            ,'country_trans_count':json.dumps(country_trans_count)}
+            ,'country_trans_count':json.dumps(country_trans_count)
+            ,'country_language':json.dumps(country_language)}
         else:
             context = {'sentence_content': sentencemodel,'username': usermodel,
             'liked': liked,'extend_index': 'sentence/background.html','collected': isCollect,'region_code':new_region_code,
-            'trans_region_code':json_trans_code,'translation':trans_model,'country_trans_count':json.dumps(country_trans_count)}
+            'trans_region_code':json_trans_code,'translation':trans_model,'country_trans_count':json.dumps(country_trans_count)
+            ,'country_language':json.dumps(country_language)}
         del json_trans_code    
         return render(request, 'sentence/sentence.html',context)
     else:
 
         context = {'sentence_content': sentencemodel,'extend_index': 'sentence/background.html','region_code':new_region_code
         ,'trans_region_code':json_trans_code,'translation':trans_model
-        ,'country_trans_count':json.dumps(country_trans_count)}
+        ,'country_trans_count':json.dumps(country_trans_count)
+        ,'country_language':json.dumps(country_language)}
 
         del json_trans_code
         return render(request, 'sentence/sentence.html',context)
