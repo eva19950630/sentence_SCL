@@ -415,6 +415,63 @@ input[type="text"]:hover {
     width: 20%;
 }
 
+.user-message-contain {
+    height: 400px;
+    width: 300px;
+    border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    left: 900;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.user-message-username {
+    color: white;
+    background: black;
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    left: 0;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.user-message-textarea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 80%;
+    border: none;
+    outline: none;
+    border-top: 1px solid black;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    font-size: 15px;
+    word-spacing: 2px;
+    resize: none;
+    background-color: #f2f2f2;
+}
+
+.user-message-send {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    background: black;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    width: 20%;
+}
+
 .messages {
     position: absolute;
     bottom: 40px;
@@ -609,6 +666,7 @@ input[type="text"]:hover {
     height: 120px;
     padding: 5px 10px;
     overflow-y: auto;
+    word-wrap: break-word;
 }
 .modalbtn {
     background: #00CCCC;
@@ -656,6 +714,7 @@ input[type="text"]:hover {
 }
 
 
+/*message*/
 .modal-content.message {
     margin: 5% auto;
     width: 600px;
@@ -674,6 +733,14 @@ input[type="text"]:hover {
     height: 370px;
     overflow-y: auto;
 }
+.user-message-dialogcontent {
+    /*background-color: #000;*/
+    border: 1px solid #00CCCC;
+    border-radius: 3px;
+    margin: 2px 0 0 0;
+    height: 370px;
+    overflow-y: auto;
+}
 .message-sendframe {
     /*background-color: #AAA;*/
     border: 1px solid #AAA;
@@ -682,10 +749,25 @@ input[type="text"]:hover {
     padding: 5px 10px;
     height: 100px;
     width: 100%;
-    color: #00CCCC;
-    letter-spacing: 0.5px;
+    color: #AAA;
+    letter-spacing: 1px;
 }
 .message-sendframe:focus {
+    border: 2px solid #AAA;
+    outline: 0;
+}
+.user-message-sendframe {
+    /*background-color: #AAA;*/
+    border: 1px solid #AAA;
+    border-radius: 3px;
+    margin: 10px 0 0 0;
+    padding: 5px 10px;
+    height: 100px;
+    width: 100%;
+    color: #AAA;
+    letter-spacing: 1px;
+}
+.user-message-sendframe:focus {
     border: 2px solid #AAA;
     outline: 0;
 }
@@ -693,14 +775,6 @@ input[type="text"]:hover {
     margin: 5px 0 0 220px;
 }
 
-/*.message-friendinfo:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-}*/
 .message-friendinfo img {
     float: left;
     border: 2.5px solid #fff;
@@ -712,7 +786,7 @@ input[type="text"]:hover {
 .friendabout {
     float: left;
     margin: 10px 0 0 10px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 .friendname {
     font-weight: 600;
@@ -723,10 +797,13 @@ input[type="text"]:hover {
     color: #f5f5f5;
 }
 
-/*.message-historylist li {
-    margin: 0 0 10px 0;
-}*/
-.clearfix:after {
+.messagelist {
+    margin: 10px 0 0 0;
+}
+.messagelist.clearfix {
+    margin: -5px 0 0 0;
+}
+.messagelist.clearfix:after {
     visibility: hidden;
     display: block;
     font-size: 0;
@@ -735,7 +812,7 @@ input[type="text"]:hover {
     height: 0;
 }
 .message-data {
-    margin: 0 0 12px -20px;
+    margin: 0 0 12px -30px;
 }
 .message-data-time {
     color: #a8aab1;
@@ -747,10 +824,14 @@ input[type="text"]:hover {
     font-weight: 600;
     letter-spacing: 0.5px;
 }
+.message-friendpic {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+}
 .message-data.align-right {
     text-align: right;
     padding-right: 1.3em; 
-    /*margin: 0 0 0 -50px;*/
 }
 .messageframe {
     color: white;
@@ -777,10 +858,10 @@ input[type="text"]:hover {
 }
 .my-message {
     background: #00CCCC;
-    margin: 0 0 10px 30px;
+    margin: 0 0 0 30px;
 }
 .other-message {
-    margin: 0 0 5px -20px;
+    margin: 0 0 0 -20px;
     background: #B5B5B5;
 }
 .circle-me {

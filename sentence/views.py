@@ -39,11 +39,13 @@ def index(request):
     if User.objects.filter(UID = uid).exists():
         if request.session.get('UID'):
             # print('login index')
-            
-            usermodel = User.objects.get(UID=request.session['UID'])
+            uid = request.session.get('UID')
+            usermodel = User.objects.get(UID=uid)
+            allMessage = Message.objects.filter(RoomUID=uid)
 
             context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'
+            ,'allMessage':allMessage}
 
             return render(request, "sentence/index.html",context)
         
@@ -886,3 +888,4 @@ def chat_room(request,uid):
     allMessage = Message.objects.filter(RoomUID=uid)
     context = {'allMessage':allMessage,'UID':UID}
     return render(request,'sentence/message_modal.html',context)
+

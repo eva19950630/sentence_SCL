@@ -93,14 +93,14 @@
                           <div class="friendmsgcount"></div>
                         </div>
                     </div>
-                    <div class="message-dialogcontent">
+                    <div class="message-dialogcontent" id="message-log">
                     </div>
-                    <form id="messageform" >
+                    <form id="messageform">
                               {% csrf_token %}
                               {{ form.as_p }}
                         <textarea class="message-sendframe" name="mymessage" placeholder="Type your message..."></textarea>
                         <div class="message-sendbtn">
-                            <input type="submit" class="modalbtn sendbtn">send</button>
+                            <input type="submit" class="modalbtn sendbtn" value="send">
                         </div>
                     </form>
                 </div>
