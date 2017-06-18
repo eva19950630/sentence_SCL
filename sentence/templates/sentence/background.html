@@ -76,6 +76,8 @@
                     <!-- Search bar -->
                     <div class="col-md-5 col-sm-6 col-xs-6">
                         <form class="search">
+                            {% csrf_token %}
+                            {{ form.as_p }}
                             <input class="searchTerm" placeholder="Enter sentence or tag keywords" />
                             <input class="searchButton" name="search_submit" type="submit" />
                         </form>
@@ -267,6 +269,7 @@
         var userImg = null;
         var iconsLenght = 0;
         var alllanguage = null;
+        var userFriends = null;
         //user profile
         $.get('/user/usermap/',{
            
@@ -277,19 +280,17 @@
             console.log("length:" + iconsLength);
             userSentence = {{sentence|safe}};
             userImg = "{{username.UserIcon.url}}";
-            friendSentencelist = {{friendSentencelist|safe}};   
+            friendSentencelist = {{friendSentencelist|safe}};   //random friends list
             alllanguage = {{alllanguage|safe}}; 
-            for(var i = 0 ; i < icons.length; i++){
-               
+            userFriends = {{userFriends|safe}};  //real friends
+            for(var i = 0 ; i < icons.length; i++){ 
                if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/'){
                 icons[Object.keys(icons)[i]].fields.UserIcon = '/media/'+icons[Object.keys(icons)[i]].fields.UserIcon;
                 }   
-                // console.log("icons " + icons[Object.keys(icons)[i]].fields.UserIcon );
-                // console.log("icons url " + icons[Object.keys(icons)[i]] );
-                // console.log("userSentence " + friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content  );  
             }         
         });
-        
+
+        var currentStranger = 0;
     </script>
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
@@ -669,7 +670,29 @@
             });
         });
 
-        // console.log("h: "+screen.height+", w: "  +screen.width);
+        $.ajaxSetup({ 
+             beforeSend: function(xhr, settings) {
+                 function getCookie(name) {
+                     var cookieValue = null;
+                     if (document.cookie && document.cookie != '') {
+                         var cookies = document.cookie.split(';');
+                         for (var i = 0; i < cookies.length; i++) {
+                             var cookie = jQuery.trim(cookies[i]);
+                             // Does this cookie string begin with the name we want?
+                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                 break;
+                             }
+                         }
+                     }
+                     return cookieValue;
+                 }
+                 if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                     // Only send the token to relative URLs i.e. locally.
+                     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                 }
+             } 
+        });
     </script>
 
 </html>

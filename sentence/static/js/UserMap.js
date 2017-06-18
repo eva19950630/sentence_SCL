@@ -62,17 +62,17 @@ function randOvalCoordinate(i){
 
 function imgOverlapping(i){
     for(var j = 0;j < i;j++){
-        console.log(xJudge(i,j,1)+xJudge(i,j,2)+yJudge(i,j,1)+yJudge(i,j,2));
+        // console.log(xJudge(i,j,1)+xJudge(i,j,2)+yJudge(i,j,1)+yJudge(i,j,2));
         // xJudge(1);xJudge(2);yJudge(1);yJudge(2);
         if((xJudge(i,j,1)&&xJudge(i,j,1)) || (xJudge(i,j,1)&&xJudge(i,j,2)) || (xJudge(i,j,2)&&xJudge(i,j,1)) || (xJudge(i,j,2)&&xJudge(i,j,2))){
-            console.log("re1");
+            // console.log("re1");
             randOvalCoordinate(i);
-            console.log("re2");
+            // console.log("re2");
             break;
         }
 
         if(((passerbyPos[i].x+CurPos.scale) > screen.width) || ((passerbyPos.y+CurPos.scale+200) > screen.height)){
-            console.log("out");
+            // console.log("out");
             randOvalCoordinate(i);
         }
     }
@@ -96,7 +96,8 @@ function yJudge(i,j,k){
             return 1;
 }
 
-var currentStranger;
+var hasAddFriend = [];
+var hasAddFriendIndex = 0;
 //Click icons
 $(c).on("click", function (event) {
     var totalOffsetX = 0;
@@ -128,12 +129,40 @@ $(c).on("click", function (event) {
             users = icons[Object.keys(icons)[i]];
             $("#introName").html(users.fields.UserName);
             $("#introLanguage").html(alllanguage[Object.keys(alllanguage)[users.fields.NativeLanguage-1]].fields.Language);
+            $('.userintro-sentence').html(friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content)
+            
+            $('#message-btn').attr('class','modalbtn addbtn');
+            $('#message-btn').attr('onclick','AddFriend()');
+            $('#message-btn').html('add friend');
+            if(userFriends){
+                console.log("true");
+                for(var j = 0;j< userFriends.length;j++){
+                    if(userFriends[Object.keys(userFriends)[j]].fields.Friend == users.pk){
+                        $('#message-btn').attr('class','modalbtn messagebtn');
+                        $('#message-btn').attr('onclick','');
+                        $('#message-btn').html('message');
+                        console.log("are friend");
+                        break;
+                    }
+                }
+            }
+            for(var j = 0;j< hasAddFriend.length;j++){
+                    console.log('array '+hasAddFriend[j]+' ' + users.pk);
+                    if(hasAddFriend[j] == users.pk){
+                        $('#message-btn').attr('class','modalbtn messagebtn');
+                        $('#message-btn').attr('onclick','');
+                        $('#message-btn').html('message');
+                        console.log("are friend add");
+                        break;
+                    }
+                }
             $("#passerIntro").modal();
            //GetProfile(proPasser);
         }
     }
 });
 function AddFriend(){
+    hasAddFriend[hasAddFriendIndex++] = users.pk;
     var FriendID = icons[Object.keys(icons)[currentStranger]].pk;
     console.log("UID" +FriendID);
     $.get('/addfriend/',{
@@ -231,88 +260,118 @@ var DrawIcons = function (isrc, pox, poy, sentence) {
 
 
 //message
-/*catch before create*/
-var msgHeader = ".message-username";
-var msgContain = ".message-contain";
-var isMsgVisable = true;
-$("body").on('click', msgHeader, function () {
-    //var windowBottom = $(window).scrollTop() + $(window).height();
-    //alert($(msgContain).position().top);
-    //if ((windowBottom - $(msgContain).position().top) > 0) {
-    if (isMsgVisable) {
-        $(msgContain).css('bottom', '-360px');
-        isMsgVisable = false;
-    }
-    else {
-        $('.message-contain').css('bottom', '0px');
-        isMsgVisable = true;
-    }
-});
-
-var userPro = "#bigV-message";
-// var CallMessage = function () {
-    $(userPro).click(function () {
-        if ($('#' + users.fields.UserName).length == 0) {
-            $('#message-area').append('<div id="' + users.fields.UserName + '" class="message-contain"><div class="message-username">' + users.fields.UserName + '</div><textarea class="message-textarea" placeholder="message" row="2"></textarea><button class="message-send">Send</button><div class="messages" name="mesag"><div class="message-box"></div></div></div>');
-        }
-    });
-// };
-//chat-box js
-var arr = [];
-var count = 0;
-for (var i = 48; i <= 122; i++) {
-    var res = String.fromCharCode(i);
-    arr[count] = res;
-    count++;
-}
-$('body').on('keyup', 'textarea', function (event) {
-    if (event.keyCode == 13 && !event.shiftKey) {
-        event.preventDefault;
-        $('.message-send').click();
-    }
-});
-//$('.message-send').each(function (i) {
-$('body').each(function (i) {
-    $(this).on('click', '.message-send', function () {
-        message = $('.message-textarea').val();
-        $.get('/message/'+ users.pk+'/',{
-           'message': message
-        },function(data){
-            
-        });
-        if ($('.messages').height() > ($('.message-contain').height())) {
-            $('.messages').css('overflowY', 'scroll');
-        }
-        if ($('textarea').val().length > 1) {
-            $('.messages').append('<div class="message-box"><p class="message"></p></div>');
-            $('.message').eq(i - 1).text($('textarea').val()).addClass('push');
-            $('textarea').val('');
-            $('textarea').focus();
-            //reply
-            /*$('.messages').append('<div class="reply-box"><span class="glyphicon glyphicon-bell"></span><p class="reply"></p></div>');
-            $('.reply').eq(i - 1).html(arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()]).addClass('push2');
-            $('.reply-box span').addClass('push2');*/
-        }
-        else {
-            $('textarea').val('');
-            $('textarea').focus();
-        }
-        var mesag = document.getElementsByName('mesag');
-        mesag.scrollTop = mesag.scrollHeight;
-    });
-});
-
-
-// $(function() {
-//     $(c ).draggable();
-// });
-
-
 $('#message-btn').click(function() {
+    $('.friendname').html(users.fields.UserName+"'s message board");
+    $("#friendimg").attr("src",users.fields.UserIcon);
     $('#passerIntro').appendTo("body").modal('hide');
     $('#messagemodal').appendTo("body").modal('show');
+    $.get('/message/'+ users.pk+'/',function(data){
+        $('.message-dialogcontent').html(data);
+        // $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 1000);
+        $('.friendmsgcount').html($(".message-historylist li").length);
+    });
+});
+
+$('#messageform').on('keyup', 'textarea', function (event) {
+    if (event.keyCode == 13 && !event.shiftKey) {
+        event.preventDefault;
+        $('.modalbtn.sendbtn').click();
+    }
+});
+// $('#messageform').attr('action','/message/'+ users.pk+'/');
+$('#messageform').submit(function(event) {
+    event.preventDefault();
+    var $form = $( this ),
+    message = $.trim ($('.message-sendframe').val());
+    var posting = $.post('/message/'+ users.pk+'/',{
+           'message': message
+        });
+
+    posting.done(function( data ) {
+        $('.message-dialogcontent').html(data);
+        $('.message-dialogcontent').animate({ scrollTop: $('.message-dialogcontent').prop("scrollHeight")}, 'toggle');
+        // $('.message-dialogcontent').scrollTop($('.message-dialogcontent')[0].scrollHeight);
+        // $('#postshow-modal').modal('show');
+        $('.friendmsgcount').html($(".message-historylist li").length);
+      });
+    $('.message-sendframe').val("");
 });
 
 $('#friendlist-message-btn').click(function() {
     $('#messagemodal').appendTo("body").modal('show');
 });
+
+/*catch before create*/
+// var msgHeader = ".message-username";
+// var msgContain = ".message-contain";
+// var isMsgVisable = true;
+// $("body").on('click', msgHeader, function () {
+//     //var windowBottom = $(window).scrollTop() + $(window).height();
+//     //alert($(msgContain).position().top);
+//     //if ((windowBottom - $(msgContain).position().top) > 0) {
+//     if (isMsgVisable) {
+//         $(msgContain).css('bottom', '-360px');
+//         isMsgVisable = false;
+//     }
+//     else {
+//         $('.message-contain').css('bottom', '0px');
+//         isMsgVisable = true;
+//     }
+// });
+
+// var userPro = "#bigV-message";
+// // var CallMessage = function () {
+//     $(userPro).click(function () {
+//         if ($('#' + users.fields.UserName).length == 0) {
+//             $('#message-area').append('<div id="' + users.fields.UserName + '" class="message-contain"><div class="message-username">' + users.fields.UserName + '</div><textarea class="message-textarea" placeholder="message" row="2"></textarea><button class="message-send">Send</button><div class="messages" name="mesag"><div class="message-box"></div></div></div>');
+//         }
+//     });
+// // };
+// //chat-box js
+// var arr = [];
+// var count = 0;
+// for (var i = 48; i <= 122; i++) {
+//     var res = String.fromCharCode(i);
+//     arr[count] = res;
+//     count++;
+// }
+// $('body').on('keyup', 'textarea', function (event) {
+//     if (event.keyCode == 13 && !event.shiftKey) {
+//         event.preventDefault;
+//         $('.message-send').click();
+//     }
+// });
+// //$('.message-send').each(function (i) {
+// $('body').each(function (i) {
+//     $(this).on('click', '.message-send', function () {
+//         message = $('.message-textarea').val();
+//         $.get('/message/'+ users.pk+'/',{
+//            'message': message
+//         },function(data){
+            
+//         });
+//         if ($('.messages').height() > ($('.message-contain').height())) {
+//             $('.messages').css('overflowY', 'scroll');
+//         }
+//         if ($('textarea').val().length > 1) {
+//             $('.messages').append('<div class="message-box"><p class="message"></p></div>');
+//             $('.message').eq(i - 1).text($('textarea').val()).addClass('push');
+//             $('textarea').val('');
+//             $('textarea').focus();
+//             //reply
+//             /*$('.messages').append('<div class="reply-box"><span class="glyphicon glyphicon-bell"></span><p class="reply"></p></div>');
+//             $('.reply').eq(i - 1).html(arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()] + arr[(Math.floor((Math.random()) * (arr.length))).toString()]).addClass('push2');
+//             $('.reply-box span').addClass('push2');*/
+//         }
+//         else {
+//             $('textarea').val('');
+//             $('textarea').focus();
+//         }
+//         var mesag = document.getElementsByName('mesag');
+//         mesag.scrollTop = mesag.scrollHeight;
+//     });
+// });
+
+// $(function() {
+//     $(c ).draggable();
+// });
