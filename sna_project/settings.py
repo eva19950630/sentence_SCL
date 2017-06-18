@@ -68,6 +68,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.csrf.CsrfResponseMiddleware',
     # 'easy_timezones.middleware.EasyTimezoneMiddleware',
 ]
 

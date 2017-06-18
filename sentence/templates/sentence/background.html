@@ -76,6 +76,8 @@
                     <!-- Search bar -->
                     <div class="col-md-5 col-sm-6 col-xs-6">
                         <form class="search">
+                            {% csrf_token %}
+                            {{ form.as_p }}
                             <input class="searchTerm" placeholder="Enter sentence or tag keywords" />
                             <input class="searchButton" name="search_submit" type="submit" />
                         </form>
@@ -184,18 +186,60 @@
                         <!-- LOG IN -->
                         {% else %}
 
+                        <div class="header-sm favorite">
+                            <!-- Favorite -->
+                            <span class="after-login">
+                                  <a href="/user/collection" class="dropdown-toggle" role="button" aria-expanded="false">
+                                    <i class="fa fa-star" style="font-size: 28px; color:#fff;"></i>
+                                  </a>
+                            </span>
+                        </div>
+
+                        <div class="header-sm notification">
+                            <!-- Notification -->
+                            <span class="after-login">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-bell" style="font-size: 28px; color:#fff;"></i>
+                                  </a>
+                                  <ul class="dropdown-menu notification" role="menu">
+                                    <div class="noti-title">&emsp;Notifications</div>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="">
+                                            <div>
+                                                
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                  </ul>
+                            </span>
+                        </div>
+
+                        <div class="header-sm messageboard">
+                            <!-- Notification -->
+                            <span class="after-login">
+                                  <a href="" class="dropdown-toggle" id="user-messageboard" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-commenting" style="font-size: 28px; color:#fff;"></i>
+                                  </a>
+                            </span>
+                        </div>
+
+                        <span style="color:#22949b; font-size: 26px;">&ensp;|</span>
+
                         <div class="header-sm user">
                             <!-- User Profile -->
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {% if username %}
                                     <img src="{{ username.UserIcon.url }}" height="40" width="40" id="user-pic">
-                                    <span id="user-name"><font color=#fff>{{username.UserName}}</font></span>
+                                    <!-- <span id="user-name"><font color=#fff>{{username.UserName}}</font></span> -->
                                   {% else %}
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
                                   {% endif %}
                                   </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                  <ul class="dropdown-menu dropdown-menu-right user" role="menu">
+                                    <li><span id="user-name"><font color=#fff>{{username.UserName}} /</font></span></li>
                                     <li><a href="/user/usermap"><i class="fa fa-map" style="font-size: 20px;"></i>&emsp;User Map</a></li>
                                     <li><a href="/user/profile"><i class="fa fa-user-o" style="font-size: 20px;"></i>&emsp;Profile</a></li>
                                     <li class="divider"></li>
@@ -205,29 +249,7 @@
                                   </ul>
                             </span>
                         </div>
-
-                        <span style="color:#22949b; font-size: 26px;">|&ensp;</span>
-
-                        <div class="header-sm favorite">
-                            <!-- Favorite -->
-                            <span class="after-login">
-                                  <a href="/user/collection" class="dropdown-toggle" role="button" aria-expanded="false">
-                                    <i class="fa fa-star" style="font-size: 30px; color:#fff;"></i>
-                                  </a>
-                            </span>
-                        </div>
-
-                        <div class="header-sm notification">
-                            <!-- Notification -->
-                            <span class="after-login">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="fa fa-bell" style="font-size: 30px; color:#fff;"></i>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <div><font color=white>&emsp;Notifications</font></div>
-                                  </ul>
-                            </span>
-                        </div>
+                        
 
                         {% endif %}
 
@@ -237,6 +259,37 @@
         </nav> <!-- end navbar-fixed-top -->
     </div> <!-- end header -->
     
+    <div class="message" style="display: block;">
+        <div role="dialog" class="modal fade" id="user-messagemodal">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content message">
+                    <div class="top" style="padding: 15px;">
+                        <button type="button" class="close" data-dismiss="modal" style="outline: 0;"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="message-friendinfo">
+                            <img id="user-friendimg" src="{{username.UserIcon.url}}">
+                            <div class="friendabout">
+                              <div class="user-friendname" id="user-message-name" userid="{{username.UID}}">{{username.UserName }}'s message board</div>
+                              <div class="user-friendmsgcount"></div>
+                            </div>
+                        </div>
+                        <div class="user-message-dialogcontent" id="user-message-log">
+                        </div>
+                        <form id="user-messageform">
+                                  {% csrf_token %}
+                                  {{ form.as_p }}
+                            <textarea class="user-message-sendframe" name="mymessage" placeholder="Type your message..."></textarea>
+                            <div class="message-sendbtn">
+                                <input type="submit" class="user modalbtn sendbtn" value="send">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
    
     <div class="body"> {% block content1 %} {% endblock content1 %} </div>
     <div class="body-2"> {% block content2 %} {% endblock content2 %} </div>
@@ -267,29 +320,40 @@
         var userImg = null;
         var iconsLenght = 0;
         var alllanguage = null;
+        var userFriends = null;
         //user profile
         $.get('/user/usermap/',{
            
         },function(data){
 
-            icons = {{ranfriendlist|safe}};
-            iconsLength = icons.length;
-            console.log("length:" + iconsLength);
-            userSentence = {{sentence|safe}};
+            //current user
             userImg = "{{username.UserIcon.url}}";
-            friendSentencelist = {{friendSentencelist|safe}};   
+            userid = "{{username.UID}}";
+            username = "{{username.UserName}}";
+            userlanguage = "{{username.NativeLanguage.Language}}";
+            userSentence = {{sentence|safe}};
+
+            //other users
+            icons = {{ranfriendlist|safe}}; // user model
+            iconsLength = icons.length;
+            friendSentencelist = {{friendSentencelist|safe}};   //random friends list //friend model
             alllanguage = {{alllanguage|safe}}; 
-            for(var i = 0 ; i < icons.length; i++){
-               
+            userFriends = {{userFriends|safe}};  //real friends //friend model
+            userFriendsModel = {{userFriendsModel|safe}} // real friend // user model
+            console.log("length:" + iconsLength);
+            for(var i = 0 ; i < icons.length; i++){ 
                if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/'){
                 icons[Object.keys(icons)[i]].fields.UserIcon = '/media/'+icons[Object.keys(icons)[i]].fields.UserIcon;
                 }   
-                // console.log("icons " + icons[Object.keys(icons)[i]].fields.UserIcon );
-                // console.log("icons url " + icons[Object.keys(icons)[i]] );
-                // console.log("userSentence " + friendSentencelist[Object.keys(friendSentencelist)[i]].fields.Content  );  
+            }         
+            for(var i = 0 ; i < userFriendsModel.length; i++){ 
+               if(userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != '/'){
+                userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon = '/media/'+userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon;
+                }   
             }         
         });
-        
+
+        var currentStranger = 0;
     </script>
     <!-- Usermap js -->
     <script type="text/javascript" src="{% static 'js/UserMap.js' %}"></script>
@@ -711,7 +775,29 @@
             });
         });
 
-        // console.log("h: "+screen.height+", w: "  +screen.width);
+        $.ajaxSetup({ 
+             beforeSend: function(xhr, settings) {
+                 function getCookie(name) {
+                     var cookieValue = null;
+                     if (document.cookie && document.cookie != '') {
+                         var cookies = document.cookie.split(';');
+                         for (var i = 0; i < cookies.length; i++) {
+                             var cookie = jQuery.trim(cookies[i]);
+                             // Does this cookie string begin with the name we want?
+                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                 break;
+                             }
+                         }
+                     }
+                     return cookieValue;
+                 }
+                 if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                     // Only send the token to relative URLs i.e. locally.
+                     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                 }
+             } 
+        });
     </script>
 
 </html>

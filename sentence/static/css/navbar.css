@@ -180,6 +180,52 @@ input[type=search-mobile]:focus {
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
+.dropdown-menu.notification {
+    width: 350px;
+    /*height: 350px;*/
+}
+.dropdown-menu.notification:after {
+    bottom: 100%;
+    left: 37.5%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #FFF;
+    border-width: 12px;
+    margin-left: -10px;
+}
+.dropdown-menu.dropdown-menu-right.user:after {
+    bottom: 100%;
+    left: 88%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #FFF;
+    border-width: 12px;
+    margin-left: -10px;
+}
+
+/*notification*/
+.noti-title {
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #fff;
+    margin: 5px 0 0 0;
+}
+.noti-content {
+    width: 350px;
+    height: 70px;
+    background-color: #f0f0f0;
+}
+.dropdown-menu.notification > li > a {
+    height: 60px;
+}
 
 .dropdown-menu > li > a {
     padding: 10px 20px;
@@ -922,12 +968,16 @@ button.social-signin.google {
 
 #user-pic {
     border-radius: 60%;
+    border: 1.5px solid #fff;
 }
 
 #user-name {
     /*background-color: #000;*/
-    font-size: 16px;
-    letter-spacing: 1.5px;
+    /*float: right;*/
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 36px;
+    padding-left: 1.2em;
 }
 
 

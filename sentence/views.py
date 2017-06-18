@@ -21,8 +21,11 @@ from django.core.files.base import ContentFile
 from django.core import serializers
 # Create your views here.
 from django.core.files.base import ContentFile
+
 import datetime
-from collections import OrderedDict#dict sort
+
+
+
 
 
 def index(request): 
@@ -40,11 +43,13 @@ def index(request):
     if User.objects.filter(UID = uid).exists():
         if request.session.get('UID'):
             # print('login index')
-            
-            usermodel = User.objects.get(UID=request.session['UID'])
+            uid = request.session.get('UID')
+            usermodel = User.objects.get(UID=uid)
+            allMessage = Message.objects.filter(RoomUID=uid)
 
             context = {'username': usermodel,'sentence_content': sentencemodel_like_order,
-            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'}
+            'sentence_content_date': sentencemodel_date_order,'extend_index': 'sentence/background.html'
+            ,'allMessage':allMessage}
 
             return render(request, "sentence/index.html",context)
         
@@ -352,8 +357,20 @@ def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
         ranfriendlist = User.objects.all().exclude(UID = usermodel.UID).order_by('?','pk')[:10]
-        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID')).order_by('pk')
         alllanguage = Language.objects.all().order_by('pk');
+
+        userFriendsdata = None
+        userFriendsModeldata = None
+        try:
+            userFriends = Friendship.objects.filter(UID=usermodel.UID)
+            userFriendsdata = serializers.serialize('json', userFriends)
+            userFriendsModel = [User.objects.get(UID=f.Friend.UID) for f in userFriends]
+            userFriendsModeldata = serializers.serialize('json', userFriendsModel)
+
+        except:
+            userFriendsdata = 'null'
+            userFriendsModeldata = 'null'
 
         sentencemodel = None
         if Sentence.objects.filter(UID=usermodel.UID).exists():
@@ -368,9 +385,10 @@ def usermap(request):
         friendSentencelistdata = serializers.serialize('json', friendSentencelist)
         sentencemodeldata = serializers.serialize('json', sentencemodel)
         alllanguagedata = serializers.serialize('json', alllanguage)
+
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
             ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
-            ,'alllanguage':alllanguagedata
+            ,'alllanguage':alllanguagedata,'userFriends':userFriendsdata,'userFriendsModel':userFriendsModeldata
         }
 
         return render(request, "sentence/usermap.html",context)
@@ -505,7 +523,8 @@ def user_history(request):
     if request.session.get('UID'):
         get_uid = request.session.get('UID')
         usermodel = User.objects.get(UID=get_uid)
-        sentencemodel = Sentence.objects.filter(UID=get_uid)
+        sentencemodel = Sentence.objects.filter(UID=get_uid,Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')
+        # sentencemodel = Sentence.objects.filter(UID=get_uid)
         translationmodel = Translation.objects.filter(UID=get_uid)
 
         context = {'sentence_model': sentencemodel,'translation_model': translationmodel,
@@ -531,8 +550,8 @@ def user_friends(request):
 
 
 def login_app(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
     get_email = request.POST.get('email')
 
     #social login
@@ -683,8 +702,8 @@ def login_app(request):
 
 #logout
 def logout(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
     print("logout")
     django_logout(request)
     context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
@@ -844,7 +863,7 @@ def addfriend(request):
     if request.method == "GET":
         friendID = request.GET.get('UID')
         uid = request.session.get('UID')
-        print("FRIEND: " +friendID)
+        # print("FRIEND: " +friendID)
 
         usermodel = User.objects.get(UID = uid)
         friendmodel = User.objects.get(UID = friendID)
@@ -856,7 +875,10 @@ def addfriend(request):
                     Friend=friendmodel,
                 )
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
-    return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
+
+
+    return render(request,"sentence/usermap.html",{"friendlist":friendlist,'extend_index': 'sentence/background.html'})
+
 
 
 def search(request,ranktype):
@@ -866,37 +888,41 @@ def search(request,ranktype):
         searchtype = None
         sentencemodel_order = None
         if ranktype == 'newSentence':
-            sentencemodel_order = Sentence.objects.filter().order_by('-Date')
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
             searchtype = "new"
         elif ranktype == 'popularSentence':
-            sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
             searchtype = "popu"
         else:
             sentencemodel_order = Sentence.objects.filter()
 
         if request.session.get('UID'):
             usermodel = User.objects.get(UID=request.session.get('UID'))
-            print(sentencemodel_order)
             context = {'username': usermodel,'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,
             'searchtype': searchtype,}
 
             return render(request, "sentence/search.html",context)
         else:
-            print("13")
             context = {'extend_index': 'sentence/background.html','sentence_content_date':sentencemodel_order,'searchtype': searchtype,}
             return render(request, "sentence/search.html",context)
-   
+
 def chat_room(request,uid):
+    UID = request.session.get('UID')
     if request.method == 'POST':
-        UID = request.session.get('UID')
         django_form = PostMessage(request.POST)
         if django_form.is_valid():
-            room = Message.objects.get_or_create(RoomUID=uid)
-            message = request.POST.get('message')
-            room.VisiterUID = UID
-            room.Message = message
-            room.save()
+            message = django_form.data.get('message')
+            if message:
+                visitermodel = User.objects.get(UID=UID)
+                roomOwnermodel = User.objects.get(UID=uid)
+                room = Message.objects.create(
+                    RoomUID=roomOwnermodel,
+                    VisiterUID = visitermodel,
+                    Message = message,
+                    )
+                room.save()
+    print(str(UID)+' '+str(uid) )
+    allMessage = Message.objects.filter(RoomUID=uid)
+    context = {'allMessage':allMessage,'UID':UID}
+    return render(request,'sentence/message_modal.html',context)
 
-        allMessage = Message.objects.filter(RoomUID=uid)
-        context = {'allMessage':allMessage}
-        return render(request,'sentence/usermap.html',context)
