@@ -275,17 +275,29 @@
            
         },function(data){
 
-            icons = {{ranfriendlist|safe}};
-            iconsLength = icons.length;
-            console.log("length:" + iconsLength);
-            userSentence = {{sentence|safe}};
+            //current user
             userImg = "{{username.UserIcon.url}}";
-            friendSentencelist = {{friendSentencelist|safe}};   //random friends list
+            userid = "{{username.UID}}";
+            username = "{{username.UserName}}";
+            userlanguage = "{{username.NativeLanguage.Language}}";
+            userSentence = {{sentence|safe}};
+
+            //other users
+            icons = {{ranfriendlist|safe}}; // user model
+            iconsLength = icons.length;
+            friendSentencelist = {{friendSentencelist|safe}};   //random friends list //friend model
             alllanguage = {{alllanguage|safe}}; 
-            userFriends = {{userFriends|safe}};  //real friends
+            userFriends = {{userFriends|safe}};  //real friends //friend model
+            userFriendsModel = {{userFriendsModel|safe}} // real friend // user model
+            console.log("length:" + iconsLength);
             for(var i = 0 ; i < icons.length; i++){ 
                if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/'){
                 icons[Object.keys(icons)[i]].fields.UserIcon = '/media/'+icons[Object.keys(icons)[i]].fields.UserIcon;
+                }   
+            }         
+            for(var i = 0 ; i < userFriendsModel.length; i++){ 
+               if(userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != '/'){
+                userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon = '/media/'+userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon;
                 }   
             }         
         });

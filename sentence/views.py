@@ -318,15 +318,20 @@ def usermap(request):
     if request.session.get('UID'):
         usermodel = User.objects.get(UID=request.session.get('UID'))
         ranfriendlist = User.objects.all().exclude(UID = usermodel.UID).order_by('?','pk')[:10]
-        friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
+        friendlist = Friendship.objects.filter(UID=request.session.get('UID')).order_by('pk')
         alllanguage = Language.objects.all().order_by('pk');
 
         userFriendsdata = None
+        userFriendsModeldata = None
         try:
             userFriends = Friendship.objects.filter(UID=usermodel.UID)
             userFriendsdata = serializers.serialize('json', userFriends)
+            userFriendsModel = [User.objects.get(UID=f.Friend.UID) for f in userFriends]
+            userFriendsModeldata = serializers.serialize('json', userFriendsModel)
+
         except:
             userFriendsdata = 'null'
+            userFriendsModeldata = 'null'
 
         sentencemodel = None
         if Sentence.objects.filter(UID=usermodel.UID).exists():
@@ -344,7 +349,7 @@ def usermap(request):
 
         context = {'username': usermodel,'extend_index': 'sentence/background.html','friendlist': friendlist
             ,'sentence':sentencemodeldata,   'ranfriendlist': data , 'friendSentencelist': friendSentencelistdata
-            ,'alllanguage':alllanguagedata,'userFriends':userFriendsdata
+            ,'alllanguage':alllanguagedata,'userFriends':userFriendsdata,'userFriendsModel':userFriendsModeldata
         }
 
         return render(request, "sentence/usermap.html",context)
@@ -479,7 +484,8 @@ def user_history(request):
     if request.session.get('UID'):
         get_uid = request.session.get('UID')
         usermodel = User.objects.get(UID=get_uid)
-        sentencemodel = Sentence.objects.filter(UID=get_uid)
+        sentencemodel = Sentence.objects.filter(UID=get_uid,Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')
+        # sentencemodel = Sentence.objects.filter(UID=get_uid)
         translationmodel = Translation.objects.filter(UID=get_uid)
 
         context = {'sentence_model': sentencemodel,'translation_model': translationmodel,
@@ -505,8 +511,8 @@ def user_friends(request):
 
 
 def login_app(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
     get_email = request.POST.get('email')
 
     #social login
@@ -657,8 +663,8 @@ def login_app(request):
 
 #logout
 def logout(request):
-    sentencemodel_date_order = Sentence.objects.filter().order_by('-Date')[:8]
-    sentencemodel_like_order = Sentence.objects.filter().order_by('-Likes')[:8]
+    sentencemodel_date_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+    sentencemodel_like_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
     print("logout")
     django_logout(request)
     context = {'sentence_content': sentencemodel_like_order,'sentence_content_date': sentencemodel_date_order
@@ -818,7 +824,7 @@ def addfriend(request):
     if request.method == "GET":
         friendID = request.GET.get('UID')
         uid = request.session.get('UID')
-        print("FRIEND: " +friendID)
+        # print("FRIEND: " +friendID)
 
         usermodel = User.objects.get(UID = uid)
         friendmodel = User.objects.get(UID = friendID)
@@ -832,7 +838,8 @@ def addfriend(request):
         friendlist = Friendship.objects.filter(UID=request.session.get('UID'))
 
 
-    return render(request,"sentence/addfriends_modal.html",{"friendlist":friendlist})
+    return render(request,"sentence/usermap.html",{"friendlist":friendlist,'extend_index': 'sentence/background.html'})
+
 
 
 def search(request,ranktype):
@@ -842,10 +849,10 @@ def search(request,ranktype):
         searchtype = None
         sentencemodel_order = None
         if ranktype == 'newSentence':
-            sentencemodel_order = Sentence.objects.filter().order_by('-Date')
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
             searchtype = "new"
         elif ranktype == 'popularSentence':
-            sentencemodel_order = Sentence.objects.filter().order_by('-Likes')
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
             searchtype = "popu"
         else:
             sentencemodel_order = Sentence.objects.filter()
@@ -875,7 +882,7 @@ def chat_room(request,uid):
                     Message = message,
                     )
                 room.save()
-
+    print(str(UID)+' '+str(uid) )
     allMessage = Message.objects.filter(RoomUID=uid)
     context = {'allMessage':allMessage,'UID':UID}
     return render(request,'sentence/message_modal.html',context)
