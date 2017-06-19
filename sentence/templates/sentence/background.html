@@ -362,7 +362,7 @@
                 }   
             }         
             for(var i = 0 ; i < userFriendsModel.length; i++){ 
-               if(userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != '/'){
+               if(userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != '/' && userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != 'h'){
                 userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon = '/media/'+userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon;
                 }   
             }         
