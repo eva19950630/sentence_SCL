@@ -564,12 +564,12 @@ def login_app(request):
             # print(userpucture)
             
             userfriend = request.GET.getlist('friends[]')
+            new_member_language = Language.objects.get(Language_ID=22)
             # print(userfriend)
             password = '000'
             if User.objects.filter(SocialID = userId).exists():
                 # print('in fb session')
                 request.session['UID'] = User.objects.get(SocialID = userId).UID
-                new_member_language = Language.objects.get(Language_ID=22)
                 # limit userId found to 0 object
                 user = User.objects.filter(SocialID = userId)[0]
                 # user.user_picture = userpicture
