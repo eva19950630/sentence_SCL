@@ -284,7 +284,13 @@
                     </div>
                     <div class="modal-body">
                         <div class="message-friendinfo">
+                            {% if not username.SocialID %}
                             <img id="user-friendimg" src="{{username.UserIcon.url}}">
+                            {% else %}
+                            <img id="user-friendimg" src="{{username.UserIcon}}">
+                            {% endif%}
+                            <!--<img id="user-friendimg" src="{{username.UserIcon.url}}">-->
+                            
                             <div class="friendabout">
                               <div class="user-friendname" id="user-message-name" userid="{{username.UID}}">{{username.UserName }}'s message board</div>
                               <div class="user-friendmsgcount"></div>
@@ -346,6 +352,8 @@
             if (SocialID > 0) {
                 console.log("usericon 0");
                 userImg = "{{username.UserIcon}}";
+                userImg = userImg.replace("&amp;","&");
+                console.log("usericon "+userImg);
             }
             else {
                 console.log("usericon -1");
@@ -365,7 +373,7 @@
             userFriendsModel = {{userFriendsModel|safe}} // real friend // user model
             console.log("length:" + iconsLength);
             for(var i = 0 ; i < icons.length; i++){ 
-               if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/'){
+               if(icons[Object.keys(icons)[i]].fields.UserIcon.charAt(0) != '/' && userFriendsModel[Object.keys(userFriendsModel)[i]].fields.UserIcon.charAt(0) != 'h'){
                 icons[Object.keys(icons)[i]].fields.UserIcon = '/media/'+icons[Object.keys(icons)[i]].fields.UserIcon;
                 }   
             }         
@@ -596,7 +604,7 @@
                     // console.log(response.status);
                     if(response.status === 'connected'){
                         console.log("login connected");
-                        FB.api("/me/picture?widrh=30" , function(response){
+                        FB.api("/me/picture?type=large" , function(response){
                             userpicture = response.data.url;
                             
                             

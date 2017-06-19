@@ -17,7 +17,11 @@
                             <label for="imageUpload"></label>
                         </div>
                         <div class="userpic-preview">
+                            {% if not username.SocialID %}
                             <div id="imagePreview" style="background-image: url({{username.UserIcon.url}})"></div>
+                            {% else %}
+                            <div id="imagePreview" style="background-image: url({{username.UserIcon}})"></div>
+                            {% endif%}
                         </div>
                     </div>    
                     <li>

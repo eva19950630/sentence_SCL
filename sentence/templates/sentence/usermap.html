@@ -28,7 +28,11 @@
                 {% for friend in friendlist %}
                 <div class="row friend-panel">
                     <a href="" data-post="{{friend.Friend.UID}}" class="friendlist-message-btn" data-toggle="modal">
+                        {% if not username.SocialID %}
                         <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon.url }}"> </div>
+                        {% else %}
+                        <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon }}"> </div>
+                        {% endif%}
                         <div class="col-lg-2 friend-name" > <h4>{{ friend.Friend.UserName }}</h4> </div>
                     </a>
                 </div>
