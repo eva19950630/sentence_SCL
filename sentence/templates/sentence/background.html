@@ -246,7 +246,7 @@
                                     {% if not username.SocialID %}
                                     <img src="{{ username.UserIcon.url }}" height="40" width="40" id="user-pic">
                                     {% else %}
-                                    <img src="" height="40" width="40" id="user-pic">
+                                    <img src="{{ username.UserIcon }}" height="40" width="40" id="user-pic">
                                     {% endif%}
                                     <!-- <span id="user-name"><font color=#fff>{{username.UserName}}</font></span> -->
                                   {% else %}
