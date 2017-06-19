@@ -340,9 +340,12 @@
         $.get('/user/usermap/',{
            
         },function(data){
-
+            userImg = null;
             //current user
-            userImg = "{{username.UserIcon.url}}";
+            if ({{username.SocialID}})
+                userImg = "{{username.UserIcon}}";
+            else
+                userImg = "{{username.UserIcon.url}}";
             userid = "{{username.UID}}";
             username = "{{username.UserName}}";
             userlanguage = "{{username.NativeLanguage.Language}}";
