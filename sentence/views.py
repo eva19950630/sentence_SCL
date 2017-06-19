@@ -601,6 +601,13 @@ def login_app(request):
                         NativeLanguage = new_member_language,
                         # UserIcon = "http://graph.facebook.com/"+userId+"/picture?type=square",
                     )
+
+                    new_sentence_model = Sentence.objects.create(
+                        Content = "Haven't post any sentence QAQ",
+                        Sentence_tag =  "English", 
+                        UID = new_user_model,
+                        Date = datetime.datetime(2017, 1, 1, 0, 0),
+                    ) 
                     
                     #save friends
                 if userfriend:
