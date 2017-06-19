@@ -23,7 +23,7 @@ class friendship(admin.ModelAdmin) :
     class Meta : 
         model = Friendship
 class rank_sentence(admin.ModelAdmin) :
-    list_display = ['UID','TID']
+    list_display = ['UID','SID']
     class Meta : 
         model = Rank_sentence
 admin.site.register(User,user)
