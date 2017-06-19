@@ -590,7 +590,7 @@
                         console.log("login connected");
                         FB.api("/me/picture?widrh=30" , function(response){
                             userpicture = response.data.url;
-                            console.log(userpicture);
+                            console.log('pic '+userpicture);
                             
                             $("#user-pic").attr('src' , response.data.url );
 
