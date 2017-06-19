@@ -243,7 +243,11 @@
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {% if username %}
+                                    {% if not username.SocialID %}
                                     <img src="{{ username.UserIcon.url }}" height="40" width="40" id="user-pic">
+                                    {% else %}
+                                    <img src="" height="40" width="40" id="user-pic">
+                                    {% endif%}
                                     <!-- <span id="user-name"><font color=#fff>{{username.UserName}}</font></span> -->
                                   {% else %}
                                     <i class="fa fa-user-circle" style="font-size: 30px; color:#FFF" id="user-pic"></i>
@@ -588,8 +592,8 @@
                             userpicture = response.data.url;
                             //console.log(userpicture);
                             
-                            // $("#user-pic").replaceWith('<img src="' + response.data.url + '" height="40" width="40" id="user-pic">');
-                            $("#user-pic").replaceWith('<img src="' + graph.facebook.com/{userId}?fields=picture  + '" height="40" width="40" id="user-pic">');
+                            $("#user-pic").attr('src' , response.data.url );
+
                                 
                         });
                         
