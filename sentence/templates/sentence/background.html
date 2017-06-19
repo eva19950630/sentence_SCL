@@ -342,7 +342,8 @@
         },function(data){
             userImg = null;
             //current user
-            if ({{username.SocialID}})
+            var SocialID = '{{username.SocialID}}';
+            if (SocialID > 0)
                 userImg = "{{username.UserIcon}}";
             else
                 userImg = "{{username.UserIcon.url}}";
