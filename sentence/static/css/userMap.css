@@ -317,12 +317,15 @@ input[type="text"]:hover {
 
 .title.friend {
     /*text-decoration: underline;*/
-    margin: -20px 0 15px 30px;
+    margin: -20px 0 15px 0;
     font-size: 24px;
     font-weight: 600;
     letter-spacing: 2px;
     color: #fff;
     text-shadow: 2px 2px #00CCCC;
+    text-align: center;
+    width: 200px;
+    /*background-color: #000;*/
 }
 
 .row.friend-panel {

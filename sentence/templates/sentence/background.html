@@ -343,10 +343,14 @@
             userImg = null;
             //current user
             var SocialID = '{{username.SocialID}}';
-            if (SocialID > 0)
+            if (SocialID > 0) {
+                console.log("usericon 0");
                 userImg = "{{username.UserIcon}}";
-            else
+            }
+            else {
+                console.log("usericon -1");
                 userImg = "{{username.UserIcon.url}}";
+            }
             userid = "{{username.UID}}";
             username = "{{username.UserName}}";
             userlanguage = "{{username.NativeLanguage.Language}}";
