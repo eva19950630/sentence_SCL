@@ -10,7 +10,11 @@
         {% for friend in friendlist %}
             <div class="col-sm-3">
                 <div class="row friendlist-manage">
+                    {% if friend.Friend.SocialID == -1 %}
                     <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon.url }}"> </div>
+                    {% else %}
+                    <div class="col-lg-2"> <img class="friend-pic" src="{{ friend.Friend.UserIcon }}"> </div>
+                    {% endif%}
                     <div class="col-lg-2 friend-name"> <h4>{{ friend.Friend.UserName }}</h4> </div>
                 </div>
             </div>

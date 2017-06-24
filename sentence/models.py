@@ -12,7 +12,7 @@ class User(models.Model):
 	UserName = models.CharField(max_length=50, null=False)
 	Email = models.EmailField(max_length=254,unique = True)
 	Password = models.CharField(max_length=50, null=False)
-	SocialID = models.BigIntegerField(null=True,unique = True,default=-1)
+	SocialID = models.BigIntegerField(null=True,default=-1)
  	# UserIcon = models.ImageField(upload_to='UserIcon_folder',height_field=700,width_field=700,max_length=100)
 	UserIcon = models.ImageField(upload_to='static/media',default='/static/images/fish.png')
 	NativeLanguage = models.ForeignKey('Language', on_delete=models.CASCADE)

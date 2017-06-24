@@ -20,7 +20,7 @@
           <div class="message-data">
             <!-- <span class="message-data-name"><i class="fa fa-circle circle-friend"></i> {{m.VisiterUID.UserName}}</span> -->
             
-            {% if not m.VisiterUID.SocialID %}
+            {% if m.VisiterUID.SocialID == -1 %}
             <span class="message-data-name"><img src="{{m.VisiterUID.UserIcon.url}}" class="message-friendpic">&ensp;{{m.VisiterUID.UserName}}</span>
             {% else %}
             <span class="message-data-name"><img src="{{m.VisiterUID.UserIcon}}" class="message-friendpic">&ensp;{{m.VisiterUID.UserName}}</span>
