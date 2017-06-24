@@ -243,7 +243,7 @@
                             <span class="after-login">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {% if username %}
-                                    {% if not username.SocialID %}
+                                    {% if username.SocialID == -1 %}
                                     <img src="{{ username.UserIcon.url }}" height="40" width="40" id="user-pic">
                                     {% else %}
                                     <img src="{{ username.UserIcon }}" height="40" width="40" id="user-pic">
@@ -260,7 +260,7 @@
                                     <li class="divider"></li>
                                     <!--class="fb-log-out" written by gim for fb log out-->
                                     <!-- <li><button class="fa fa-sign-out fb-log-out">Logout</button> -->
-                                    <li><a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out fb-log-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
+                                    <li><a href="/logout/" class="fb-log-out"><i class="fa fa-sign-out" style="font-size: 20px;"></i>&emsp;Log out</a></li>
                                   </ul>
                             </span>
                         </div>
@@ -284,7 +284,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="message-friendinfo">
-                            {% if not username.SocialID %}
+                            {% if username.SocialID == -1 %}
                             <img id="user-friendimg" src="{{username.UserIcon.url}}">
                             {% else %}
                             <img id="user-friendimg" src="{{username.UserIcon}}">
@@ -349,7 +349,7 @@
             userImg = null;
             //current user
             var SocialID = '{{username.SocialID}}';
-            if (SocialID > 0) {
+            if (SocialID != -1) {
                 console.log("usericon 0");
                 userImg = "{{username.UserIcon}}";
                 userImg = userImg.replace("&amp;","&");
@@ -735,17 +735,18 @@
 <!-- like / collect -->
     <script type="text/javascript">
         //translation
-        function trans_like(){
+        function trans_like(e){
             console.log("in");
             var id;
             id = $('.cardheart.trans').attr('data-post-id');
+            // id = $(e).attr('data-post-id');
             console.log(id);
             $.get('/translation_likes/', {
                 translation_id: id
             }, function(data) {
                 json_like = JSON.parse(data);
                 console.log(json_like.data + ' ' +json_like.state);
-                var trans_likes = document.getElementsByClassName("trans_like_");
+                var trans_likes = document.getElementsByClassName("trans_like_"+id);
                 trans_likes.innerHTML = ' '+json_like.data;
                 $('.trans_like_'+id).html(' '+json_like.data);
             });

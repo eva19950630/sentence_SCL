@@ -897,10 +897,10 @@ def search(request,ranktype):
         searchtype = None
         sentencemodel_order = None
         if ranktype == 'newSentence':
-            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')[:8]
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Date')
             searchtype = "new"
         elif ranktype == 'popularSentence':
-            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')[:8]
+            sentencemodel_order = Sentence.objects.filter(Date__gt=datetime.datetime(2017, 1, 1, 0, 1)).order_by('-Likes')
             searchtype = "popu"
         else:
             sentencemodel_order = Sentence.objects.filter()
