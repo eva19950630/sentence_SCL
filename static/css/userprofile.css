@@ -1,0 +1,249 @@
+.profiletitle {
+	font-size: 24px;
+	margin-bottom: 20px;
+	letter-spacing: 0.5px;
+	color: #00CCCC;
+}
+
+.title {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #005454;
+}
+
+.sidebar-icon {
+	width: 150px;
+	height: 150px;
+}
+
+.sidebar-menu.user {
+	margin-top: 70px;
+}
+
+
+/*History*/
+.profiletitle.sentence {
+	color: #005454;
+}
+
+.profiletitle.translation {
+	color: #FFB77D;
+}
+
+.panel-default.sentence {
+	border-color: #005454;
+}
+
+.panel-heading.sentence {
+	background-color: #005454;
+	color: #fff;
+}
+
+.panel-body {
+	word-wrap: break-word;
+}
+
+.panel-body.sentence {
+	letter-spacing: 1px;
+}
+
+.panel-default.translation {
+	border-color: #FFB77D;
+}
+
+.panel-heading.translation {
+	background-color: #FFB77D;
+	/*color: #fff;*/
+}
+
+.panel-body.translation {
+	letter-spacing: 1px;
+}
+
+
+/*Collection*/
+.profiletitle.collection {
+	color: #ffc70f;
+}
+
+.panel-default.collection {
+	width: 350px;
+	background-color: #ffc70f;
+	border-color: #ffc70f;
+	font-size: 16px;
+	letter-spacing: 1px;
+	/*color: #fff;*/
+}
+
+.panel-default.collection:hover {
+	box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+	color: #555;
+}
+
+.collection-link {
+	color: #000;
+}
+
+
+/*Achievement*/
+.profiletitle.achievement {
+	margin: 0 0 20px 15px;
+}
+
+.achievement-content {
+	font-size: 16px;
+}
+
+.achievement-content.sentence {
+	color: #005454;
+}
+
+.achievement-content.translation {
+	color: #FFB77D;
+}
+
+
+/*Accounts*/
+.updatefield {
+	padding: 10px 0;
+	list-style: square;
+	color: #005454;
+	padding-left: 4em;
+}
+.updatefield li {
+	padding-left: 1em;
+}
+
+/*profile pic upload*/
+.userpic-upload {
+	position: relative;
+	display: inline-block;
+	max-width: 200px;
+	margin: 0 0 20px 0;
+}
+.userpic-upload .userpic-edit {
+	position: absolute;
+	right: 0;
+	z-index: 1;
+	top: 3px;
+}
+.userpic-upload .userpic-edit input {
+	display: none;
+}
+.userpic-upload .userpic-edit input + label {
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	margin-bottom: 0;
+	border-radius: 100%;
+	background: #FFFFFF;
+	border: 1px solid transparent;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+	cursor: pointer;
+	font-weight: normal;
+	transition: all 0.2s ease-in-out;
+}
+.userpic-upload .userpic-edit input + label:hover {
+	background: #F0F0F0;
+	border-color: #d6d6d6;
+}
+.userpic-upload .userpic-edit input + label:after {
+	content: "\f040";
+	font-family: 'FontAwesome';
+	color: #757575;
+	position: absolute;
+	top: 10px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	margin: auto;
+}
+.userpic-upload .userpic-preview {
+	width: 150px;
+	height: 150px;
+	position: relative;
+	/*margin: 0 0 0 35px;*/
+	border-radius: 100%;
+	border: 6px solid #F0F0F0;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.userpic-upload .userpic-preview > div {
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.updatefield .title.account {
+	/*font-weight: 600;*/
+}
+.updatefield .title.account + input {
+	display: inline;
+}
+.updatefield input, .accontemail {
+	font-size: 16px;
+	text-align: center;
+}
+.accountlang {
+	height: 30px;
+	width: auto;
+	padding: 5px 5px;
+}
+.accountlang:focus {
+	border: 2px solid #00CCCC;
+	outline: 0;
+}
+
+.updateprofile-btn {
+	margin: 20px 0 0 70px;
+	width: 160px;
+	height: 32px;
+	background: #00CCCC;
+	border: none;
+	border-radius: 2px;
+	color: #FFF;
+	font-weight: 500;
+	font-size: 15px;
+	text-transform: uppercase;
+	transition: 0.1s ease;
+	cursor: pointer;
+}
+.updateprofile-btn:hover,
+.updateprofile-btn:focus {
+	opacity: 0.8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: 0.1s ease;
+}
+.updateprofile-btn:active {
+	opacity: 1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    transition: 0.1s ease;
+}
+
+.profilecontent.account {
+	width: 50vw;
+}
+
+
+
+/*Profile*/
+.profile-content {
+	/*margin: 0 0 0 30px;*/
+}
+
+.progress-bar.exp {
+	background-color: #00CCCC;
+}
+
+.page-header.profile {
+	color: #777777;
+	letter-spacing: 2px;
+}
+
+
+/*Friends*/
+.row.friendlist-manage {
+	padding: 10px 0;
+}

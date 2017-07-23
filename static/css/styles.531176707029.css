@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+html,
+head,
+body {
+  height: 100%;
+  background: white;
+  font-family: 'Raleway', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  padding-top: 30px;
+  /* .navbar-fixed-top */
+}
+
+
+
+.body {
+  margin-top: 80px;
+}
+
+.body-2 {
+  margin-top: 250px;
+}
+
+.footer {
+  margin: 50px 0;
+}
+
+
+@media (max-width: 767px) {
+  body {
+    padding-top: 80px;
+  }
+}
+
+.hidden{
+    display:none;   
+}
+.hidden + span{
+    display:none;   
+}
